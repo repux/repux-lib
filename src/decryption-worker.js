@@ -24,13 +24,13 @@ export async function decryptionWorker([ bytes, passwordKey, initializationVecto
     }
 
     async function decryptFirstChunk(bytes) {
-        const decryptedChunk = await crypto.subtle.decrypt({ name: 'RSA-OAEP' }, privateKey, bytes);
+        const decryptedChunk = await crypto.subtle.decrypt({ name: options.ASYMMETRIC_ENCRYPTION_ALGORITHM }, privateKey, bytes);
         progress({ chunk: decryptedChunk, number: 0, vector });
     }
 
     async function decryptChunk(bytes) {
         const alg = {
-            name: 'AES-CBC',
+            name: options.SYMMETRIC_ENCRYPTION_ALGORITHM,
             iv: vector
         };
         const decryptedChunk = await crypto.subtle.decrypt(

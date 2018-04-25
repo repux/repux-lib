@@ -1,6 +1,7 @@
-import { INITIALIZATION_VECTOR, ProgressCrypto } from './progress-crypto';
+import { ProgressCrypto } from './progress-crypto';
 import { Buffer } from 'buffer';
 import { ERRORS } from './errors';
+import { KeyGenerator } from './key-generator';
 
 export class FileUploader extends ProgressCrypto {
     constructor(ipfs) {
@@ -8,7 +9,7 @@ export class FileUploader extends ProgressCrypto {
         this.ipfs = ipfs;
     }
 
-    upload(password, publicKey, file) {
+    async upload(symmetricKey, publicKey, file) {
         this.isUploadFinished = false;
         this.file = file;
 
@@ -16,7 +17,9 @@ export class FileUploader extends ProgressCrypto {
             return this.emit('error', ERRORS.FILE_NOT_SPECIFIED);
         }
 
-        this.crypt('encrypt', password, INITIALIZATION_VECTOR, publicKey, file);
+        this.initializationVector = KeyGenerator.generateInitializationVector();
+
+        this.crypt('encrypt', symmetricKey, this.initializationVector, publicKey, file);
     }
 
     onChunkCrypted(chunk) {
@@ -56,6 +59,7 @@ export class FileUploader extends ProgressCrypto {
         }
 
         const meta = {
+            initializationVector: this.initializationVector,
             name: this.file.name,
             size: this.file.size,
             chunks: this.chunks

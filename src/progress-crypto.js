@@ -2,15 +2,20 @@ import { Observable } from './observable';
 import { spawn } from 'threads';
 import { encryptionWorker } from './encryption-worker';
 import { decryptionWorker } from './decryption-worker';
-
-export const CHUNK_SIZE = 15 * 64 * 1024;
-export const FIRST_CHUNK_SIZE = 190;
-export const VECTOR_SIZE = 16;
-export const INITIALIZATION_VECTOR = new Uint8Array([0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-    0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F]);
+import { reencryptionWorker } from './reecryption-worker';
+import {
+    CHUNK_SIZE,
+    FIRST_CHUNK_SIZE,
+    VECTOR_SIZE,
+    SYMMETRIC_ENCRYPTION_ALGORITHM,
+    ASYMMETRIC_ENCRYPTION_ALGORITHM,
+    ASYMMETRIC_ENCRYPTION_HASH
+} from './config';
 
 export class ProgressCrypto extends Observable {
     async crypt(type, password, initializationVector, asymmetricKey, file, options) {
+        let passwordKey, asymmetricKeyObject;
+
         if (!options) {
             options = {};
         }
@@ -18,18 +23,28 @@ export class ProgressCrypto extends Observable {
         options = Object.assign({
             CHUNK_SIZE,
             FIRST_CHUNK_SIZE,
-            VECTOR_SIZE
+            VECTOR_SIZE,
+            SYMMETRIC_ENCRYPTION_ALGORITHM,
+            ASYMMETRIC_ENCRYPTION_ALGORITHM
         }, options);
 
         this.isFinished = false;
         this.chunks = {};
 
-        const pwUtf8 = new TextEncoder().encode(password);
-        const pwHash = await crypto.subtle.digest('SHA-256', pwUtf8);
-        const passwordKey = await crypto.subtle.importKey('raw', pwHash, { name: 'AES-CBC' }, false, [type]);
-        let asymmetricKeyObject = await crypto.subtle.importKey('jwk', asymmetricKey, { name: 'RSA-OAEP', hash: { name: "SHA-256" } }, false, [type]);
+        if (password) {
+            passwordKey = await crypto.subtle.importKey('jwk', password, {
+                name: SYMMETRIC_ENCRYPTION_ALGORITHM
+            }, false, [type]);
+        }
 
-        this.thread = spawn(type === 'encrypt' ? encryptionWorker : decryptionWorker);
+        if (asymmetricKey) {
+            asymmetricKeyObject = await crypto.subtle.importKey('jwk', asymmetricKey, {
+                name: ASYMMETRIC_ENCRYPTION_ALGORITHM,
+                hash: { name: ASYMMETRIC_ENCRYPTION_HASH }
+            }, false, [ type ]);
+        }
+
+        this.thread = ProgressCrypto.getWorkerByType(type);
         this.thread.send([
             file,
             passwordKey,
@@ -60,6 +75,20 @@ export class ProgressCrypto extends Observable {
         });
 
         return this.thread;
+    }
+
+    static getWorkerByType(type) {
+        if (type === 'encrypt') {
+            return spawn(encryptionWorker);
+        }
+
+        if (type === 'decrypt') {
+            return spawn(decryptionWorker);
+        }
+
+        if (type === 'reencrypt') {
+            return spawn(reencryptionWorker);
+        }
     }
 
     terminate() {

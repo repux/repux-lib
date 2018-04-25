@@ -7,18 +7,15 @@ npm install @repux/repux-lib
 
 ## Example usage
 ```javascript
-import Web3 from 'web3';
 import IpfsAPI from 'ipfs-api';
-import { Repux } from 'repux-lib';
-let web3 = new Web3(new Web3.providers.HttpProvider('http://local.dev.ico.repux:8545'));
-web3.eth.defaultAccount = '0x627306090abaB3A6e2400e9345bC60c78a8BEf57';
-const repux = new RepuX(web3, new IpfsAPI({
+import { RepuxLib } from 'repux-lib';
+const repux = new RepuxLib(new IpfsAPI({
     host: '127.0.0.1',
     port: 5002,
     protocol: 'http'
 }));
-const balance = await repux.getBalance();
-console.log(balance);
+const version = RepuxLib.getVersion();
+console.log(version);
 ```
 
 ## Development
@@ -50,5 +47,5 @@ Build library, run `http-server` and then open index.html in browser.
 | Edge    | Desktop | Not tested   | -                       |
 | Chrome  | Mobile  | Not tested   | -                       |
 | Firefox | Mobile  | Not tested   | -                       |
-| Firefox | Safari  | Not tested   | -                       |
+| Safari  | Mobile  | Not tested   | -                       |
 | Node.js | Desktop | &cross; (WIP)| -                       |

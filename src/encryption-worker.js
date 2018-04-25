@@ -27,7 +27,7 @@ export function encryptionWorker ([file, passwordKey, initializationVector, publ
     }
 
     async function encryptFirstChunk(bytes) {
-        const encryptedChunk = await crypto.subtle.encrypt({ name: 'RSA-OAEP' }, publicKey, bytes);
+        const encryptedChunk = await crypto.subtle.encrypt({ name: options.ASYMMETRIC_ENCRYPTION_ALGORITHM }, publicKey, bytes);
         progress({ chunk: encryptedChunk, number: 0 });
     }
 
@@ -35,7 +35,7 @@ export function encryptionWorker ([file, passwordKey, initializationVector, publ
         let tmp;
 
         const alg = {
-            name: 'AES-CBC',
+            name: options.SYMMETRIC_ENCRYPTION_ALGORITHM,
             iv: vector
         };
         const encryptedChunk = await crypto.subtle.encrypt(

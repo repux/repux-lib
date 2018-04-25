@@ -1,4 +1,4 @@
-import { INITIALIZATION_VECTOR, ProgressCrypto } from './progress-crypto';
+import { ProgressCrypto } from './progress-crypto';
 import { ERRORS } from './errors';
 import { FileWriterFactory } from './file-writer-factory';
 import { FileSize } from './file-size';
@@ -10,9 +10,9 @@ export class FileDownloader extends ProgressCrypto {
         this.ipfs = ipfs;
     }
 
-    download(password, privateKey, fileHash) {
-        this.password = password;
+    download(symmetricKey, privateKey, fileHash) {
         this.privateKey = privateKey;
+        this.symmetricKey = symmetricKey;
 
         this.ipfs.files.get(fileHash, (err, files) => {
             if (!files || files.length === 0) {
@@ -32,7 +32,7 @@ export class FileDownloader extends ProgressCrypto {
                     this.fileChunks = Object.values(fileMeta.chunks);
                     this.fileChunksNumber = this.fileChunks.length;
                     this.isFirstChunk = true;
-                    this.vector = INITIALIZATION_VECTOR;
+                    this.vector = Uint8Array.from(Object.values(fileMeta.initializationVector));
                     this.downloadFileChunks();
                 } catch(err) {
                     this.emit('error', err.error);
@@ -57,7 +57,7 @@ export class FileDownloader extends ProgressCrypto {
                     this.firstChunkData = null;
                 }
 
-                this.crypt('decrypt', this.password, this.vector, this.privateKey, content, {
+                this.crypt('decrypt', this.symmetricKey, this.vector, this.privateKey, content, {
                     isFirstChunk: this.isFirstChunk
                 });
             });

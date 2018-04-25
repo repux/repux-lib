@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { RepuxLib } from '../src/repux-lib';
 import IpfsAPI from 'ipfs-api';
-import { IPFS_HOST, IPFS_PORT, IPFS_PROTOCOL, JWK_PUBLIC_KEY, JWK_PRIVATE_KEY, FILE_PASSWORD } from './config';
+import { IPFS_HOST, IPFS_PORT, IPFS_PROTOCOL } from './config';
 
 const FILE_NAME = 'test.txt';
 const FILE = new File([ new Blob([
@@ -25,7 +25,7 @@ function downloadBlob(blobUrl, fileName) {
 }
 
 describe('File can be uploaded and downloaded using encryption/decryption', function () {
-    let uploadedFileHash;
+    let uploadedFileHash, symmetricKey, asymmetricKeys1, asymmetricKeys2;
     const repux = new RepuxLib(new IpfsAPI({
         host: IPFS_HOST,
         port: IPFS_PORT,
@@ -40,11 +40,33 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
         });
     });
 
+    describe('RepuxLib.generateSymmetricKey()', function () {
+        this.timeout(30000);
+
+        it('should generate symmetric key', async function() {
+            symmetricKey = await RepuxLib.generateSymmetricKey();
+            console.log('symmetric key', symmetricKey);
+            assert.ok(symmetricKey);
+        });
+    });
+
+    describe('RepuxLib.generateAsymmetricKeysPair()', function () {
+        this.timeout(30000);
+
+        it('should generate asymmetric key', async function() {
+            asymmetricKeys1 = await RepuxLib.generateAsymmetricKeyPair();
+            asymmetricKeys2 = await RepuxLib.generateAsymmetricKeyPair();
+            console.log('asymmetric keys 1', asymmetricKeys1);
+            console.log('asymmetric keys 2', asymmetricKeys2);
+            assert.ok(asymmetricKeys1);
+        });
+    });
+
     describe('RepuxLib.uploadFile()', function () {
         this.timeout(30000);
 
         it('should emit progress event and emit finish event with meta file hash', function (done) {
-            const fileUploader = repux.uploadFile(FILE_PASSWORD, JWK_PUBLIC_KEY, FILE);
+            const fileUploader = repux.uploadFile(symmetricKey, asymmetricKeys1.publicKey, FILE);
             fileUploader.subscribe('progress', function (eventType, progress) {
                 console.log('progress', progress);
                 assert.ok(progress);
@@ -59,11 +81,26 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
         });
     });
 
+    describe('RepuxLib.reencryptFile()', function () {
+        this.timeout(30000);
+
+        it('should emit progress event and emit finish event with new meta file hash', function (done) {
+            const fileReencryptor = repux.reencryptFile(asymmetricKeys1.privateKey, asymmetricKeys2.publicKey, uploadedFileHash);
+
+            fileReencryptor.subscribe('finish', function (eventType, metaFileHash) {
+                assert.ok(metaFileHash);
+                console.log('metaFileHash', metaFileHash);
+                uploadedFileHash = metaFileHash;
+                done();
+            });
+        });
+    });
+
     describe('RepuxLib.downloadFile()', function () {
         this.timeout(30000);
 
         it('should emit progress event and emit finish event with url to file', async function (done) {
-            const fileDownloader = repux.downloadFile(FILE_PASSWORD, JWK_PRIVATE_KEY, uploadedFileHash);
+            const fileDownloader = repux.downloadFile(symmetricKey, asymmetricKeys2.privateKey, uploadedFileHash);
             fileDownloader.subscribe('progress', function (eventType, progress) {
                 console.log('progress', progress);
                 assert.ok(progress);
