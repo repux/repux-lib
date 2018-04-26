@@ -88,8 +88,9 @@ $ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"P
 | Firefox | Desktop | &check;      | 2GB(64-bit) 1GB(32-bit) |
 | Safari  | Desktop | &check;      | 2GB(64-bit) 1GB(32-bit) |
 | Opera   | Desktop | &check;      | 100GB                   |
+| Brave   | Desktop | &check;      | 100GB                   |
 | IE      | Desktop | &cross;      | -                       |
-| Edge    | Desktop | Not tested   | -                       |
+| Edge    | Desktop | &cross;      | -                       |
 | Chrome  | Mobile  | Not tested   | -                       |
 | Firefox | Mobile  | Not tested   | -                       |
 | Safari  | Mobile  | Not tested   | -                       |

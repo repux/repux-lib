@@ -10,8 +10,8 @@ export class BlobWriter extends FileWriterInterface {
     }
 
     init() {
-        return new Promise((resolve, reject) => {
-            if(!BlobWriter.isSupported()) {
+        return new Promise(async (resolve, reject) => {
+            if(!await BlobWriter.isSupported()) {
                 reject({ error: ERRORS.BLOB_NOT_SUPPORTED });
                 return;
             }

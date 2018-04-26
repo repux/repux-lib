@@ -21,7 +21,7 @@ export class FileDownloader extends ProgressCrypto {
 
             files.forEach(async (file) => {
                 const fileMeta = JSON.parse(file.content.toString('utf8'));
-                this.fileWriter = FileWriterFactory.create(fileMeta.name, fileMeta.size);
+                this.fileWriter = await FileWriterFactory.create(fileMeta.name, fileMeta.size);
 
                 if (fileMeta.size > FileSize.getMaxFileSize()) {
                     return this.emit('error', ERRORS.MAX_FILE_SIZE_EXCEEDED);

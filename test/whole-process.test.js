@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { RepuxLib } from '../src/repux-lib';
+import RepuxLib from '../src/repux-lib';
 import IpfsAPI from 'ipfs-api';
 import { IPFS_HOST, IPFS_PORT, IPFS_PROTOCOL } from './config';
 
@@ -25,7 +25,7 @@ function downloadBlob(blobUrl, fileName) {
 }
 
 describe('File can be uploaded and downloaded using encryption/decryption', function () {
-    let uploadedFileHash, symmetricKey, asymmetricKeys1, asymmetricKeys2;
+    let uploadedFileHash, symmetricKey, encryptedSymmetricKey, asymmetricKeys1, asymmetricKeys2;
     const repux = new RepuxLib(new IpfsAPI({
         host: IPFS_HOST,
         port: IPFS_PORT,
@@ -37,6 +37,14 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
             const version = RepuxLib.getVersion();
             console.log('version', version);
             assert.ok(typeof version === 'string');
+        });
+    });
+
+    describe('RepuxLib.getMaxFileSize()', function () {
+        it('should return maximum file size', async function () {
+            const maxFileSize = await RepuxLib.getMaxFileSize();
+            console.log('maxFileSize', maxFileSize);
+            assert.ok(maxFileSize > 0);
         });
     });
 
@@ -93,6 +101,35 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
                 uploadedFileHash = metaFileHash;
                 done();
             });
+        });
+    });
+
+    describe('RepuxLib.encryptSymmetricKey()', function () {
+        this.timeout(30000);
+
+        it('should encrypt symmetric key using buyer public key', async function (done) {
+            encryptedSymmetricKey = await RepuxLib.encryptSymmetricKey(symmetricKey, asymmetricKeys2.publicKey);
+
+            assert.ok(encryptedSymmetricKey);
+            console.log('encryptedSymmetricKey', encryptedSymmetricKey);
+            done();
+        });
+    });
+
+    describe('RepuxLib.decryptSymmetricKey()', function () {
+        this.timeout(30000);
+
+        it('should decrypt encrypted symmetric key using buyer public key', async function (done) {
+            const decryptedSymmetricKey = await RepuxLib.decryptSymmetricKey(encryptedSymmetricKey, asymmetricKeys2.privateKey);
+
+            assert.equal(decryptedSymmetricKey.k, symmetricKey.k);
+            assert.equal(decryptedSymmetricKey.alg, symmetricKey.alg);
+            assert.equal(decryptedSymmetricKey.ext, symmetricKey.ext);
+            assert.equal(decryptedSymmetricKey.key_ops[0], symmetricKey.key_ops[0]);
+            assert.equal(decryptedSymmetricKey.key_ops[1], symmetricKey.key_ops[1]);
+            assert.equal(decryptedSymmetricKey.kty, symmetricKey.kty);
+            console.log('encryptedSymmetricKey', decryptedSymmetricKey);
+            done();
         });
     });
 

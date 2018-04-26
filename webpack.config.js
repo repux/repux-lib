@@ -8,7 +8,7 @@ module.exports = {
     devtool: 'source-map',
     output: {
         path: path.resolve(__dirname, 'build'),
-        library: 'repux-lib',
+        library: 'RepuxLib',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },

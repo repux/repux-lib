@@ -1,6 +1,8 @@
 import { FileWriterInterface } from './file-writer-interface';
 import { ERRORS } from './errors';
 
+const STORAGE_TYPE = window && window.TEMPORARY;
+
 export class FileSystemWriter extends FileWriterInterface {
     constructor(fileName, fileSize) {
         super();
@@ -9,13 +11,13 @@ export class FileSystemWriter extends FileWriterInterface {
     }
 
     init() {
-        return new Promise((resolve, reject) => {
-            if(!FileSystemWriter.isSupported()) {
+        return new Promise(async (resolve, reject) => {
+            if(!await FileSystemWriter.isSupported()) {
                 reject({ error: ERRORS.FILE_SYSTEM_API_NOT_SUPPORTED });
                 return;
             }
 
-            FileSystemWriter.requestFileSystem()(window.TEMPORARY, this.fileSize, fs => {
+            FileSystemWriter.requestFileSystem()(STORAGE_TYPE, this.fileSize, fs => {
                 fs.root.getFile(this.fileName, { create: true, exclusive: false }, fileEntry => {
                     this.fileEntry = fileEntry;
                     this.fileEntry.createWriter(fileWriter => {
@@ -32,8 +34,16 @@ export class FileSystemWriter extends FileWriterInterface {
         return window ? window.requestFileSystem || window.webkitRequestFileSystem : null;
     }
 
-    static isSupported() {
-        return this.requestFileSystem();
+    static async isSupported() {
+        const fileSystemRequest = FileSystemWriter.requestFileSystem();
+
+        if (!fileSystemRequest) {
+            return false;
+        }
+
+        return new Promise(resolve => {
+            fileSystemRequest(STORAGE_TYPE, 1, () => resolve(true), () => resolve(false));
+        })
     }
 
     write(data) {

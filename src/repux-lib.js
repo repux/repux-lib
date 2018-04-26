@@ -1,14 +1,15 @@
 import { FileUploader } from './file-uploader';
 import { FileReencryptor } from './file-reencryptor';
 import { FileDownloader } from './file-downloader';
-import packageConfig from '../package';
 import { KeyGenerator } from './key-generator';
+import { KeyEncryptor } from './key-encryptor';
+import { FileSize } from './file-size';
+import packageConfig from '../package';
 
 /**
  * RepuxLib
  */
-class RepuxLib {
-
+export default class RepuxLib {
     /**
      * @param {IpfsAPI} ipfs - IpfsAPI instance
      */
@@ -22,6 +23,14 @@ class RepuxLib {
      */
     static getVersion() {
         return packageConfig.version;
+    }
+
+    /**
+     * Returns maximum file size in bytes
+     * @returns {number}
+     */
+    static getMaxFileSize() {
+        return FileSize.getMaxFileSize();
     }
 
     /**
@@ -55,7 +64,7 @@ class RepuxLib {
     /**
      * Downloads and decrypts file
      * @param {Object} symmetricKey - Symmetric key in JWK (JSON Web Key) format to decrypt first chunk of file with AES-CBC algorithm
-     * @param {Object} privateKey - Public key in JWK (JSON Web Key) format to decrypt first chunk of file with RSA-OAEP algorithm
+     * @param {Object} privateKey - Private key in JWK (JSON Web Key) format to decrypt first chunk of file with RSA-OAEP algorithm
      * @param ipfsHash - IPFS hash to meta file
      * @returns {FileDownloader}
      */
@@ -81,8 +90,24 @@ class RepuxLib {
     static generateAsymmetricKeyPair() {
         return KeyGenerator.generateAsymmetricKeyPair();
     }
-}
 
-export {
-    RepuxLib
+    /**
+     * Encrypts symmetric key using public key
+     * @param symmetricKey - Symmetric key in JWK (JSON Web Key) format to AES-CBC algorithm
+     * @param publicKey - Public key in JWK (JSON Web Key) format to RSA-OAEP algorithm
+     * @returns {Promise<*>}
+     */
+    static encryptSymmetricKey(symmetricKey, publicKey) {
+        return KeyEncryptor.encryptSymmetricKey(symmetricKey, publicKey);
+    }
+
+    /**
+     * Decrypts encrypted symmetric key using public key
+     * @param encryptedSymmetricKey - Encrypted symmetric key in JWK (JSON Web Key) format to AES-CBC algorithm
+     * @param privateKey - Private key in JWK (JSON Web Key) format to RSA-OAEP algorithm
+     * @returns {Promise<*>}
+     */
+    static decryptSymmetricKey(encryptedSymmetricKey, privateKey) {
+        return KeyEncryptor.decryptSymmetricKey(encryptedSymmetricKey, privateKey);
+    }
 }

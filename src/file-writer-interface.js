@@ -2,7 +2,7 @@ export class FileWriterInterface {
     init() {
         // Overwrite me
     }
-    static isSupported() {
+    static async isSupported() {
         // Overwrite me
     }
 

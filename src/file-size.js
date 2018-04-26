@@ -14,8 +14,8 @@ export const STORAGE_SIZE = {
 };
 
 export class FileSize {
-    static getMaxFileSize() {
-        if (FileSystemWriter.isSupported()) {
+    static async getMaxFileSize() {
+        if (await FileSystemWriter.isSupported()) {
             return 100 * STORAGE_SIZE.GIGABYTE;
         }
 
