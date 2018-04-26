@@ -19,16 +19,24 @@ console.log(version);
 ```
 
 ## Development
-1. Run ethereum node, compile and migrate contracts.
+* Run ethereum node, compile and migrate contracts. 
 
-2. Run following commands:
+* Run following commands:
 ```bash
 npm install -g ipfs http-server
 npm install
 ipfs daemon
 ```
 
-3. And to build library run:
+**Note for ipfs-go users**: please make sure that you have properly address API configured. Default port 5001 is busy on MacOSX. Please re-configure IPFS using command:
+    
+    ipfs config Addresses.API /ip4/127.0.0.1/tcp/5002
+  
+and then start daemon:
+
+    ipfs daemon    
+
+* And to build library run:
 ```bash
 npx webpack
 ```
@@ -36,7 +44,16 @@ npx webpack
 ## Tests
 Build library, run `http-server` and then open index.html in browser.
 
-## Browser compability
+### CORS settings
+
+```bash
+$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://127.0.0.1:8081\"]"
+$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
+$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
+```
+
+## Browser compatibility
+
 | Browser | Type    | Is supported | Max file size           |
 | ------- | ------- |:------------:| -----------------------:|
 | Chrome  | Desktop | &check;      | 100GB                   |
