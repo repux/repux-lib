@@ -21,17 +21,20 @@
   "scripts": {
     "build": "WEBPACK_ENV=build webpack",
     "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
-    "test": "mocha --compilers js:babel-core/register --colors -w ./test/*"
+    "test": "mocha --compilers js:babel-core/register --colors -w ./test/*",
+    "unit-test": "jest"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2016": "^6.24.1",
     "buffer": "^5.1.0",
     "ipfs-api": "^20.0.0",
+    "jest": "^22.4.3",
     "mocha": "^5.1.0",
+    "regenerator-runtime": "^0.11.1",
     "threads": "^0.10.1",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.15"

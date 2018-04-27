@@ -1,4 +1,4 @@
-import { Observable } from './observable';
+import { Observable } from '../utils/observable';
 import { spawn } from 'threads';
 import { encryptionWorker } from './encryption-worker';
 import { decryptionWorker } from './decryption-worker';
@@ -10,7 +10,7 @@ import {
     SYMMETRIC_ENCRYPTION_ALGORITHM,
     ASYMMETRIC_ENCRYPTION_ALGORITHM,
     ASYMMETRIC_ENCRYPTION_HASH
-} from './config';
+} from '../config';
 
 export class ProgressCrypto extends Observable {
     async crypt(type, password, initializationVector, asymmetricKey, file, options) {

@@ -5,7 +5,7 @@ import {
     ASYMMETRIC_ENCRYPTION_MODULUS_LENGTH,
     ASYMMETRIC_ENCRYPTION_EXPONENT,
     ASYMMETRIC_ENCRYPTION_HASH
-} from './config';
+} from '../config';
 
 export class KeyGenerator {
     static generateInitializationVector() {

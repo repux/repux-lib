@@ -5,7 +5,6 @@ module.exports = {
         ['lib/index']: ['./src/repux-lib.js'],
         ['tests/index']: ['./test/run.js']
     },
-    devtool: 'source-map',
     output: {
         path: path.resolve(__dirname, 'build'),
         library: 'RepuxLib',

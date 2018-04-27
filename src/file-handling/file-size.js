@@ -1,5 +1,5 @@
 import { FileSystemWriter } from './file-system-writer';
-import { UserAgent } from './user-agent';
+import { UserAgent } from '../utils/user-agent';
 
 const BYTE = 1;
 const KILOBYTE = 1024 * BYTE;
