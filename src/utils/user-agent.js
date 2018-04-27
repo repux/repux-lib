@@ -8,7 +8,7 @@ export class UserAgent {
     }
 
     static isChromeOS() {
-        return UserAgent.getUA().match(/CtiOS/i);
+        return UserAgent.getUA().match(/CriOS/i);
     }
 
     static isFirefoxOS() {

@@ -70,6 +70,17 @@ yarn build
 ```
 
 ## Tests
+
+### Unit testing
+Unit tests are performed by Jest framework. Test suites should be placed inside `__tests__` folder. To run unit tests use command: 
+
+    yarn unit-test
+    
+To use watch: 
+
+    yarn unit-test-watch    
+
+### Integration testing
 Build library, run `http-server` and then open index.html in browser.
 
 ### CORS settings
