@@ -1,3 +1,14 @@
 {
-  "presets": ["es2016"]
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [
+            "last 2 versions"
+          ]
+        }
+      }
+    ]
+  ]
 }

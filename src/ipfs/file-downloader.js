@@ -1,8 +1,8 @@
-import { ProgressCrypto } from './progress-crypto';
-import { ERRORS } from './errors';
-import { FileWriterFactory } from './file-writer-factory';
-import { FileSize } from './file-size';
-import { merge } from './uint8-array-utils';
+import { ProgressCrypto } from '../crypto/progress-crypto';
+import { ERRORS } from '../errors';
+import { FileWriterFactory } from '../file-handling/file-writer-factory';
+import { FileSize } from '../file-handling/file-size';
+import { merge } from '../utils/uint8-array-utils';
 
 export class FileDownloader extends ProgressCrypto {
     constructor(ipfs) {

@@ -52,7 +52,7 @@ console.log(version);
 * Run following commands:
 ```bash
 npm install -g ipfs http-server
-npm install
+yarn
 ipfs daemon
 ```
 
@@ -66,7 +66,7 @@ and then start daemon:
 
 * And to build library run:
 ```bash
-npx webpack
+yarn build
 ```
 
 ## Tests

@@ -1,9 +1,9 @@
-import { FileUploader } from './file-uploader';
-import { FileReencryptor } from './file-reencryptor';
-import { FileDownloader } from './file-downloader';
-import { KeyGenerator } from './key-generator';
-import { KeyEncryptor } from './key-encryptor';
-import { FileSize } from './file-size';
+import { FileUploader } from './ipfs/file-uploader';
+import { FileReencryptor } from './ipfs/file-reencryptor';
+import { FileDownloader } from './ipfs/file-downloader';
+import { KeyGenerator } from './crypto/key-generator';
+import { KeyEncryptor } from './crypto/key-encryptor';
+import { FileSize } from './file-handling/file-size';
 import packageConfig from '../package';
 
 /**

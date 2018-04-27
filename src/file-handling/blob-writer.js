@@ -1,6 +1,6 @@
 import { FileWriterInterface } from './file-writer-interface';
-import { ERRORS } from './errors';
-import { merge } from './uint8-array-utils';
+import { ERRORS } from '../errors';
+import { merge } from '../utils/uint8-array-utils';
 
 export class BlobWriter extends FileWriterInterface {
     constructor(fileName, fileSize) {

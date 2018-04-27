@@ -1,5 +1,5 @@
 import { FileWriterInterface } from './file-writer-interface';
-import { ERRORS } from './errors';
+import { ERRORS } from '../errors';
 
 const STORAGE_TYPE = window && window.TEMPORARY;
 

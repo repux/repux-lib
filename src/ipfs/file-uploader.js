@@ -1,7 +1,7 @@
-import { ProgressCrypto } from './progress-crypto';
+import { ProgressCrypto } from '../crypto/progress-crypto';
 import { Buffer } from 'buffer';
-import { ERRORS } from './errors';
-import { KeyGenerator } from './key-generator';
+import { ERRORS } from '../errors';
+import { KeyGenerator } from '../crypto/key-generator';
 
 export class FileUploader extends ProgressCrypto {
     constructor(ipfs) {

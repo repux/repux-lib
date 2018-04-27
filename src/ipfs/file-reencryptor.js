@@ -1,7 +1,7 @@
-import { ProgressCrypto } from './progress-crypto';
-import { ERRORS } from './errors';
+import { ProgressCrypto } from '../crypto/progress-crypto';
+import { ERRORS } from '../errors';
 import { Buffer } from 'buffer';
-import { ASYMMETRIC_ENCRYPTION_ALGORITHM, ASYMMETRIC_ENCRYPTION_HASH } from './config';
+import { ASYMMETRIC_ENCRYPTION_ALGORITHM, ASYMMETRIC_ENCRYPTION_HASH } from '../config';
 
 export class FileReencryptor extends ProgressCrypto {
     constructor(ipfs) {

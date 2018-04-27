@@ -1,4 +1,4 @@
-import { ASYMMETRIC_ENCRYPTION_ALGORITHM, ASYMMETRIC_ENCRYPTION_HASH } from './config';
+import { ASYMMETRIC_ENCRYPTION_ALGORITHM, ASYMMETRIC_ENCRYPTION_HASH } from '../config';
 
 export class KeyEncryptor {
     static toBase64(u8) {
