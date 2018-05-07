@@ -47,7 +47,12 @@ export class FileSystemWriter extends FileWriterInterface {
     }
 
     write(data) {
-        this.fileWriter.write(new Blob([data]));
+        return new Promise(resolve => {
+            this.fileWriter.onwriteend = () => {
+                resolve();
+            };
+            this.fileWriter.write(new Blob([data]));
+        });
     }
 
     getFileURL() {

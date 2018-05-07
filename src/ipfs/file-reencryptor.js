@@ -16,7 +16,7 @@ export class FileReencryptor extends ProgressCrypto {
 
         this.ipfs.files.get(this.fileHash, (err, files) => {
             if (!files || files.length === 0) {
-                this.emit('error', ERRORS.FILE_NOT_FOUND);
+                this.onError(ERRORS.FILE_NOT_FOUND);
             }
 
             files.forEach(async (file) => {
@@ -59,7 +59,7 @@ export class FileReencryptor extends ProgressCrypto {
 
         this.ipfs.files.add(Buffer.from(chunk.chunk), (err, files) => {
             if (err) {
-                this.emit('error', err);
+                this.onError(err);
                 return this.terminate();
             }
 

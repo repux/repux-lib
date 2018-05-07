@@ -26,6 +26,8 @@
                 <h3>Upload file:</h3>
                 <input type="file" id="file-input">
                 <button id="upload-file">Upload</button>
+                <strong>Progress:</strong>
+                <div id="upload-progress"></div>
                 <strong>Result:</strong>
                 <div id="upload-result"></div>
             </td>
@@ -34,6 +36,8 @@
                 <input id="download-file-hash" type="text" placeholder="Meta file hash">
                 <textarea id="download-encrypted-symmetric-key" placeholder="Encrypted symmetric key"></textarea>
                 <button id="download-file">Download</button>
+                <strong>Progress:</strong>
+                <div id="download-progress"></div>
                 <strong>Result:</strong>
                 <div id="download-result"></div>
             </td>
@@ -44,6 +48,8 @@
                 <input id="reencrypt-file-hash" type="text" placeholder="Meta file hash">
                 <textarea id="buyer-public-key" placeholder="Buyer public key"></textarea>
                 <button id="reencrypt-file">Re-encrypt</button>
+                <strong>Progress:</strong>
+                <div id="reencrypt-progress"></div>
                 <strong>Result:</strong>
                 <div id="reencrypt-result"></div>
             </td>
@@ -100,6 +106,9 @@
             const file = document.getElementById('file-input').files[0];
 
             const fileUploader = repux.uploadFile(symmetricKey, publicKey, file);
+            fileUploader.subscribe('progress', (eventType, progress) => {
+                document.getElementById('upload-progress').innerText = progress;
+            });
             fileUploader.subscribe('finish', (eventType, fileHash) => {
                  document.getElementById('upload-result').innerText = 'HASH: ' + fileHash + ', KEY: ' + JSON.stringify(symmetricKey);
                  localStorage.setItem('file_' + fileHash, JSON.stringify(symmetricKey));
@@ -115,6 +124,9 @@
 
 
             const fileReencryptor= repux.reencryptFile(privateKey, buyerPublicKey, fileHash);
+            fileReencryptor.subscribe('progress', (eventType, progress) => {
+                document.getElementById('reencrypt-progress').innerText = progress;
+            });
             fileReencryptor.subscribe('finish', (eventType, fileHash) => {
                 document.getElementById('reencrypt-result').innerText = 'HASH: ' + fileHash + ', KEY: ' + encryptedSymmetricKey;
             });
@@ -127,11 +139,11 @@
             const decryptedSymmetricKey = await Repux.decryptSymmetricKey(encryptedSymmetricKey, privateKey);
 
             const fileDownloader = repux.downloadFile(decryptedSymmetricKey, privateKey, fileHash);
+            fileDownloader.subscribe('progress', (eventType, progress) => {
+                document.getElementById('download-progress').innerText = progress;
+            });
             fileDownloader.subscribe('finish', (eventType, file) => {
                 downloadBlob(file.fileURL, file.fileName);
-            });
-            fileDownloader.subscribe('error', (eventType, error) => {
-                console.error(error);
             });
         }
     </script>

@@ -14,7 +14,7 @@ export class FileUploader extends ProgressCrypto {
         this.file = file;
 
         if (!file) {
-            return this.emit('error', ERRORS.FILE_NOT_SPECIFIED);
+            return this.onError(ERRORS.FILE_NOT_SPECIFIED);
         }
 
         this.initializationVector = KeyGenerator.generateInitializationVector();
@@ -27,7 +27,7 @@ export class FileUploader extends ProgressCrypto {
 
         this.ipfs.files.add(Buffer.from(chunk.chunk), (err, files) => {
             if (err) {
-                this.emit('error', err);
+                this.onError(err);
                 return this.terminate();
             }
 
@@ -68,7 +68,6 @@ export class FileUploader extends ProgressCrypto {
         this.isUploadFinished = true;
         this.ipfs.files.add(Buffer.from(JSON.stringify(meta)), (err, files) => {
             this.emit('finish', files[0].hash);
-            this.emit('progress', 1);
         });
     }
 }

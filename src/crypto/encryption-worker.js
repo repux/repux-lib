@@ -10,6 +10,7 @@
  * @param progress
  * @returns {Promise<any>}
  */
+
 export function encryptionWorker ([file, passwordKey, initializationVector, publicKey, options], done, progress) {
     const startTime = (new Date()).getTime();
     let offset = 0;
@@ -27,45 +28,56 @@ export function encryptionWorker ([file, passwordKey, initializationVector, publ
     }
 
     async function encryptFirstChunk(bytes) {
-        const encryptedChunk = await crypto.subtle.encrypt({ name: options.ASYMMETRIC_ENCRYPTION_ALGORITHM }, publicKey, bytes);
+        let encryptedChunk;
+
+        try {
+            encryptedChunk = await crypto.subtle.encrypt({ name: options.ASYMMETRIC_ENCRYPTION_ALGORITHM }, publicKey, bytes);
+        } catch(error) {
+            progress({ error: options.ENCRYPTION_ERROR });
+        }
+
         progress({ chunk: encryptedChunk, number: 0 });
     }
 
-    async function encryptChunk(bytes, totalSize) {
-        let tmp;
+    async function encryptChunk(bytes) {
+        let tmp, encryptedChunk;
 
         const alg = {
             name: options.SYMMETRIC_ENCRYPTION_ALGORITHM,
             iv: vector
         };
-        const encryptedChunk = await crypto.subtle.encrypt(
-            alg,
-            passwordKey,
-            bytes
-        );
+
+        try {
+            encryptedChunk = await crypto.subtle.encrypt(
+                alg,
+                passwordKey,
+                bytes
+            );
+        } catch(error) {
+            progress({ error: options.ENCRYPTION_ERROR });
+        }
 
         vector = getVector(new Uint8Array(encryptedChunk), bytes);
 
          if (offset === 0) {
              // Encrypt first chunk with asymmetric key
              await encryptFirstChunk(new Uint8Array(encryptedChunk.slice(0, options.FIRST_CHUNK_SIZE)));
+             progress({ time: (new Date()).getTime() - startTime, progress: options.FIRST_CHUNK_SIZE / file.size });
 
              if (encryptedChunk.byteLength > options.FIRST_CHUNK_SIZE) {
                  tmp = new Uint8Array(encryptedChunk.slice(options.FIRST_CHUNK_SIZE));
              }
          } else {
-             tmp = encryptedChunk;
+             tmp = new Uint8Array(encryptedChunk);
          }
-
-         progress({ time: (new Date()).getTime() - startTime, progress: offset / totalSize });
 
         return tmp;
     }
 
     reader.onload = async () => {
-        let tmp = await encryptChunk(new Uint8Array(reader.result), file.size);
+        let tmp = await encryptChunk(new Uint8Array(reader.result));
 
-        if (tmp.length) {
+        if (tmp.byteLength) {
             progress({ chunk: tmp, number: offset / options.CHUNK_SIZE + 1, vector });
         }
 

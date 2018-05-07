@@ -9,6 +9,7 @@
  * @param progress
  * @returns {Promise<any>}
  */
+
 export async function decryptionWorker([ bytes, passwordKey, initializationVector, privateKey, options ], done, progress) {
     const startTime = (new Date()).getTime();
     let vector = initializationVector;
@@ -24,8 +25,14 @@ export async function decryptionWorker([ bytes, passwordKey, initializationVecto
     }
 
     async function decryptFirstChunk(bytes) {
-        const decryptedChunk = await crypto.subtle.decrypt({ name: options.ASYMMETRIC_ENCRYPTION_ALGORITHM }, privateKey, bytes);
-        progress({ chunk: decryptedChunk, number: 0, vector });
+        let decryptedChunk;
+
+        try {
+            decryptedChunk = await crypto.subtle.decrypt({ name: options.ASYMMETRIC_ENCRYPTION_ALGORITHM }, privateKey, bytes);
+            progress({ chunk: decryptedChunk, number: 0, vector });
+        } catch(error) {
+            progress({ error: options.DECRYPTION_ERROR });
+        }
     }
 
     async function decryptChunk(bytes) {
@@ -33,11 +40,18 @@ export async function decryptionWorker([ bytes, passwordKey, initializationVecto
             name: options.SYMMETRIC_ENCRYPTION_ALGORITHM,
             iv: vector
         };
-        const decryptedChunk = await crypto.subtle.decrypt(
-            alg,
-            passwordKey,
-            bytes
-        );
+
+        let decryptedChunk;
+
+        try {
+            decryptedChunk = await crypto.subtle.decrypt(
+                alg,
+                passwordKey,
+                bytes
+            );
+        } catch(error) {
+            progress({ error: options.DECRYPTION_ERROR });
+        }
 
         vector = getVector(new Uint8Array(decryptedChunk), bytes);
 
