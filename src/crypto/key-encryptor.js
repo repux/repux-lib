@@ -1,14 +1,7 @@
 import { ASYMMETRIC_ENCRYPTION_ALGORITHM, ASYMMETRIC_ENCRYPTION_HASH } from '../config';
+import Base64 from '../utils/base64';
 
 export class KeyEncryptor {
-    static toBase64(u8) {
-        return btoa(String.fromCharCode.apply(null, new Uint8Array(u8)));
-    }
-
-    static fromBase64(str) {
-        return Uint8Array.from(atob(str).split('').map(function (c) { return c.charCodeAt(0); }));
-    }
-
     static async encryptSymmetricKey(symmetricKey, publicKey) {
         const symmetricKeyUint = (new TextEncoder()).encode(JSON.stringify(symmetricKey));
 
@@ -19,11 +12,11 @@ export class KeyEncryptor {
 
         const result = await crypto.subtle.encrypt({ name: ASYMMETRIC_ENCRYPTION_ALGORITHM }, asymmetricKeyObject, symmetricKeyUint);
 
-        return KeyEncryptor.toBase64(result);
+        return Base64.encode(result);
     }
 
     static async decryptSymmetricKey(encryptedSymmetricKey, privateKey) {
-        const encryptedSymmetricKeyUint = KeyEncryptor.fromBase64(encryptedSymmetricKey);
+        const encryptedSymmetricKeyUint = Base64.decode(encryptedSymmetricKey);
 
         const asymmetricKeyObject = await crypto.subtle.importKey('jwk', privateKey, {
             name: ASYMMETRIC_ENCRYPTION_ALGORITHM,
