@@ -19,8 +19,8 @@
     "protocol"
   ],
   "scripts": {
-    "build": "WEBPACK_ENV=build webpack",
-    "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
+    "build": "webpack --mode=production --progress",
+    "dev": "webpack --mode=development --progress --colors --watch",
     "test": "mocha --compilers js:babel-core/register --colors -w ./test/*",
     "unit-test": "jest",
     "unit-test-watch": "jest --watch"

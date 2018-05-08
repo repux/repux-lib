@@ -11,6 +11,7 @@ export class Observable {
     emit(eventTypes, ...args) {
         const eventData = arguments;
 
+        setTimeout(() => {
             _forEachEventType(eventTypes, eventType => {
                 const observers = this.observers[ eventType ];
 
@@ -20,6 +21,7 @@ export class Observable {
 
                 observers.forEach(observer => observer.apply(null, eventData));
             });
+        });
 
         return this;
     }
