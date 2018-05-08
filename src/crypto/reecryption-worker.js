@@ -16,7 +16,7 @@ export function reencryptionWorker([ bytes, passwordKey, initializationVector, p
             const reencryptedChunk = await crypto.subtle.encrypt({ name: options.ASYMMETRIC_ENCRYPTION_ALGORITHM }, options.newPublicKey, decryptedChunk);
             progress({ chunk: reencryptedChunk, number: 0 });
         } catch(error) {
-            progress({ error: options.ENCRYPTION_ERROR });
+            progress({ error: options.REENCRYPTION_ERROR });
         }
     }
 

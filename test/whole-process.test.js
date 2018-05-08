@@ -56,18 +56,19 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
         this.timeout(30000);
 
         it('should emit progress event and emit finish event with meta file hash', function (done) {
-            const fileUploader = repux.uploadFile(symmetricKey, asymmetricKeys1.publicKey, FILE);
-            fileUploader.subscribe('progress', function (eventType, progress) {
+            const fileUploader = repux.createFileUploader();
+            fileUploader.on('progress', (eventType, progress) => {
                 console.log('progress', progress);
                 assert.ok(progress);
             });
 
-            fileUploader.subscribe('finish', function (eventType, metaFileHash) {
+            fileUploader.on('finish', (eventType, metaFileHash) => {
                 assert.ok(metaFileHash);
                 console.log('metaFileHash', metaFileHash);
                 uploadedFileHash = metaFileHash;
                 done();
             });
+            fileUploader.upload(symmetricKey, asymmetricKeys1.publicKey, FILE);
         });
     });
 
@@ -75,14 +76,14 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
         this.timeout(30000);
 
         it('should emit progress event and emit finish event with new meta file hash', function (done) {
-            const fileReencryptor = repux.reencryptFile(asymmetricKeys1.privateKey, asymmetricKeys2.publicKey, uploadedFileHash);
-
-            fileReencryptor.subscribe('finish', function (eventType, metaFileHash) {
-                assert.ok(metaFileHash);
-                console.log('metaFileHash', metaFileHash);
-                uploadedFileHash = metaFileHash;
-                done();
-            });
+            repux.createFileReencryptor()
+                .reencrypt(asymmetricKeys1.privateKey, asymmetricKeys2.publicKey, uploadedFileHash)
+                .on('finish', (eventType, metaFileHash) => {
+                    assert.ok(metaFileHash);
+                    console.log('metaFileHash', metaFileHash);
+                    uploadedFileHash = metaFileHash;
+                    done();
+                });
         });
     });
 
@@ -118,24 +119,23 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
     describe('RepuxLib.downloadFile()', function () {
         this.timeout(30000);
 
-        it('should emit progress event and emit finish event with url to file', async function (done) {
-            const fileDownloader = repux.downloadFile(symmetricKey, asymmetricKeys2.privateKey, uploadedFileHash);
-            fileDownloader.subscribe('progress', function (eventType, progress) {
-                console.log('progress', progress);
-                assert.ok(progress);
-            });
+        it('should emit progress event and emit finish event with url to file', function (done) {
+            repux.createFileDownloader()
+                .download(symmetricKey, asymmetricKeys2.privateKey, uploadedFileHash)
+                .on('progress', (eventType, progress) => {
+                    console.log('progress', progress);
+                    assert.ok(progress);
+                }).on('finish', (eventType, result) => {
+                    console.log('result', result);
+                    assert.ok(result.fileURL);
+                    assert.equal(result.fileName, FILE_NAME);
 
-            fileDownloader.subscribe('finish', function (eventType, result) {
-                console.log('result', result);
-                assert.ok(result.fileURL);
-                assert.equal(result.fileName, FILE_NAME);
+                    if (window) {
+                        downloadBlob(result.fileURL, result.fileName);
+                    }
 
-                if (window) {
-                    downloadBlob(result.fileURL, result.fileName);
-                }
-
-                done();
-            });
+                    done();
+                });
         });
     });
 });

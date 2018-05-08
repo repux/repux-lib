@@ -9,17 +9,27 @@ export class FileUploader extends ProgressCrypto {
         this.ipfs = ipfs;
     }
 
-    async upload(symmetricKey, publicKey, file) {
+    /**
+     * Encrypts and uploads file using symmetric and public keys
+     * @param {Object} symmetricKey - Symmetric key in JWK (JSON Web Key) format to encrypt first chunk of file with AES-CBC algorithm
+     * @param {Object} publicKey - Public key in JWK (JSON Web Key) format to encrypt first chunk of file with RSA-OAEP algorithm
+     * @param {File} file - file to upload
+     * @returns {FileUploader}
+     */
+    upload(symmetricKey, publicKey, file) {
         this.isUploadFinished = false;
         this.file = file;
 
         if (!file) {
-            return this.onError(ERRORS.FILE_NOT_SPECIFIED);
+            this.onError(ERRORS.FILE_NOT_SPECIFIED);
+            return this;
         }
 
         this.initializationVector = KeyGenerator.generateInitializationVector();
 
         this.crypt('encrypt', symmetricKey, this.initializationVector, publicKey, file);
+
+        return this;
     }
 
     onChunkCrypted(chunk) {

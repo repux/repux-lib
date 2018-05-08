@@ -1,23 +1,56 @@
+function _forEachEventType(eventTypes, methodToExecute) {
+    const eventNames = eventTypes.replace(/\s/g, '').split(',');
+    eventNames.forEach(eventName => methodToExecute(eventName));
+}
+
 export class Observable {
     constructor() {
         this.observers = {};
     }
 
-    emit(eventType, data) {
-        const observers = this.observers[eventType];
+    emit(eventTypes, ...args) {
+        const eventData = arguments;
 
-        if (!observers) {
-            return;
-        }
+            _forEachEventType(eventTypes, eventType => {
+                const observers = this.observers[ eventType ];
 
-        observers.forEach(observer => observer(eventType, data));
+                if (!observers) {
+                    return;
+                }
+
+                observers.forEach(observer => observer.apply(null, eventData));
+            });
+
+        return this;
     }
 
-    subscribe(eventType, handler) {
-        if (!this.observers[ eventType ]) {
-            this.observers[ eventType ] = [];
+    on(eventTypes, handler) {
+        _forEachEventType(eventTypes, eventType => {
+            if (!this.observers[ eventType ]) {
+                this.observers[ eventType ] = [];
+            }
+
+            this.observers[ eventType ].push(handler);
+        });
+
+        return this;
+    }
+
+    off(eventTypes, handler) {
+        if (!eventTypes) {
+            this.observers = {};
+            return this;
         }
 
-        this.observers[ eventType ].push(handler);
+        _forEachEventType(eventTypes, eventType => {
+            if (!handler) {
+                delete this.observers[ eventType ];
+                return;
+            }
+
+            delete this.observers[ eventType ][ handler ];
+        });
+
+        return this;
     }
 }

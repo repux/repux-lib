@@ -1,14 +1,14 @@
 import assert from 'assert';
-import { FILE_CONTENT, FILE_NAME, IPFS_HOST, IPFS_PORT, IPFS_PROTOCOL } from './config';
+import { FILE_CONTENT, FILE_NAME, IPFS_HOST, IPFS_PORT, IPFS_PROTOCOL } from '../config';
 import {
     ASYMMETRIC_ENCRYPTION_ALGORITHM,
     ASYMMETRIC_ENCRYPTION_HASH, CHUNK_SIZE,
     FIRST_CHUNK_SIZE,
     SYMMETRIC_ENCRYPTION_ALGORITHM, VECTOR_SIZE
-} from '../src/config';
+} from '../../src/config';
 import IpfsAPI from 'ipfs-api';
-import RepuxLib from '../src/repux-lib';
-import { decryptionWorker } from '../src/crypto/decryption-worker';
+import RepuxLib from '../../src/repux-lib';
+import { decryptionWorker } from '../../src/crypto/decryption-worker';
 
 describe('File chunks shouldn\'t be decrypted when user provides improper keys', function () {
     this.timeout(90000);
@@ -35,8 +35,7 @@ describe('File chunks shouldn\'t be decrypted when user provides improper keys',
             asymmetricKeys = await RepuxLib.generateAsymmetricKeyPair();
             symmetricKey = await RepuxLib.generateSymmetricKey();
 
-            const fileUploader = repux.uploadFile(symmetricKey, asymmetricKeys.publicKey, file);
-            fileUploader.subscribe('finish', function (eventType, metaFileHash) {
+            repux.createFileUploader().on('finish', function (eventType, metaFileHash) {
                 fileHash = metaFileHash;
 
                 ipfs.files.get(fileHash, (err, files) => {
@@ -44,7 +43,7 @@ describe('File chunks shouldn\'t be decrypted when user provides improper keys',
                     initializationVector = Uint8Array.from(Object.values(metaContent.initializationVector));
                     resolve();
                 });
-            });
+            }).upload(symmetricKey, asymmetricKeys.publicKey, file);
         });
     });
 

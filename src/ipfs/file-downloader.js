@@ -10,37 +10,44 @@ export class FileDownloader extends ProgressCrypto {
         this.ipfs = ipfs;
     }
 
+    /**
+     * Downloads and decrypts file
+     * @param {Object} symmetricKey - Symmetric key in JWK (JSON Web Key) format to decrypt first chunk of file with AES-CBC algorithm
+     * @param {Object} privateKey - Private key in JWK (JSON Web Key) format to decrypt first chunk of file with RSA-OAEP algorithm
+     * @param fileHash - IPFS hash to meta file
+     * @returns {FileDownloader}
+     */
     download(symmetricKey, privateKey, fileHash) {
         this.privateKey = privateKey;
         this.symmetricKey = symmetricKey;
 
-        setTimeout(() => {
-            this.ipfs.files.get(fileHash, (err, files) => {
-                if (!files || files.length === 0) {
-                    this.onError(ERRORS.FILE_NOT_FOUND);
-                    return;
-                }
+        this.ipfs.files.get(fileHash, (err, files) => {
+            if (!files || files.length === 0) {
+                this.onError(ERRORS.FILE_NOT_FOUND);
+                return;
+            }
 
-                files.forEach(async (file) => {
-                    try {
-                        const fileMeta = JSON.parse(file.content.toString('utf8'));
-                        this.fileWriter = await FileWriterFactory.create(fileMeta.name, fileMeta.size);
+            files.forEach(async (file) => {
+                try {
+                    const fileMeta = JSON.parse(file.content.toString('utf8'));
+                    this.fileWriter = await FileWriterFactory.create(fileMeta.name, fileMeta.size);
 
-                        if (fileMeta.size > FileSize.getMaxFileSize()) {
-                            return this.onError(ERRORS.MAX_FILE_SIZE_EXCEEDED);
-                        }
-                        await this.fileWriter.init();
-                        this.fileChunks = Object.values(fileMeta.chunks);
-                        this.fileChunksNumber = this.fileChunks.length;
-                        this.isFirstChunk = true;
-                        this.vector = Uint8Array.from(Object.values(fileMeta.initializationVector));
-                        this.downloadFileChunks();
-                    } catch (err) {
-                        this.onError(err.error);
+                    if (fileMeta.size > FileSize.getMaxFileSize()) {
+                        return this.onError(ERRORS.MAX_FILE_SIZE_EXCEEDED);
                     }
-                });
+                    await this.fileWriter.init();
+                    this.fileChunks = Object.values(fileMeta.chunks);
+                    this.fileChunksNumber = this.fileChunks.length;
+                    this.isFirstChunk = true;
+                    this.vector = Uint8Array.from(Object.values(fileMeta.initializationVector));
+                    this.downloadFileChunks();
+                } catch (err) {
+                    this.onError(err.error);
+                }
             });
-        }, 1);
+        });
+
+        return this;
     }
 
     downloadFileChunks() {

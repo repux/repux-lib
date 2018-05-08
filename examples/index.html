@@ -105,14 +105,14 @@
             const publicKey = JSON.parse(document.getElementById('public-key').value);
             const file = document.getElementById('file-input').files[0];
 
-            const fileUploader = repux.uploadFile(symmetricKey, publicKey, file);
-            fileUploader.subscribe('progress', (eventType, progress) => {
-                document.getElementById('upload-progress').innerText = progress;
-            });
-            fileUploader.subscribe('finish', (eventType, fileHash) => {
-                 document.getElementById('upload-result').innerText = 'HASH: ' + fileHash + ', KEY: ' + JSON.stringify(symmetricKey);
-                 localStorage.setItem('file_' + fileHash, JSON.stringify(symmetricKey));
-            });
+            repux.createFileUploader().upload(symmetricKey, publicKey, file)
+                .on('progress', (eventType, progress) => {
+                    document.getElementById('upload-progress').innerText = progress;
+                })
+                .on('finish', (eventType, fileHash) => {
+                     document.getElementById('upload-result').innerText = 'HASH: ' + fileHash + ', KEY: ' + JSON.stringify(symmetricKey);
+                     localStorage.setItem('file_' + fileHash, JSON.stringify(symmetricKey));
+                });
         };
 
         document.getElementById('reencrypt-file').onclick = async function() {
@@ -123,13 +123,13 @@
             const encryptedSymmetricKey = await Repux.encryptSymmetricKey(symmetricKey, buyerPublicKey);
 
 
-            const fileReencryptor= repux.reencryptFile(privateKey, buyerPublicKey, fileHash);
-            fileReencryptor.subscribe('progress', (eventType, progress) => {
-                document.getElementById('reencrypt-progress').innerText = progress;
-            });
-            fileReencryptor.subscribe('finish', (eventType, fileHash) => {
-                document.getElementById('reencrypt-result').innerText = 'HASH: ' + fileHash + ', KEY: ' + encryptedSymmetricKey;
-            });
+            repux.createFileReencryptor().reencrypt(privateKey, buyerPublicKey, fileHash)
+                .on('progress', (eventType, progress) => {
+                    document.getElementById('reencrypt-progress').innerText = progress;
+                })
+                .on('finish', (eventType, fileHash) => {
+                    document.getElementById('reencrypt-result').innerText = 'HASH: ' + fileHash + ', KEY: ' + encryptedSymmetricKey;
+                });
         };
 
         document.getElementById('download-file').onclick = async function() {
@@ -138,13 +138,14 @@
             const encryptedSymmetricKey =  document.getElementById('download-encrypted-symmetric-key').value;
             const decryptedSymmetricKey = await Repux.decryptSymmetricKey(encryptedSymmetricKey, privateKey);
 
-            const fileDownloader = repux.downloadFile(decryptedSymmetricKey, privateKey, fileHash);
-            fileDownloader.subscribe('progress', (eventType, progress) => {
-                document.getElementById('download-progress').innerText = progress;
-            });
-            fileDownloader.subscribe('finish', (eventType, file) => {
-                downloadBlob(file.fileURL, file.fileName);
-            });
+            repux.createFileDownloader()
+                .download(decryptedSymmetricKey, privateKey, fileHash)
+                .on('progress', (eventType, progress) => {
+                    document.getElementById('download-progress').innerText = progress;
+                })
+                .on('finish', (eventType, file) => {
+                    downloadBlob(file.fileURL, file.fileName);
+                });
         }
     </script>
 </body>
