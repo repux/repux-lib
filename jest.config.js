@@ -1,6 +1,7 @@
 module.exports = {
     testPathIgnorePatterns: [
         '/node_modules/',
-        '/test/'
+        '/test/',
+        '/__tests__/helpers'
     ]
 };
