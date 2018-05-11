@@ -1,7 +1,7 @@
 import { ProgressCrypto } from '../crypto/progress-crypto';
 import { ERRORS } from '../errors';
 import { Buffer } from 'buffer';
-import { ASYMMETRIC_ENCRYPTION_ALGORITHM, ASYMMETRIC_ENCRYPTION_HASH } from '../config';
+import { KeyImporter } from '../crypto/key-importer';
 
 export class FileReencryptor extends ProgressCrypto {
     constructor(ipfs) {
@@ -21,14 +21,19 @@ export class FileReencryptor extends ProgressCrypto {
         this.newPublicKey = newPublicKey;
         this.fileHash = fileHash;
 
+        /* eslint handle-callback-err: 0 */
         this.ipfs.files.get(this.fileHash, (err, files) => {
             if (!files || files.length === 0) {
                 return this.onError(ERRORS.FILE_NOT_FOUND);
             }
 
             files.forEach(async (file) => {
-                this.fileMeta = JSON.parse(file.content.toString('utf8'));
-                this.downloadChunk(this.fileMeta.chunks[ 0 ]);
+                try {
+                    this.fileMeta = JSON.parse(file.content.toString('utf8'));
+                    this.downloadChunk(this.fileMeta.chunks[0]);
+                } catch (err) {
+                    this.onError(err.message);
+                }
             });
         });
 
@@ -36,20 +41,19 @@ export class FileReencryptor extends ProgressCrypto {
     }
 
     downloadChunk(chunk) {
+        /* eslint handle-callback-err: 0 */
         this.ipfs.files.get(chunk, (err, files) => {
+            if (!files || files.length === 0) {
+                this.onError(ERRORS.FILE_NOT_FOUND);
+                return;
+            }
+
             files.forEach(async (file) => {
                 let content = file.content;
 
                 try {
-                    const oldPrivateKey = await crypto.subtle.importKey('jwk', this.oldPrivateKey, {
-                        name: ASYMMETRIC_ENCRYPTION_ALGORITHM,
-                        hash: { name: ASYMMETRIC_ENCRYPTION_HASH }
-                    }, false, [ 'decrypt' ]);
-
-                    const newPublicKey = await crypto.subtle.importKey('jwk', this.newPublicKey, {
-                        name: ASYMMETRIC_ENCRYPTION_ALGORITHM,
-                        hash: { name: ASYMMETRIC_ENCRYPTION_HASH }
-                    }, false, [ 'encrypt' ]);
+                    const oldPrivateKey = await KeyImporter.importPrivateKey(this.oldPrivateKey);
+                    const newPublicKey = await KeyImporter.importPublicKey(this.newPublicKey);
 
                     this.crypt('reencrypt', null, null, null, content, {
                         isFirstChunk: true,
@@ -64,21 +68,21 @@ export class FileReencryptor extends ProgressCrypto {
     }
 
     onProgress(progress) {
-        this.emit('progress', (progress + this.fileChunksNumber - this.fileChunks.length - 1) / this.fileChunksNumber);
+        return false;
     }
 
     onChunkCrypted(chunk) {
         const meta = Object.assign({}, this.fileMeta);
 
+        /* eslint handle-callback-err: 0 */
         this.ipfs.files.add(Buffer.from(chunk.chunk), (err, files) => {
-            if (err) {
-                this.onError(err);
-                return this.terminate();
-            }
-
             meta.chunks[0] = files[0].hash;
 
             this.ipfs.files.add(Buffer.from(JSON.stringify(meta)), (err, files) => {
+                if (err) {
+                    this.onError(err);
+                    return this.terminate();
+                }
                 this.emit('finish', files[0].hash);
                 this.emit('progress', 1);
             });

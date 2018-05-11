@@ -59,7 +59,14 @@ ipfs daemon
 **Note for ipfs-go users**: please make sure that you have properly address API configured. Default port 5001 is busy on MacOSX. Please re-configure IPFS using command:
     
     ipfs config Addresses.API /ip4/127.0.0.1/tcp/5002
-  
+    
+additionally run these commands to setup CORS for integration tests   
+ 
+    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://127.0.0.1:8081\"]"
+    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
+    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
+
+
 and then start daemon:
 
     ipfs daemon    
@@ -72,36 +79,32 @@ yarn build
 ## Tests
 
 ### Unit testing
-Unit tests are performed by Jest framework. Test suites should be placed inside `__tests__` folder. To run unit tests use command: 
+Unit tests are executed by Karma runner (https://karma-runner.github.io) written in Mocha test framework (https://mochajs.org/) using Chai assertions library (http://www.chaijs.com/) with `expect` style. To run unit tests use command: 
 
-    yarn unit-test
+    yarn test
     
 To use watch: 
 
-    yarn unit-test-watch    
+    yarn test:watch    
 
 ### Integration testing
-Build library, run `http-server` and then open index.html in browser.
 
-### CORS settings
-
-```bash
-$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://127.0.0.1:8081\"]"
-$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
-$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
-```
+Tp perform integration tests please follow these steps:
+* build library `yarn build:integration-test` 
+* run `http-server` or `npx http-server` 
+* open url in a browser `http://127.0.0.1:8081`.
 
 ## Browser compatibility
 
-| Browser | Type    | Is supported | Max file size           |
-| ------- | ------- |:------------:| -----------------------:|
-| Chrome  | Desktop | &check;      | 100GB                   |
-| Firefox | Desktop | &check;      | 2GB(64-bit) 1GB(32-bit) |
-| Safari  | Desktop | &check;      | 2GB(64-bit) 1GB(32-bit) |
-| Opera   | Desktop | &check;      | 100GB                   |
-| Brave   | Desktop | &check;      | 100GB                   |
-| IE      | Desktop | &cross;      | -                       |
-| Edge    | Desktop | &cross;      | -                       |
-| Chrome  | Mobile  | Not tested   | -                       |
-| Firefox | Mobile  | Not tested   | -                       |
-| Safari  | Mobile  | Not tested   | -                       |
+| Browser | Type    | Is supported | Max file size           | Notes |
+| ------- | ------- |:------------:| -----------------------:| ----- |
+| Chrome  | Desktop | &check;      | 100GB                   | Access to the WebCrypto API is restricted to secure origins (which is to say https:// pages). |
+| Firefox | Desktop | &check;      | 2GB(64-bit) 1GB(32-bit) |       |
+| Safari  | Desktop | &check;      | 2GB(64-bit) 1GB(32-bit) |       |
+| Opera   | Desktop | &check;      | 100GB                   |       |
+| Brave   | Desktop | &check;      | 100GB                   |       |
+| IE      | Desktop | &cross;      | -                       | Web Crypto API must be prefixed, needs async/await polyfill |
+| Edge    | Desktop | &cross;      | -                       | Web Crypto API is not supported insize a Web Worker (https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7607496/), needs TextEncryptor/TextDecryptor polyfill |
+| Chrome  | Mobile  | &check;      | 100MB                   | Access to the WebCrypto API is restricted to secure origins (which is to say https:// pages). |
+| Firefox | Mobile  | &check;      | 100MB                   |       |
+| Safari  | Mobile  | Not tested   | -                       |       |

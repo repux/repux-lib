@@ -1,3 +1,5 @@
+/* global Blob */
+
 import { FileWriterInterface } from './file-writer-interface';
 import { ERRORS } from '../errors';
 
@@ -12,7 +14,7 @@ export class FileSystemWriter extends FileWriterInterface {
 
     init() {
         return new Promise(async (resolve, reject) => {
-            if(!await FileSystemWriter.isSupported()) {
+            if (!await FileSystemWriter.isSupported()) {
                 reject({ error: ERRORS.FILE_SYSTEM_API_NOT_SUPPORTED });
                 return;
             }
@@ -24,7 +26,7 @@ export class FileSystemWriter extends FileWriterInterface {
                         this.fileWriter = fileWriter;
                         this.fileWriter.truncate(0);
                         resolve();
-                    }, error => reject({ error }))
+                    }, error => reject({ error }));
                 }, error => reject({ error }));
             }, error => reject({ error }));
         });
@@ -43,7 +45,7 @@ export class FileSystemWriter extends FileWriterInterface {
 
         return new Promise(resolve => {
             fileSystemRequest(STORAGE_TYPE, 1, () => resolve(true), () => resolve(false));
-        })
+        });
     }
 
     write(data) {

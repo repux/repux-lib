@@ -55,7 +55,7 @@ export class FileUploader extends ProgressCrypto {
         }
 
         for (let i = 0; i <= this.maxChunkNumber; i++) {
-            if (typeof(this.chunks[i]) === 'undefined') {
+            if (typeof this.chunks[i] === 'undefined') {
                 return false;
             }
         }
@@ -77,7 +77,9 @@ export class FileUploader extends ProgressCrypto {
 
         this.isUploadFinished = true;
         this.ipfs.files.add(Buffer.from(JSON.stringify(meta)), (err, files) => {
-            this.emit('finish', files[0].hash);
+            if (!err) {
+                this.emit('finish', files[0].hash);
+            }
         });
     }
 }

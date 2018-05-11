@@ -1,3 +1,4 @@
+/* global btoa, atob */
 class Base64 {
     static encode(u8) {
         return btoa(String.fromCharCode.apply(null, new Uint8Array(u8)));

@@ -8,19 +8,19 @@ export class UserAgent {
     }
 
     static isChromeOS() {
-        return UserAgent.getUA().match(/CriOS/i);
+        return /CriOS/i.test(UserAgent.getUA());
     }
 
     static isFirefoxOS() {
-        return UserAgent.getUA().match(/FxiOS/i);
+        return /FxiOS/i.test(UserAgent.getUA());
     }
 
     static isTrident() {
-        return UserAgent.getUA().match(/trident/i);
+        return /trident/i.test(UserAgent.getUA());
     }
 
     static isEdge() {
-        return UserAgent.getUA().match(/\sedge\//i);
+        return /\sedge\//i.test(UserAgent.getUA());
     }
 
     static is64bit() {

@@ -30,6 +30,8 @@
                 <div id="upload-progress"></div>
                 <strong>Result:</strong>
                 <div id="upload-result"></div>
+                <strong>Errors:</strong>
+                <div id="upload-error"></div>
             </td>
             <td>
                 <h3>Download file:</h3>
@@ -40,6 +42,8 @@
                 <div id="download-progress"></div>
                 <strong>Result:</strong>
                 <div id="download-result"></div>
+                <strong>Errors:</strong>
+                <div id="download-error"></div>
             </td>
         </tr>
         <tr>
@@ -52,13 +56,17 @@
                 <div id="reencrypt-progress"></div>
                 <strong>Result:</strong>
                 <div id="reencrypt-result"></div>
+                <strong>Errors:</strong>
+                <div id="reencrypt-error"></div>
             </td>
         </tr>
     </table>
 
+    <script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding-indexes.js"></script>
+    <script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding.js"></script>
     <script src="../node_modules/ipfs-api/dist/index.js"></script>
-    <script type="module">
-        import '../build/lib/index.js';
+    <script src="../build/lib/index.js"></script>
+    <script>
         const Repux = RepuxLib.default;
 
         const repux = new Repux(new IpfsApi({
@@ -109,6 +117,9 @@
                 .on('progress', (eventType, progress) => {
                     document.getElementById('upload-progress').innerText = progress;
                 })
+                .on('error', (eventType, error) => {
+                    document.getElementById('upload-error').innerText = error;
+                })
                 .on('finish', (eventType, fileHash) => {
                      document.getElementById('upload-result').innerText = 'HASH: ' + fileHash + ', KEY: ' + JSON.stringify(symmetricKey);
                      localStorage.setItem('file_' + fileHash, JSON.stringify(symmetricKey));
@@ -127,6 +138,9 @@
                 .on('progress', (eventType, progress) => {
                     document.getElementById('reencrypt-progress').innerText = progress;
                 })
+                .on('error', (eventType, error) => {
+                    document.getElementById('reencrypt-error').innerText = error;
+                })
                 .on('finish', (eventType, fileHash) => {
                     document.getElementById('reencrypt-result').innerText = 'HASH: ' + fileHash + ', KEY: ' + encryptedSymmetricKey;
                 });
@@ -142,6 +156,9 @@
                 .download(decryptedSymmetricKey, privateKey, fileHash)
                 .on('progress', (eventType, progress) => {
                     document.getElementById('download-progress').innerText = progress;
+                })
+                .on('error', (eventType, error) => {
+                    document.getElementById('download-error').innerText = error;
                 })
                 .on('finish', (eventType, file) => {
                     downloadBlob(file.fileURL, file.fileName);

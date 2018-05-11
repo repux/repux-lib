@@ -22,7 +22,7 @@ export class FileDownloader extends ProgressCrypto {
         this.symmetricKey = symmetricKey;
 
         this.ipfs.files.get(fileHash, (err, files) => {
-            if (!files || files.length === 0) {
+            if (err || !files || files.length === 0) {
                 this.onError(ERRORS.FILE_NOT_FOUND);
                 return;
             }
@@ -42,7 +42,7 @@ export class FileDownloader extends ProgressCrypto {
                     this.vector = Uint8Array.from(Object.values(fileMeta.initializationVector));
                     this.downloadFileChunks();
                 } catch (err) {
-                    this.onError(err.error);
+                    this.onError(err.message);
                 }
             });
         });
@@ -58,6 +58,15 @@ export class FileDownloader extends ProgressCrypto {
         }
 
         this.ipfs.files.get(this.fileChunks[0], (err, files) => {
+            if (err) {
+                this.onError(err);
+                return;
+            }
+            if (!files || files.length === 0) {
+                this.onError(ERRORS.FILE_NOT_FOUND);
+                return;
+            }
+
             files.forEach((file) => {
                 let content = file.content;
 

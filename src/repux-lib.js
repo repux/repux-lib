@@ -38,7 +38,7 @@ export default class RepuxLib {
      * @returns {FileUploader}
      */
     createFileUploader() {
-        return new FileUploader(this._ipfs)
+        return new FileUploader(this._ipfs);
     }
 
     /**
@@ -46,7 +46,7 @@ export default class RepuxLib {
      * @returns {FileReencryptor}
      */
     createFileReencryptor() {
-        return new FileReencryptor(this._ipfs)
+        return new FileReencryptor(this._ipfs);
     }
 
     /**
@@ -54,7 +54,7 @@ export default class RepuxLib {
      * @returns {FileDownloader}
      */
     createFileDownloader() {
-        return new FileDownloader(this._ipfs)
+        return new FileDownloader(this._ipfs);
     }
 
     /**

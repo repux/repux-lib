@@ -1,3 +1,4 @@
+/* global Blob */
 import { FileWriterInterface } from './file-writer-interface';
 import { ERRORS } from '../errors';
 import { merge } from '../utils/uint8-array-utils';
@@ -11,7 +12,7 @@ export class BlobWriter extends FileWriterInterface {
 
     init() {
         return new Promise(async (resolve, reject) => {
-            if(!await BlobWriter.isSupported()) {
+            if (!await BlobWriter.isSupported()) {
                 reject({ error: ERRORS.BLOB_NOT_SUPPORTED });
                 return;
             }

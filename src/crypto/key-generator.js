@@ -1,3 +1,4 @@
+/* global crypto */
 import {
     SYMMETRIC_ENCRYPTION_ALGORITHM,
     SYMMETRIC_ENCRYPTION_KEY_LENGTH,
@@ -9,7 +10,7 @@ import {
 
 export class KeyGenerator {
     static generateInitializationVector() {
-        return crypto.getRandomValues(new Uint8Array(16))
+        return crypto.getRandomValues(new Uint8Array(16));
     }
 
     static async generateSymmetricKey() {
@@ -35,6 +36,6 @@ export class KeyGenerator {
         return {
             publicKey,
             privateKey
-        }
+        };
     }
 }

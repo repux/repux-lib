@@ -1,8 +1,8 @@
 import { Observable } from '../utils/observable';
 import { spawn } from 'threads';
-import { encryptionWorker } from './encryption-worker';
-import { decryptionWorker } from './decryption-worker';
-import { reencryptionWorker } from './reecryption-worker';
+import { encryptionWorker } from '../threads/encryption-worker';
+import { decryptionWorker } from '../threads/decryption-worker';
+import { reencryptionWorker } from '../threads/reecryption-worker';
 import {
     CHUNK_SIZE,
     FIRST_CHUNK_SIZE,
@@ -12,6 +12,7 @@ import {
     ASYMMETRIC_ENCRYPTION_HASH
 } from '../config';
 import { ERRORS } from '../errors';
+import { KeyImporter } from './key-importer';
 
 export class ProgressCrypto extends Observable {
     async crypt(type, password, initializationVector, asymmetricKey, file, options = {}) {
@@ -24,6 +25,7 @@ export class ProgressCrypto extends Observable {
                 VECTOR_SIZE,
                 SYMMETRIC_ENCRYPTION_ALGORITHM,
                 ASYMMETRIC_ENCRYPTION_ALGORITHM,
+                ASYMMETRIC_ENCRYPTION_HASH,
                 ENCRYPTION_ERROR: ERRORS.ENCRYPTION_ERROR,
                 DECRYPTION_ERROR: ERRORS.DECRYPTION_ERROR,
                 REENCRYPTION_ERROR: ERRORS.REENCRYPTION_ERROR
@@ -33,16 +35,15 @@ export class ProgressCrypto extends Observable {
             this.chunks = {};
 
             if (password) {
-                passwordKey = await crypto.subtle.importKey('jwk', password, {
-                    name: SYMMETRIC_ENCRYPTION_ALGORITHM
-                }, false, [ type ]);
+                passwordKey = await KeyImporter.importSymmetricKey(password);
             }
 
             if (asymmetricKey) {
-                asymmetricKeyObject = await crypto.subtle.importKey('jwk', asymmetricKey, {
-                    name: ASYMMETRIC_ENCRYPTION_ALGORITHM,
-                    hash: { name: ASYMMETRIC_ENCRYPTION_HASH }
-                }, false, [ type ]);
+                if (type === 'encrypt') {
+                    asymmetricKeyObject = await KeyImporter.importPublicKey(asymmetricKey);
+                } else {
+                    asymmetricKeyObject = await KeyImporter.importPrivateKey(asymmetricKey);
+                }
             }
 
             this.thread = ProgressCrypto.getWorkerByType(type);
@@ -75,8 +76,8 @@ export class ProgressCrypto extends Observable {
             });
 
             return this.thread;
-        } catch(error) {
-            this.onError(ProgressCrypto.getErrorByType(type))
+        } catch (error) {
+            this.onError(ProgressCrypto.getErrorByType(type));
         }
     }
 
