@@ -23,9 +23,11 @@
     "build:integration-test": "WEBPACK_ENV=build webpack --mode development --env=test",
     "dev": "WEBPACK_ENV=dev webpack --mode development --progress --colors --watch",
     "test": "karma start --single-run --browsers ChromeHeadless karma.conf.js --folder test/unit",
-    "test:watch": "karma start --auto-watch --browsers ChromeHeadless karma.conf.js --folder test/unit"
+    "test:watch": "karma start --auto-watch --browsers ChromeHeadless karma.conf.js --folder test/unit",
+    "release": "semantic-release"
   },
   "devDependencies": {
+    "@semantic-release/git": "^5.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.3",
@@ -53,6 +55,7 @@
     "karma-webpack": "^3.0.0",
     "mocha": "^5.1.1",
     "regenerator-runtime": "^0.11.1",
+    "semantic-release": "^15.4.0",
     "sinon": "^5.0.7",
     "threads": "^0.10.1",
     "webpack": "^4.5.0",
