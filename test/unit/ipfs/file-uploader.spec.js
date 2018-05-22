@@ -5,6 +5,8 @@ import { ERRORS } from '../../../src/errors';
 import { FileUploader } from '../../../src/ipfs/file-uploader';
 import IpfsApi, { FILE_HASHES } from '../../helpers/ipfs-api-mock';
 import mockCryptoGetRandomValues from '../../helpers/crypto-get-random-values-mock';
+import { Buffer } from 'buffer';
+import { PurchaseType } from '../../../src/types/purchase-type';
 
 describe('FileUploader', () => {
     let ipfs = new IpfsApi();
@@ -57,6 +59,20 @@ describe('FileUploader', () => {
                 expect(file).to.equal(FILE);
             };
             uploader.upload(SYMMERTIC_KEY, PUBLIC_KEY, FILE);
+        });
+
+        it('should assign metaData argument to metaData property', () => {
+            const shortDescription = 'SHORT_DESCRIPTION';
+            const longDescription = 'LONG_DESCRIPTION';
+            const metaData = {
+                shortDescription,
+                longDescription
+            };
+
+            const uploader = new FileUploader(ipfs);
+            uploader.upload(SYMMERTIC_KEY, PUBLIC_KEY, FILE, metaData);
+
+            expect(uploader.metaData).to.deep.equal(metaData);
         });
     });
 
@@ -134,11 +150,12 @@ describe('FileUploader', () => {
 
             const uploader = new FileUploader(ipfs);
             uploader.initializationVector = initializationVector;
+            uploader.metaData = {};
             uploader.file = {
                 name: fileName,
-                size: fileSize,
-                chunks: fileChunks
+                size: fileSize
             };
+            uploader.chunks = fileChunks;
 
             return new Promise(resolve => {
                 uploader.on('finish', (eventType, fileHash) => {
@@ -150,6 +167,50 @@ describe('FileUploader', () => {
                 uploader.finishUpload();
                 expect(uploader.isUploadFinished).to.be.true;
             });
+        });
+
+        it('should add additional meta data to meta file from metaData property', () => {
+            const shortDescription = 'SHORT_DESCRIPTION';
+            const longDescription = 'LONG_DESCRIPTION';
+            const type = PurchaseType.ONE_TIME_PURCHASE;
+            const initializationVector = 'INITIALIZATION_VECTOR';
+            const fileName = 'FILE_NAME';
+            const fileSize = 'FILE_SIZE';
+            const fileChunks = [FILE_HASHES.FILE_CHUNK_0, FILE_HASHES.FILE_CHUNK_1];
+            const addSinon = sinon.fake();
+
+            const uploader = new FileUploader({
+                files: {
+                    add: (contentJson) => {
+                        const content = JSON.parse(contentJson);
+                        expect(content.initializationVector).to.equal(initializationVector);
+                        expect(content.name).to.equal(fileName);
+                        expect(content.size).to.equal(fileSize);
+                        expect(content.chunks).to.deep.equal(fileChunks);
+                        expect(content.shortDescription).to.equal(shortDescription);
+                        expect(content.longDescription).to.equal(longDescription);
+                        expect(content.type).to.equal(type);
+                        addSinon();
+                    }
+                }
+            });
+
+            Buffer.from = (string) => string;
+
+            uploader.initializationVector = initializationVector;
+            uploader.metaData = {
+                shortDescription,
+                longDescription,
+                type
+            };
+            uploader.file = {
+                name: fileName,
+                size: fileSize
+            };
+            uploader.chunks = fileChunks;
+
+            uploader.finishUpload();
+            expect(addSinon.called).to.be.true;
         });
     });
 });

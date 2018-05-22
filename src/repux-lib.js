@@ -4,6 +4,9 @@ import { FileDownloader } from './ipfs/file-downloader';
 import { KeyGenerator } from './crypto/key-generator';
 import { KeyEncryptor } from './crypto/key-encryptor';
 import { FileSize } from './file-handling/file-size';
+import { PurchaseType } from './types/purchase-type';
+import { BuyerType } from './types/buyer-type';
+import { TermOfUse } from './types/term-of-use';
 import packageConfig from '../package';
 
 /**
@@ -93,3 +96,7 @@ export default class RepuxLib {
         return KeyEncryptor.decryptSymmetricKey(encryptedSymmetricKey, privateKey);
     }
 }
+
+export { PurchaseType };
+export { BuyerType };
+export { TermOfUse };
