@@ -2,6 +2,7 @@ import { ProgressCrypto } from '../crypto/progress-crypto';
 import { Buffer } from 'buffer';
 import { ERRORS } from '../errors';
 import { KeyGenerator } from '../crypto/key-generator';
+import { KeyEncryptor } from '../crypto/key-encryptor';
 
 export class FileUploader extends ProgressCrypto {
     constructor(ipfs) {
@@ -46,13 +47,12 @@ export class FileUploader extends ProgressCrypto {
 
     /**
      * Encrypts and uploads file using symmetric and public keys
-     * @param {Object} symmetricKey - Symmetric key in JWK (JSON Web Key) format to encrypt first chunk of file with AES-CBC algorithm
      * @param {Object} publicKey - Public key in JWK (JSON Web Key) format to encrypt first chunk of file with RSA-OAEP algorithm
      * @param {File} file - file to upload
      * @param {FileMetaData} metaData - meta data object
      * @returns {FileUploader}
      */
-    upload(symmetricKey, publicKey, file, metaData = {}) {
+    upload(publicKey, file, metaData = {}) {
         this.isUploadFinished = false;
         this.file = file;
         this.metaData = metaData;
@@ -63,10 +63,16 @@ export class FileUploader extends ProgressCrypto {
         }
 
         this.initializationVector = KeyGenerator.generateInitializationVector();
-
-        this.crypt('encrypt', symmetricKey, this.initializationVector, publicKey, file);
+        this.publicKey = publicKey;
+        this.file = file;
+        this.startEncryption();
 
         return this;
+    }
+
+    async startEncryption() {
+        this.symmetricKey = await KeyGenerator.generateSymmetricKey();
+        this.crypt('encrypt', this.symmetricKey, this.initializationVector, this.publicKey, this.file);
     }
 
     onChunkCrypted(chunk) {
@@ -100,7 +106,7 @@ export class FileUploader extends ProgressCrypto {
         return true;
     }
 
-    finishUpload() {
+    async finishUpload() {
         if (this.isUploadFinished) {
             return;
         }
@@ -109,12 +115,14 @@ export class FileUploader extends ProgressCrypto {
             initializationVector: this.initializationVector,
             name: this.file.name,
             size: this.file.size,
-            chunks: this.chunks
+            chunks: this.chunks,
+            symmetricKey: await KeyEncryptor.encryptSymmetricKey(this.symmetricKey, this.publicKey)
         });
 
         this.isUploadFinished = true;
         this.ipfs.files.add(Buffer.from(JSON.stringify(meta)), (err, files) => {
             if (!err) {
+                this.emit('progress', 1);
                 this.emit('finish', files[0].hash);
             }
         });

@@ -2,6 +2,7 @@ import { ProgressCrypto } from '../crypto/progress-crypto';
 import { ERRORS } from '../errors';
 import { Buffer } from 'buffer';
 import { KeyImporter } from '../crypto/key-importer';
+import { KeyEncryptor } from '../crypto/key-encryptor';
 
 export class FileReencryptor extends ProgressCrypto {
     constructor(ipfs) {
@@ -75,8 +76,11 @@ export class FileReencryptor extends ProgressCrypto {
         const meta = Object.assign({}, this.fileMeta);
 
         /* eslint handle-callback-err: 0 */
-        this.ipfs.files.add(Buffer.from(chunk.chunk), (err, files) => {
+        this.ipfs.files.add(Buffer.from(chunk.chunk), async (err, files) => {
             meta.chunks[0] = files[0].hash;
+
+            const decryptedSymmetricKey = await KeyEncryptor.decryptSymmetricKey(meta.symmetricKey, this.oldPrivateKey);
+            meta.symmetricKey = await KeyEncryptor.encryptSymmetricKey(decryptedSymmetricKey, this.newPublicKey);
 
             this.ipfs.files.add(Buffer.from(JSON.stringify(meta)), (err, files) => {
                 if (err) {

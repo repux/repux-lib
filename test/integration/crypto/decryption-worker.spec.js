@@ -33,10 +33,11 @@ describe('File chunks shouldn\'t be decrypted when user provides improper keys',
             repux = new RepuxLib(ipfs);
 
             asymmetricKeys = await RepuxLib.generateAsymmetricKeyPair();
-            symmetricKey = await RepuxLib.generateSymmetricKey();
+            const uploader = repux.createFileUploader();
 
-            repux.createFileUploader().on('finish', function (eventType, metaFileHash) {
+            uploader.on('finish', function (eventType, metaFileHash) {
                 fileHash = metaFileHash;
+                symmetricKey = uploader.symmetricKey;
 
                 ipfs.files.get(fileHash, (err, files) => {
                     if (err) {
@@ -46,7 +47,7 @@ describe('File chunks shouldn\'t be decrypted when user provides improper keys',
                     initializationVector = Uint8Array.from(Object.values(metaContent.initializationVector));
                     resolve();
                 });
-            }).upload(symmetricKey, asymmetricKeys.publicKey, file);
+            }).upload(asymmetricKeys.publicKey, file);
         });
     });
 

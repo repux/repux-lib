@@ -69,7 +69,7 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
                 uploadedFileHash = metaFileHash;
                 done();
             });
-            fileUploader.upload(symmetricKey, asymmetricKeys1.publicKey, FILE);
+            fileUploader.upload(asymmetricKeys1.publicKey, FILE);
         });
     });
 
@@ -122,7 +122,7 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
 
         it('should emit progress event and emit finish event with url to file', function (done) {
             repux.createFileDownloader()
-                .download(symmetricKey, asymmetricKeys2.privateKey, uploadedFileHash)
+                .download(asymmetricKeys2.privateKey, uploadedFileHash)
                 .on('progress', (eventType, progress) => {
                     console.log('progress', progress);
                     assert.ok(progress);
