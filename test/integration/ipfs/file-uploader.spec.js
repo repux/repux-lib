@@ -39,7 +39,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
                     progressCallCounter++;
 
                     if (progress === 1) {
-                        assert(progressCallCounter >= 5 && progressCallCounter <= 6);
+                        assert(progressCallCounter >= 10 && progressCallCounter <= 11);
                     }
                 })
                 .on('finish', (eventType, fileHash) => {

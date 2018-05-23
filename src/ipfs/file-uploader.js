@@ -3,6 +3,7 @@ import { Buffer } from 'buffer';
 import { ERRORS } from '../errors';
 import { KeyGenerator } from '../crypto/key-generator';
 import { KeyEncryptor } from '../crypto/key-encryptor';
+import { CHUNK_SIZE, FIRST_CHUNK_SIZE } from '../config';
 
 export class FileUploader extends ProgressCrypto {
     constructor(ipfs) {
@@ -65,6 +66,8 @@ export class FileUploader extends ProgressCrypto {
         this.initializationVector = KeyGenerator.generateInitializationVector();
         this.publicKey = publicKey;
         this.file = file;
+        this.fileSize = file.size;
+        this.uploadedSize = 0;
         this.startEncryption();
 
         return this;
@@ -86,6 +89,14 @@ export class FileUploader extends ProgressCrypto {
 
             this.chunks[chunk.number] = files[0].hash;
 
+            if (chunk.number === 0) {
+                this.uploadedSize += FIRST_CHUNK_SIZE;
+            } else {
+                this.uploadedSize += CHUNK_SIZE;
+            }
+            this.uploadedSize = Math.min(this.uploadedSize, this.fileSize);
+            this.onProgress();
+
             if (this.isAllChunksAreSent()) {
                 this.finishUpload();
             }
@@ -98,12 +109,16 @@ export class FileUploader extends ProgressCrypto {
         }
 
         for (let i = 0; i <= this.maxChunkNumber; i++) {
-            if (typeof this.chunks[i] === 'undefined') {
+            if (typeof this.chunks[ i ] === 'undefined') {
                 return false;
             }
         }
 
         return true;
+    }
+
+    onProgress() {
+        this.emit('progress', Math.min(this.uploadedSize / this.fileSize, 0.9999));
     }
 
     async finishUpload() {

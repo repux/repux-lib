@@ -60,7 +60,7 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
             const fileUploader = repux.createFileUploader();
             fileUploader.on('progress', (eventType, progress) => {
                 console.log('progress', progress);
-                assert.ok(progress);
+                assert.ok(progress !== null);
             });
 
             fileUploader.on('finish', (eventType, metaFileHash) => {
