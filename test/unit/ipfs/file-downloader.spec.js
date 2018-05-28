@@ -7,6 +7,7 @@ import { BlobWriter } from '../../../src/file-handling/blob-writer';
 import { FileSize } from '../../../src/file-handling/file-size';
 import { FileDownloader } from '../../../src/ipfs/file-downloader';
 import IpfsApi, { FILE_HASHES, FILES } from '../../helpers/ipfs-api-mock';
+import { KeyEncryptor } from '../../../src/crypto/key-encryptor';
 
 describe('FileDownloader', () => {
     let ipfs = new IpfsApi();
@@ -25,6 +26,7 @@ describe('FileDownloader', () => {
         it('it should fetch meta file when user provide correct meta file hash and it should init fileWriter', () => {
             FileSystemWriter.isSupported = () => false;
             BlobWriter.isSupported = () => true;
+            KeyEncryptor.decryptSymmetricKey = sinon.fake.returns('DECRYPTED_KEY');
             const downloader = new FileDownloader(ipfs);
 
             return new Promise(resolve => {
@@ -34,10 +36,11 @@ describe('FileDownloader', () => {
                     expect(downloader.isFirstChunk).to.be.true;
                     expect(downloader.vector).to.deep.equal(new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
                     expect(downloader.fileWriter instanceof BlobWriter).to.be.true;
+                    expect(KeyEncryptor.decryptSymmetricKey.called).to.be.true;
                     resolve();
                 };
 
-                downloader.download(SYMMERTIC_KEY, PRIVATE_KEY, FILE_HASHES.META_FILE_HASH);
+                downloader.download(PRIVATE_KEY, FILE_HASHES.META_FILE_HASH);
             });
         });
 
@@ -47,7 +50,7 @@ describe('FileDownloader', () => {
             const downloader = new FileDownloader(ipfs);
 
             return new Promise(resolve => {
-                downloader.download(SYMMERTIC_KEY, PRIVATE_KEY, 'INCORRECT_FILE_HASH');
+                downloader.download(PRIVATE_KEY, 'INCORRECT_FILE_HASH');
                 downloader.on('error', () => {
                     resolve();
                 });
@@ -58,10 +61,11 @@ describe('FileDownloader', () => {
             FileSystemWriter.isSupported = () => false;
             BlobWriter.isSupported = () => true;
             FileSize.getMaxFileSize = () => 1;
+            KeyEncryptor.decryptSymmetricKey = sinon.fake.returns('DECRYPTED_KEY');
             const downloader = new FileDownloader(ipfs);
 
             return new Promise(resolve => {
-                downloader.download(SYMMERTIC_KEY, PRIVATE_KEY, FILE_HASHES.META_FILE_HASH);
+                downloader.download(PRIVATE_KEY, FILE_HASHES.META_FILE_HASH);
                 downloader.on('error', (eventType, error) => {
                     expect(error).to.equal(ERRORS.MAX_FILE_SIZE_EXCEEDED);
                     resolve();
@@ -72,11 +76,12 @@ describe('FileDownloader', () => {
         it('should emit an error when there is no supported file writers', () => {
             FileSystemWriter.isSupported = () => false;
             BlobWriter.isSupported = () => false;
+            KeyEncryptor.decryptSymmetricKey = sinon.fake.returns('DECRYPTED_KEY');
             const downloader = new FileDownloader(ipfs);
 
             return new Promise(resolve => {
                 downloader.downloadFileChunks = () => {};
-                downloader.download(SYMMERTIC_KEY, PRIVATE_KEY, FILE_HASHES.META_FILE_HASH);
+                downloader.download(PRIVATE_KEY, FILE_HASHES.META_FILE_HASH);
                 downloader.on('error', (eventType, error) => {
                     expect(error).to.equal(ERRORS.DOESNT_SUPPPORT_ANY_FILE_WRITER);
                     resolve();
@@ -88,6 +93,7 @@ describe('FileDownloader', () => {
             FileSystemWriter.isSupported = () => false;
             BlobWriter.isSupported = () => true;
             FileSize.getMaxFileSize = () => 10000000;
+            KeyEncryptor.decryptSymmetricKey = sinon.fake.returns('DECRYPTED_KEY');
             const downloader = new FileDownloader(ipfs);
             const ERROR = 'ERROR';
 
@@ -95,7 +101,7 @@ describe('FileDownloader', () => {
                 downloader.downloadFileChunks = () => {
                     throw new Error(ERROR);
                 };
-                downloader.download(SYMMERTIC_KEY, PRIVATE_KEY, FILE_HASHES.META_FILE_HASH);
+                downloader.download(PRIVATE_KEY, FILE_HASHES.META_FILE_HASH);
                 downloader.on('error', (eventType, error) => {
                     expect(error).to.equal(ERROR);
                     resolve();

@@ -1,7 +1,9 @@
 /* eslint no-unused-expressions: 0 */
+/* global sinon */
 import { KeyImporter } from '../../../src/crypto/key-importer';
 import { FileReencryptor } from '../../../src/ipfs/file-reencryptor';
 import IpfsApi, { FILE_HASHES, FILES } from '../../helpers/ipfs-api-mock';
+import { KeyEncryptor } from '../../../src/crypto/key-encryptor';
 
 describe('FileReencryptor', () => {
     let ipfs = new IpfsApi();
@@ -99,6 +101,8 @@ describe('FileReencryptor', () => {
 
     describe('onChunkCrypted()', () => {
         it('shoud emit finish event with new meta file hash', async () => {
+            KeyEncryptor.decryptSymmetricKey = sinon.fake.returns('DECRYPTED_KEY');
+            KeyEncryptor.encryptSymmetricKey = sinon.fake.returns('ENCRYPTED_KEY');
             const vector = new Uint8Array([0, 0, 0]);
             const chunk = new Uint8Array([1, 2, 3]);
             const reencryptor = new FileReencryptor(ipfs);
@@ -110,6 +114,8 @@ describe('FileReencryptor', () => {
                 reencryptor.onChunkCrypted({ vector, chunk });
                 reencryptor.on('finish', (eventType, metaFileHash) => {
                     expect(metaFileHash).to.equal(FILE_HASHES.NEW_IPFS_FILE);
+                    expect(KeyEncryptor.decryptSymmetricKey.called).to.be.true;
+                    expect(KeyEncryptor.encryptSymmetricKey.called).to.be.true;
                     resolve();
                 });
             });

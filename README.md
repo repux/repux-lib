@@ -53,23 +53,22 @@ console.log(version);
 ```bash
 npm install -g ipfs http-server
 yarn
-ipfs daemon
 ```
-
-**Note for ipfs-go users**: please make sure that you have properly address API configured. Default port 5001 is busy on MacOSX. Please re-configure IPFS using command:
-    
-    ipfs config Addresses.API /ip4/127.0.0.1/tcp/5002
     
 additionally run these commands to setup CORS for integration tests   
  
-    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://127.0.0.1:8081\"]"
-    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
-    ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
+    jsipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://127.0.0.1:8081\"]"
+    jsipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
+    jsipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
 
 
 and then start daemon:
 
-    ipfs daemon    
+    jsipfs daemon   
+
+**Note for ipfs-go users**: Instead of `jsipfs` command use `ipfs`. Also please make sure that you have properly address API configured. Default port 5001 is busy on MacOSX. Please re-configure IPFS using command:
+    
+    ipfs config Addresses.API /ip4/127.0.0.1/tcp/5002 
 
 * And to build library run:
 ```bash

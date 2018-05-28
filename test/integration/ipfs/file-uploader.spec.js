@@ -7,7 +7,7 @@ import { ERRORS } from '../../../src/errors';
 
 describe('File uploader should upload and encrypt data only with proper keys', function () {
     this.timeout(90000);
-    let file, largeFileContent, repux, asymmetricKeys, symmetricKey;
+    let file, largeFileContent, repux, asymmetricKeys;
 
     before(function () {
         return new Promise(async resolve => {
@@ -26,7 +26,6 @@ describe('File uploader should upload and encrypt data only with proper keys', f
             }));
 
             asymmetricKeys = await RepuxLib.generateAsymmetricKeyPair();
-            symmetricKey = await RepuxLib.generateSymmetricKey();
             resolve();
         });
     });
@@ -35,12 +34,12 @@ describe('File uploader should upload and encrypt data only with proper keys', f
         it('should emit progress for each chunk and content should be equal to original content', function (done) {
             let progressCallCounter = 0;
             repux.createFileUploader()
-                .upload(symmetricKey, asymmetricKeys.publicKey, file)
+                .upload(asymmetricKeys.publicKey, file)
                 .on('progress', (eventType, progress) => {
                     progressCallCounter++;
 
                     if (progress === 1) {
-                        assert.equal(progressCallCounter, 5);
+                        assert(progressCallCounter >= 10 && progressCallCounter <= 11);
                     }
                 })
                 .on('finish', (eventType, fileHash) => {
@@ -56,7 +55,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
             tempAsymmetricKeys.publicKey.n += 'a';
 
             repux.createFileUploader()
-                .upload(symmetricKey, tempAsymmetricKeys.publicKey, file)
+                .upload(tempAsymmetricKeys.publicKey, file)
                 .on('error', (eventType, error) => {
                     assert.equal(error, ERRORS.ENCRYPTION_ERROR);
                     done();
@@ -67,18 +66,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
     describe('User shouldn\'t be able to upload file without asymmetricKey', function () {
         it('should emit error when asymmetric key isn\'t present', function (done) {
             repux.createFileUploader()
-                .upload(symmetricKey, null, file)
-                .on('error', (eventType, error) => {
-                    assert.equal(error, ERRORS.ENCRYPTION_ERROR);
-                    done();
-                });
-        });
-    });
-
-    describe('User shouldn\'t be able to upload file without symmetricKey', function () {
-        it('should emit error when symmetric key isn\'t present', function (done) {
-            repux.createFileUploader()
-                .upload(null, asymmetricKeys.publicKey, file)
+                .upload(null, file)
                 .on('error', (eventType, error) => {
                     assert.equal(error, ERRORS.ENCRYPTION_ERROR);
                     done();
@@ -89,7 +77,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
     describe('User shouldn\'t be able to upload file without File instance', function () {
         it('should emit error when file hash isn\'t present', function (done) {
             repux.createFileUploader()
-                .upload(symmetricKey, asymmetricKeys.publicKey, null)
+                .upload(asymmetricKeys.publicKey, null)
                 .on('error', (eventType, error) => {
                     assert.equal(error, ERRORS.FILE_NOT_SPECIFIED);
                     done();

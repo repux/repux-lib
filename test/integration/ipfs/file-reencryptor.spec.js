@@ -7,7 +7,7 @@ import { ERRORS } from '../../../src/errors';
 
 describe('File re-encryptor should download first chunk, decrypt data and re-encrypt it only with proper keys', function () {
     this.timeout(90000);
-    let file, largeFileContent, repux, fileHash, asymmetricKeys, newAsymmetricKeys, symmetricKey;
+    let file, largeFileContent, repux, fileHash, asymmetricKeys, newAsymmetricKeys;
 
     before(function () {
         return new Promise(async resolve => {
@@ -27,10 +27,9 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
 
             asymmetricKeys = await RepuxLib.generateAsymmetricKeyPair();
             newAsymmetricKeys = await RepuxLib.generateAsymmetricKeyPair();
-            symmetricKey = await RepuxLib.generateSymmetricKey();
 
             repux.createFileUploader()
-                .upload(symmetricKey, asymmetricKeys.publicKey, file)
+                .upload(asymmetricKeys.publicKey, file)
                 .on('finish', (eventType, metaFileHash) => {
                     fileHash = metaFileHash;
                     resolve();

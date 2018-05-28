@@ -3,6 +3,7 @@ import { ERRORS } from '../errors';
 import { FileWriterFactory } from '../file-handling/file-writer-factory';
 import { FileSize } from '../file-handling/file-size';
 import { merge } from '../utils/uint8-array-utils';
+import { KeyEncryptor } from '../crypto/key-encryptor';
 
 export class FileDownloader extends ProgressCrypto {
     constructor(ipfs) {
@@ -12,14 +13,12 @@ export class FileDownloader extends ProgressCrypto {
 
     /**
      * Downloads and decrypts file
-     * @param {Object} symmetricKey - Symmetric key in JWK (JSON Web Key) format to decrypt first chunk of file with AES-CBC algorithm
      * @param {Object} privateKey - Private key in JWK (JSON Web Key) format to decrypt first chunk of file with RSA-OAEP algorithm
      * @param fileHash - IPFS hash to meta file
      * @returns {FileDownloader}
      */
-    download(symmetricKey, privateKey, fileHash) {
+    download(privateKey, fileHash) {
         this.privateKey = privateKey;
-        this.symmetricKey = symmetricKey;
 
         this.ipfs.files.get(fileHash, (err, files) => {
             if (err || !files || files.length === 0) {
@@ -30,6 +29,11 @@ export class FileDownloader extends ProgressCrypto {
             files.forEach(async (file) => {
                 try {
                     const fileMeta = JSON.parse(file.content.toString('utf8'));
+                    try {
+                        this.symmetricKey = await KeyEncryptor.decryptSymmetricKey(fileMeta.symmetricKey, this.privateKey);
+                    } catch (err) {
+                        return this.onError(ERRORS.DECRYPTION_ERROR);
+                    }
                     this.fileWriter = await FileWriterFactory.create(fileMeta.name, fileMeta.size);
 
                     if (fileMeta.size > FileSize.getMaxFileSize()) {
@@ -52,6 +56,7 @@ export class FileDownloader extends ProgressCrypto {
 
     downloadFileChunks() {
         if (!this.fileChunks.length) {
+            this.emit('progress', 1);
             this.emit('finish', { fileURL: this.fileWriter.getFileURL(), fileName: this.fileWriter.fileName });
 
             return;
