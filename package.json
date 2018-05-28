@@ -1,6 +1,6 @@
 {
   "name": "repux-lib",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "RepuX encryption/decryption library",
   "author": "RepuX <support@repux.io>",
   "license": "MIT",
