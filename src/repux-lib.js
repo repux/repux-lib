@@ -3,6 +3,7 @@ import { FileReencryptor } from './ipfs/file-reencryptor';
 import { FileDownloader } from './ipfs/file-downloader';
 import { KeyGenerator } from './crypto/key-generator';
 import { KeyEncryptor } from './crypto/key-encryptor';
+import { KeySerializer } from './crypto/key-serializer';
 import { FileSize } from './file-handling/file-size';
 import { PurchaseType } from './types/purchase-type';
 import { BuyerType } from './types/buyer-type';
@@ -94,6 +95,24 @@ export default class RepuxLib {
      */
     static decryptSymmetricKey(encryptedSymmetricKey, privateKey) {
         return KeyEncryptor.decryptSymmetricKey(encryptedSymmetricKey, privateKey);
+    }
+
+    /**
+     * Serializes public key as a string.
+     * @param {JsonWebKey} publicKeyJWK
+     * @returns {string}
+     */
+    static serializePublicKey(publicKeyJWK) {
+        return KeySerializer.serializePublicKey(publicKeyJWK);
+    }
+
+    /**
+     * Deserializes string public key and returns JsonWebKey
+     * @param {string} publicKeyString
+     * @returns {JsonWebKey}
+     */
+    static deserializePublicKey(publicKeyString) {
+        return KeySerializer.deserializePublicKey(publicKeyString);
     }
 }
 

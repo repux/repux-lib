@@ -184,4 +184,18 @@ export default class RepuxLib {
    * @returns {Promise<JsonWebKey>}
    */
   static decryptSymmetricKey(encryptedSymmetricKey: string, privateKey: JsonWebKey): Promise<JsonWebKey>;
+
+  /**
+   * Serializes public key as a string.
+   * @param {JsonWebKey} publicKeyJWK
+   * @returns {string}
+   */
+  static serializePublicKey(publicKeyJWK: JsonWebKey): string;
+
+  /**
+   * Deserializes string public key and returns JsonWebKey
+   * @param {string} publicKeyString
+   * @returns {JsonWebKey}
+   */
+  static deserializePublicKey(publicKeyString: string): JsonWebKey;
 }
