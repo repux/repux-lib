@@ -99,6 +99,12 @@ export class FileDownloader extends ProgressCrypto {
         } else {
             this.isFirstChunk = false;
             this.firstChunkData = chunk.chunk;
+
+            if (this.fileChunksNumber === 1) {
+                this.crypt('decrypt', this.symmetricKey, this.vector, this.privateKey, this.firstChunkData, {
+                    isFirstChunk: false
+                });
+            }
         }
 
         this.fileChunks.shift();

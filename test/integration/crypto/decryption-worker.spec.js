@@ -24,7 +24,7 @@ describe('File chunks shouldn\'t be decrypted when user provides improper keys',
                 protocol: IPFS_PROTOCOL
             });
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < 1000000; i++) {
                 largeFileContent += FILE_CONTENT;
             }
 

@@ -21,6 +21,11 @@ export function encryptionWorker([file, passwordKey, initializationVector, publi
     reader.onload = async () => {
         let tmp = await encryptChunk(new Uint8Array(reader.result));
 
+        if (!tmp) {
+            progress({ time: (new Date()).getTime() - startTime, progress: 1 });
+            return;
+        }
+
         if (tmp.byteLength) {
             progress({ chunk: tmp, number: offset / options.CHUNK_SIZE + 1, vector });
         }

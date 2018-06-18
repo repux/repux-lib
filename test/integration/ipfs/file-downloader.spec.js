@@ -14,7 +14,7 @@ describe('File downloader should download and decrypt data only with proper keys
         return new Promise(async resolve => {
             largeFileContent = '';
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < 1000000; i++) {
                 largeFileContent += FILE_CONTENT;
             }
 
@@ -32,7 +32,6 @@ describe('File downloader should download and decrypt data only with proper keys
                 .upload(asymmetricKeys.publicKey, file)
                 .on('finish', (eventType, metaFileHash) => {
                     fileHash = metaFileHash;
-                    console.log('resolve!!!');
                     resolve();
                 });
         });
@@ -48,7 +47,7 @@ describe('File downloader should download and decrypt data only with proper keys
                     progressCallCounter++;
 
                     if (progress === 1) {
-                        assert(progressCallCounter >= 4 && progressCallCounter <= 5);
+                        assert.strictEqual(progressCallCounter, 28);
                     }
                 })
                 .on('finish', async (eventType, file) => {
