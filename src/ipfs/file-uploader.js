@@ -81,13 +81,20 @@ export class FileUploader extends ProgressCrypto {
     onChunkCrypted(chunk) {
         super.onChunkCrypted(chunk);
 
+        if (this.maxChunkNumber === 1 && this.thread) {
+            this.thread.send('seek');
+        }
+
         this.ipfs.files.add(Buffer.from(chunk.chunk), (err, files) => {
             if (err) {
                 this.onError(err);
                 return this.terminate();
             }
 
-            this.chunks[chunk.number] = files[0].hash;
+            if (this.thread) {
+                this.thread.send('seek');
+            }
+            this.chunks[ chunk.number ] = files[ 0 ].hash;
 
             if (chunk.number === 0) {
                 this.uploadedSize += FIRST_CHUNK_SIZE;
