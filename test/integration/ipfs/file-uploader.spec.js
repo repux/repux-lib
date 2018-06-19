@@ -13,7 +13,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
         return new Promise(async resolve => {
             largeFileContent = '';
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < 1000000; i++) {
                 largeFileContent += FILE_CONTENT;
             }
 
@@ -39,7 +39,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
                     progressCallCounter++;
 
                     if (progress === 1) {
-                        assert(progressCallCounter >= 10 && progressCallCounter <= 11);
+                        assert.strictEqual(progressCallCounter, 57);
                     }
                 })
                 .on('finish', (eventType, fileHash) => {

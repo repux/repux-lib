@@ -56,8 +56,10 @@ export class FileDownloader extends ProgressCrypto {
 
     downloadFileChunks() {
         if (!this.fileChunks.length) {
-            this.emit('progress', 1);
-            this.emit('finish', { fileURL: this.fileWriter.getFileURL(), fileName: this.fileWriter.fileName });
+            if (!this.firstChunkData) {
+                this.emit('progress', 1);
+                this.emit('finish', { fileURL: this.fileWriter.getFileURL(), fileName: this.fileWriter.fileName });
+            }
 
             return;
         }
@@ -95,10 +97,17 @@ export class FileDownloader extends ProgressCrypto {
         this.vector = chunk.vector;
 
         if (!this.isFirstChunk) {
+            this.firstChunkData = null;
             await this.fileWriter.write(chunk.chunk);
         } else {
             this.isFirstChunk = false;
             this.firstChunkData = chunk.chunk;
+
+            if (this.fileChunksNumber === 1) {
+                this.crypt('decrypt', this.symmetricKey, this.vector, this.privateKey, this.firstChunkData, {
+                    isFirstChunk: false
+                });
+            }
         }
 
         this.fileChunks.shift();

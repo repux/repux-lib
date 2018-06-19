@@ -13,7 +13,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
         return new Promise(async resolve => {
             largeFileContent = '';
 
-            for (let i = 0; i < 1000; i++) {
+            for (let i = 0; i < 1000000; i++) {
                 largeFileContent += FILE_CONTENT;
             }
 

@@ -12,7 +12,11 @@
  * @param progress
  * @returns {Promise<any>}
  */
-export function encryptionWorker([file, passwordKey, initializationVector, publicKey, options], done, progress) {
+export function encryptionWorker([ file, passwordKey, initializationVector, publicKey, options ], done, progress) {
+    if (!options) {
+        return;
+    }
+
     const startTime = (new Date()).getTime();
     let offset = 0;
     const reader = new FileReader();
@@ -20,6 +24,11 @@ export function encryptionWorker([file, passwordKey, initializationVector, publi
 
     reader.onload = async () => {
         let tmp = await encryptChunk(new Uint8Array(reader.result));
+
+        if (!tmp) {
+            progress({ time: (new Date()).getTime() - startTime, progress: 1 });
+            return;
+        }
 
         if (tmp.byteLength) {
             progress({ chunk: tmp, number: offset / options.CHUNK_SIZE + 1, vector });
@@ -32,8 +41,6 @@ export function encryptionWorker([file, passwordKey, initializationVector, publi
         }
 
         progress({ time: (new Date()).getTime() - startTime, progress: offset / file.size });
-
-        seek();
     };
 
     seek();
@@ -108,4 +115,10 @@ export function encryptionWorker([file, passwordKey, initializationVector, publi
 
         return tmp;
     }
+
+    this.addEventListener('message', event => {
+        if (event.data.param === 'seek') {
+            seek();
+        }
+    });
 }
