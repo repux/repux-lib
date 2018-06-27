@@ -62,10 +62,10 @@ describe('FileUploader', () => {
 
         it('should assign metaData argument to metaData property', () => {
             const shortDescription = 'SHORT_DESCRIPTION';
-            const longDescription = 'LONG_DESCRIPTION';
+            const fullDescription = 'FULL_DESCRIPTION';
             const metaData = {
                 shortDescription,
-                longDescription
+                fullDescription
             };
 
             const uploader = new FileUploader(ipfs);
@@ -172,7 +172,7 @@ describe('FileUploader', () => {
 
         it('should add additional meta data to meta file from metaData property', async () => {
             const shortDescription = 'SHORT_DESCRIPTION';
-            const longDescription = 'LONG_DESCRIPTION';
+            const fullDescription = 'FULL_DESCRIPTION';
             const type = PurchaseType.ONE_TIME_PURCHASE;
             const initializationVector = 'INITIALIZATION_VECTOR';
             const fileName = 'FILE_NAME';
@@ -190,7 +190,7 @@ describe('FileUploader', () => {
                         expect(content.size).to.equal(fileSize);
                         expect(content.chunks).to.deep.equal(fileChunks);
                         expect(content.shortDescription).to.equal(shortDescription);
-                        expect(content.longDescription).to.equal(longDescription);
+                        expect(content.fullDescription).to.equal(fullDescription);
                         expect(content.type).to.equal(type);
                         addSinon();
                     }
@@ -202,7 +202,7 @@ describe('FileUploader', () => {
             uploader.initializationVector = initializationVector;
             uploader.metaData = {
                 shortDescription,
-                longDescription,
+                fullDescription,
                 type
             };
             uploader.file = {
