@@ -1,11 +1,11 @@
 {
   "name": "repux-lib",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "RepuX encryption/decryption library",
   "author": "RepuX <support@repux.io>",
   "license": "MIT",
   "main": "build/lib/index.js",
-  "types": "repux-lib.d.ts",
+  "types": "src/repux-lib.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/repux/repux-lib.git"
@@ -29,14 +29,15 @@
   },
   "devDependencies": {
     "@semantic-release/git": "^5.0.0",
-    "@types/node": "^10.3.0",
+    "@types/mocha": "^5.2.4",
+    "@types/sinon": "^5.0.1",
+    "awesome-typescript-loader": "^5.2.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-istanbul": "^4.1.6",
     "babel-preset-env": "^1.6.1",
-    "buffer": "^5.1.0",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-loader": "^2.0.0",
@@ -44,7 +45,6 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
-    "ipfs-api": "^20.0.0",
     "karma": "^2.0.2",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
@@ -54,13 +54,25 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sinon": "^1.0.5",
     "karma-sourcemap-loader": "^0.3.7",
+    "karma-tslint": "^1.1.0",
+    "karma-typescript": "^3.0.12",
     "karma-webpack": "^3.0.0",
     "mocha": "^5.1.1",
     "regenerator-runtime": "^0.11.1",
     "semantic-release": "^15.4.0",
     "sinon": "^5.0.7",
-    "threads": "^0.10.1",
+    "tslint": "^5.10.0",
+    "tslint-eslint-rules": "^5.3.1",
+    "typescript": "^2.9.2",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.15"
+  },
+  "dependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/filesystem": "^0.0.28",
+    "@types/node": "^10.3.0",
+    "buffer": "^5.1.0",
+    "ipfs-api": "^20.0.0",
+    "threads": "^0.10.1"
   }
 }

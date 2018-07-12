@@ -42,7 +42,7 @@ const repux = new RepuxLib(new IpfsAPI({
     port: 5002,
     protocol: 'http'
 }));
-const version = RepuxLib.getVersion();
+const version = repux.getVersion();
 console.log(version);
 ```
 

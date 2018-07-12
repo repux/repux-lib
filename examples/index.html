@@ -1,161 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>RepuxLib example usage</title>
+  <meta charset="UTF-8">
+  <title>RepuxLib example usage</title>
 </head>
 <body>
-    <div>Version: <strong id="version"></strong></div>
-    <div>Max file size: <strong><span id="file-size"></span> bytes</strong></div>
+<div>Version: <strong id="version"></strong></div>
+<div>Max file size: <strong><span id="file-size"></span> bytes</strong></div>
 
-    <h3>Public key</h3>
-    <textarea id="public-key" style="width:100%"></textarea>
+<h3>Public key</h3>
+<textarea id="public-key" style="width:100%"></textarea>
 
-    <h3>Private key</h3>
-    <textarea id="private-key" style="width:100%"></textarea>
+<h3>Private key</h3>
+<textarea id="private-key" style="width:100%"></textarea>
 
-    <br><br><br><br>
+<br><br><br><br>
 
-    <table style="width:100%" border="1">
-        <tr>
-            <th>Seller</th>
-            <th>Buyer</th>
-        </tr>
-        <tr>
-            <td>
-                <h3>Upload file:</h3>
-                <input type="file" id="file-input">
-                <button id="upload-file">Upload</button>
-                <strong>Progress:</strong>
-                <div id="upload-progress"></div>
-                <strong>Result:</strong>
-                <div id="upload-result"></div>
-                <strong>Errors:</strong>
-                <div id="upload-error"></div>
-            </td>
-            <td>
-                <h3>Download file:</h3>
-                <input id="download-file-hash" type="text" placeholder="Meta file hash">
-                <button id="download-file">Download</button>
-                <strong>Progress:</strong>
-                <div id="download-progress"></div>
-                <strong>Result:</strong>
-                <div id="download-result"></div>
-                <strong>Errors:</strong>
-                <div id="download-error"></div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3>Re-encrypt file:</h3>
-                <input id="reencrypt-file-hash" type="text" placeholder="Meta file hash">
-                <textarea id="buyer-public-key" placeholder="Buyer public key"></textarea>
-                <button id="reencrypt-file">Re-encrypt</button>
-                <strong>Progress:</strong>
-                <div id="reencrypt-progress"></div>
-                <strong>Result:</strong>
-                <div id="reencrypt-result"></div>
-                <strong>Errors:</strong>
-                <div id="reencrypt-error"></div>
-            </td>
-        </tr>
-    </table>
+<table style="width:100%" border="1">
+  <tr>
+    <th>Seller</th>
+    <th>Buyer</th>
+  </tr>
+  <tr>
+    <td>
+      <h3>Upload file:</h3>
+      <input type="file" id="file-input">
+      <button id="upload-file">Upload</button>
+      <strong>Progress:</strong>
+      <div id="upload-progress"></div>
+      <strong>Result:</strong>
+      <div id="upload-result"></div>
+      <strong>Errors:</strong>
+      <div id="upload-error"></div>
+    </td>
+    <td>
+      <h3>Download file:</h3>
+      <input id="download-file-hash" type="text" placeholder="Meta file hash">
+      <button id="download-file">Download</button>
+      <strong>Progress:</strong>
+      <div id="download-progress"></div>
+      <strong>Result:</strong>
+      <div id="download-result"></div>
+      <strong>Errors:</strong>
+      <div id="download-error"></div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>Re-encrypt file:</h3>
+      <input id="reencrypt-file-hash" type="text" placeholder="Meta file hash">
+      <textarea id="buyer-public-key" placeholder="Buyer public key"></textarea>
+      <button id="reencrypt-file">Re-encrypt</button>
+      <strong>Progress:</strong>
+      <div id="reencrypt-progress"></div>
+      <strong>Result:</strong>
+      <div id="reencrypt-result"></div>
+      <strong>Errors:</strong>
+      <div id="reencrypt-error"></div>
+    </td>
+  </tr>
+</table>
 
-    <script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding-indexes.js"></script>
-    <script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding.js"></script>
-    <script src="../node_modules/ipfs-api/dist/index.js"></script>
-    <script src="../build/lib/index.js"></script>
-    <script>
-        const Repux = RepuxLib.default;
+<script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding-indexes.js"></script>
+<script src="https://unpkg.com/text-encoding@0.6.4/lib/encoding.js"></script>
+<script src="../node_modules/ipfs-api/dist/index.js"></script>
+<script src="../build/lib/index.js"></script>
+<script>
+  const { EventType } = RepuxLib;
+  const Repux = RepuxLib.RepuxLib;
 
-        const repux = new Repux(new IpfsApi({
-            host: 'cryptoblox.co',
-            port: 5002,
-            protocol: 'https'
-        }));
+  const repux = new Repux(new IpfsApi({
+    host: 'localhost',
+    port: 5002,
+    protocol: 'https'
+  }));
 
-        function downloadBlob(blobUrl, fileName) {
-            const a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(function () {
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(blobUrl);
-            }, 0);
-        }
+  function downloadBlob(blobUrl, fileName) {
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(blobUrl);
+    }, 0);
+  }
 
-        async function init() {
-            let privateKey = localStorage.getItem('privateKey');
-            let publicKey = localStorage.getItem('publicKey');
+  async function init() {
+    let privateKey = localStorage.getItem('privateKey');
+    let publicKey = localStorage.getItem('publicKey');
 
-            if (!publicKey) {
-                const keypair = await Repux.generateAsymmetricKeyPair();
-                privateKey = JSON.stringify(keypair.privateKey);
-                publicKey = JSON.stringify(keypair.publicKey);
-                localStorage.setItem('privateKey', privateKey);
-                localStorage.setItem('publicKey', publicKey);
-            }
+    if (!publicKey) {
+      const keypair = await repux.generateAsymmetricKeyPair();
+      privateKey = JSON.stringify(keypair.privateKey);
+      publicKey = JSON.stringify(keypair.publicKey);
+      localStorage.setItem('privateKey', privateKey);
+      localStorage.setItem('publicKey', publicKey);
+    }
 
-            document.getElementById('public-key').value = publicKey;
-            document.getElementById('private-key').value = privateKey;
+    document.getElementById('public-key').value = publicKey;
+    document.getElementById('private-key').value = privateKey;
 
-            document.getElementById('version').innerText = Repux.getVersion();
-            document.getElementById('file-size').innerText = await Repux.getMaxFileSize();
-        }
+    document.getElementById('version').innerText = repux.getVersion();
+    document.getElementById('file-size').innerText = await repux.getMaxFileSize();
+  }
 
-        init();
+  init();
 
-        document.getElementById('upload-file').onclick = async function() {
-            const publicKey = JSON.parse(document.getElementById('public-key').value);
-            const file = document.getElementById('file-input').files[0];
+  document.getElementById('upload-file').onclick = async function () {
+    const publicKey = JSON.parse(document.getElementById('public-key').value);
+    const file = document.getElementById('file-input').files[0];
+    const metaData = {
+      title: 'Title'
+    };
 
-            repux.createFileUploader().upload(publicKey, file)
-                .on('progress', (eventType, progress) => {
-                    document.getElementById('upload-progress').innerText = progress;
-                })
-                .on('error', (eventType, error) => {
-                    document.getElementById('upload-error').innerText = error;
-                })
-                .on('finish', (eventType, fileHash) => {
-                    document.getElementById('upload-result').innerText = 'HASH: ' + fileHash;
-                });
-        };
+    repux.createFileUploader().upload(publicKey, file, metaData)
+      .on(EventType.PROGRESS, (eventType, progress) => {
+        document.getElementById('upload-progress').innerText = progress;
+      })
+      .on(EventType.ERROR, (eventType, error) => {
+        document.getElementById('upload-error').innerText = error;
+      })
+      .on(EventType.FINISH, (eventType, fileHash) => {
+        document.getElementById('upload-result').innerText = 'HASH: ' + fileHash;
+      });
+  };
 
-        document.getElementById('reencrypt-file').onclick = async function() {
-            const buyerPublicKey = JSON.parse(document.getElementById('buyer-public-key').value);
-            const privateKey = JSON.parse(document.getElementById('private-key').value);
-            const fileHash = document.getElementById('reencrypt-file-hash').value;
+  document.getElementById('reencrypt-file').onclick = async function () {
+    const buyerPublicKey = JSON.parse(document.getElementById('buyer-public-key').value);
+    const privateKey = JSON.parse(document.getElementById('private-key').value);
+    const fileHash = document.getElementById('reencrypt-file-hash').value;
 
-            repux.createFileReencryptor().reencrypt(privateKey, buyerPublicKey, fileHash)
-                .on('progress', (eventType, progress) => {
-                    document.getElementById('reencrypt-progress').innerText = progress;
-                })
-                .on('error', (eventType, error) => {
-                    document.getElementById('reencrypt-error').innerText = error;
-                })
-                .on('finish', (eventType, fileHash) => {
-                    document.getElementById('reencrypt-result').innerText = 'HASH: ' + fileHash;
-                });
-        };
+    repux.createFileReencryptor().reencrypt(privateKey, buyerPublicKey, fileHash)
+      .on(EventType.PROGRESS, (eventType, progress) => {
+        document.getElementById('reencrypt-progress').innerText = progress;
+      })
+      .on(EventType.ERROR, (eventType, error) => {
+        document.getElementById('reencrypt-error').innerText = error;
+      })
+      .on(EventType.FINISH, (eventType, fileHash) => {
+        document.getElementById('reencrypt-result').innerText = 'HASH: ' + fileHash;
+      });
+  };
 
-        document.getElementById('download-file').onclick = async function() {
-            const privateKey = JSON.parse(document.getElementById('private-key').value);
-            const fileHash = document.getElementById('download-file-hash').value;
+  document.getElementById('download-file').onclick = async function () {
+    const privateKey = JSON.parse(document.getElementById('private-key').value);
+    const fileHash = document.getElementById('download-file-hash').value;
 
-            repux.createFileDownloader()
-                .download(privateKey, fileHash)
-                .on('progress', (eventType, progress) => {
-                    document.getElementById('download-progress').innerText = progress;
-                })
-                .on('error', (eventType, error) => {
-                    document.getElementById('download-error').innerText = error;
-                })
-                .on('finish', (eventType, file) => {
-                    downloadBlob(file.fileURL, file.fileName);
-                });
-        }
-    </script>
+    repux.createFileDownloader()
+      .download(privateKey, fileHash)
+      .on(EventType.PROGRESS, (eventType, progress) => {
+        document.getElementById('download-progress').innerText = progress;
+      })
+      .on(EventType.ERROR, (eventType, error) => {
+        document.getElementById('download-error').innerText = error;
+      })
+      .on(EventType.FINISH, (eventType, file) => {
+        downloadBlob(file.fileURL, file.fileName);
+      });
+  }
+</script>
 </body>
 </html>
