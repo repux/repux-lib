@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = env => {
     let entries = {};
-    entries['lib/index'] = ['./src/repux-lib.js'];
+    entries['lib/index'] = ['./src/repux-lib.ts'];
 
     if (env && env === 'test') {
         entries = {};
@@ -18,6 +18,9 @@ module.exports = env => {
             libraryTarget: 'umd',
             umdNamedDefine: true
         },
+        resolve: {
+            extensions: ['.ts', '.js', '.tsx', '.jsx']
+        },
         module: {
             rules: [
                 {
@@ -31,6 +34,11 @@ module.exports = env => {
                             }
                         }
                     ]
+                },
+                {
+                    test: /\.tsx?$/,
+                    exclude: [/node_modules/, /build/],
+                    loader: 'awesome-typescript-loader'
                 },
                 {
                     enforce: 'pre',

@@ -1,7 +1,7 @@
-import './crypto/decryption-worker.spec.js';
-import './ipfs/file-uploader.spec.js';
-import './ipfs/file-reencryptor.spec.js';
-import './ipfs/file-downloader.spec.js';
-import './whole-process.spec.js';
+import './crypto/decryption-worker.spec';
+import './ipfs/file-uploader.spec';
+import './ipfs/file-reencryptor.spec';
+import './ipfs/file-downloader.spec';
+import './whole-process.spec';
 
 mocha.run();
