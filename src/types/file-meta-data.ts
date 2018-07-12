@@ -59,20 +59,20 @@ export interface FileMetaData {
   /**
    * File API documentation
    */
-  apiDocumentation?: Attachment,
+  apiDocumentation?: Attachment[],
 
   /**
    * Other file documentation
    */
-  otherDocumentation?: Attachment,
+  otherDocumentation?: Attachment[],
 
   /**
    * Sample not encrypted file
    */
-  sampleFile?: Attachment,
+  sampleFile?: Attachment[],
 
   /**
    * Use-case documentation
    */
-  useCaseDocumentation?: Attachment
+  useCaseDocumentation?: Attachment[]
 }
