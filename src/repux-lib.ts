@@ -21,9 +21,10 @@ import { SymmetricKey } from './types/symmetric-key';
 import { FileMetaData } from './types/file-meta-data';
 import { PurchaseType } from './types/purchase-type';
 import { BuyerType } from './types/buyer-type';
-import { TermOfUse } from './types/term-of-use';
 import { Attachment } from './types/attachment';
 import { DataLocation } from './types/data-location';
+import { Eula } from './types/eula';
+import { EulaType } from './types/eula-type';
 
 export {
   EventType,
@@ -38,9 +39,10 @@ export {
   FileMetaData,
   PurchaseType,
   BuyerType,
-  TermOfUse,
   Attachment,
   DataLocation,
+  Eula,
+  EulaType
 };
 
 export class RepuxLib {
