@@ -1,9 +1,9 @@
 import { PurchaseType } from './purchase-type';
 import { BuyerType } from './buyer-type';
-import { TermOfUse } from './term-of-use';
 import { Attachment } from './attachment';
 import { DataLocation } from './data-location';
 import BigNumber from 'bignumber.js';
+import { Eula } from './eula';
 
 export interface FileMetaData {
   /**
@@ -52,27 +52,27 @@ export interface FileMetaData {
   price?: BigNumber;
 
   /**
-   *  Type of terms of use (could be defined by user)
+   *  End User License Agreement
    */
-  termsOfUse?: TermOfUse | string;
+  eula?: Eula;
 
   /**
    * File API documentation
    */
-  apiDocumentation?: Attachment,
+  apiDocumentation?: Attachment[],
 
   /**
    * Other file documentation
    */
-  otherDocumentation?: Attachment,
+  otherDocumentation?: Attachment[],
 
   /**
    * Sample not encrypted file
    */
-  sampleFile?: Attachment,
+  sampleFile?: Attachment[],
 
   /**
    * Use-case documentation
    */
-  useCaseDocumentation?: Attachment
+  useCaseDocumentation?: Attachment[]
 }

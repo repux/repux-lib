@@ -10,4 +10,9 @@ export interface Attachment {
    * File hash
    */
   fileHash: IpfsFileHash;
+
+  /**
+   * File name
+   */
+  fileName: string;
 }

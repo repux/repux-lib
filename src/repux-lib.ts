@@ -19,6 +19,12 @@ import { PublicKey } from './types/public-key';
 import { AsymmetricKeyPair } from './types/asymmetric-key-pair';
 import { SymmetricKey } from './types/symmetric-key';
 import { FileMetaData } from './types/file-meta-data';
+import { PurchaseType } from './types/purchase-type';
+import { BuyerType } from './types/buyer-type';
+import { Attachment } from './types/attachment';
+import { DataLocation } from './types/data-location';
+import { Eula } from './types/eula';
+import { EulaType } from './types/eula-type';
 
 export {
   EventType,
@@ -30,7 +36,13 @@ export {
   AsymmetricKeyPair,
   SymmetricKey,
   IpfsFileHash,
-  FileMetaData
+  FileMetaData,
+  PurchaseType,
+  BuyerType,
+  Attachment,
+  DataLocation,
+  Eula,
+  EulaType
 };
 
 export class RepuxLib {
