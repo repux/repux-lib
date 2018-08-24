@@ -1,5 +1,5 @@
 import { Chunk, ProgressCrypto } from '../crypto/progress-crypto';
-import { Buffer } from 'buffer';
+import 'buffer';
 import { ErrorMessage } from '../error-message';
 import { KeyGenerator } from '../crypto/key-generator';
 import { KeyEncryptor } from '../crypto/key-encryptor';
