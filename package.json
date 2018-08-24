@@ -71,7 +71,7 @@
     "@types/chai": "^4.1.4",
     "@types/filesystem": "^0.0.28",
     "@types/node": "^10.3.0",
-    "buffer": "^5.1.0",
+    "buffer": "5.1.0",
     "ipfs-api": "^20.0.0",
     "threads": "^0.10.1"
   }

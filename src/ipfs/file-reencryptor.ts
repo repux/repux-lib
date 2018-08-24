@@ -1,6 +1,6 @@
 import { Chunk, ProgressCrypto } from '../crypto/progress-crypto';
 import { ErrorMessage } from '../error-message';
-import { Buffer } from 'buffer';
+import 'buffer';
 import IpfsAPI, { IpfsFileHash } from 'ipfs-api';
 import { InternalFileMetaData } from '../types/internal-file-meta-data';
 import { KeyDecryptor } from '../crypto/key-decryptor';
