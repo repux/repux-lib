@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { fake, SinonFake } from 'sinon';
+import { fake } from 'sinon';
 import { ErrorMessage } from '../../../src/error-message';
 import { FileUploader } from '../../../src/ipfs/file-uploader';
 import IpfsApi, { FILE_HASHES } from '../../helpers/ipfs-api-mock';
@@ -41,7 +41,7 @@ describe('FileUploader', () => {
 
       return new Promise(resolve => {
         uploader.upload(<any> PUBLIC_KEY, <any> null);
-        uploader.on(EventType.ERROR, (eventType, error) => {
+        uploader.on(EventType.ERROR, (_eventType, error) => {
           expect(error).to.equal(ErrorMessage.FILE_NOT_SPECIFIED);
           resolve();
         });
@@ -190,7 +190,7 @@ describe('FileUploader', () => {
       uploader[ 'chunks' ] = fileChunks;
 
       return new Promise(async resolve => {
-        uploader.on(EventType.FINISH, (eventType, fileHash) => {
+        uploader.on(EventType.FINISH, (_eventType, fileHash) => {
           expect(fileHash).to.equal(FILE_HASHES.NEW_IPFS_FILE);
           expect(encryptSymmetricKey.called).to.equal(true);
           resolve();

@@ -35,7 +35,7 @@ describe('File downloader should download and decrypt data only with proper keys
 
       repux.createFileUploader()
         .upload(asymmetricKeys.publicKey, file)
-        .on(EventType.FINISH, (eventType: EventType, metaFileHash: IpfsFileHash) => {
+        .on(EventType.FINISH, (_eventType: EventType, metaFileHash: IpfsFileHash) => {
           fileHash = metaFileHash;
           resolve();
         });
@@ -48,14 +48,14 @@ describe('File downloader should download and decrypt data only with proper keys
 
       repux.createFileDownloader()
         .download(asymmetricKeys.privateKey, fileHash)
-        .on(EventType.PROGRESS, (eventType: EventType, progress: number) => {
+        .on(EventType.PROGRESS, (_eventType: EventType, progress: number) => {
           progressCallCounter++;
 
           if (progress === 1) {
             assert.strictEqual(progressCallCounter, 28);
           }
         })
-        .on(EventType.FINISH, async (eventType: EventType, file: DownloadedFile) => {
+        .on(EventType.FINISH, async (_eventType: EventType, file: DownloadedFile) => {
           const content = await fetchBlobContents(file.fileURL);
           console.log(content);
           console.log(largeFileContent);
@@ -72,7 +72,7 @@ describe('File downloader should download and decrypt data only with proper keys
 
       repux.createFileDownloader()
         .download(tempAsymmetricKeys.privateKey, fileHash)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.DECRYPTION_ERROR);
           done();
         });
@@ -86,7 +86,7 @@ describe('File downloader should download and decrypt data only with proper keys
 
       repux.createFileDownloader()
         .download(tempAsymmetricKeys.privateKey, fileHash)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.DECRYPTION_ERROR);
           done();
         });
@@ -97,7 +97,7 @@ describe('File downloader should download and decrypt data only with proper keys
     it('should emit error when asymmetric key isn\'t present', (done) => {
       repux.createFileDownloader()
         .download(<any> null, fileHash)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.DECRYPTION_ERROR);
           done();
         });
@@ -108,7 +108,7 @@ describe('File downloader should download and decrypt data only with proper keys
     it('should emit error when file hash is improper', (done) => {
       repux.createFileDownloader()
         .download(asymmetricKeys.privateKey, 'INCORRECT_FILE_HASH')
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.FILE_NOT_FOUND);
           done();
         });
@@ -119,7 +119,7 @@ describe('File downloader should download and decrypt data only with proper keys
     it('should emit error when file hash isn\'t present', (done) => {
       repux.createFileDownloader()
         .download(asymmetricKeys.privateKey, <any> null)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.FILE_NOT_FOUND);
           done();
         });

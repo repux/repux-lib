@@ -71,7 +71,7 @@ describe('FileReencryptor', () => {
           throw new Error(ERROR);
         };
         reencryptor.reencrypt(<any> PRIVATE_KEY, <any> PUBLIC_KEY, <any> FILE_HASHES.META_FILE_HASH);
-        reencryptor.on(EventType.ERROR, (eventType, error) => {
+        reencryptor.on(EventType.ERROR, (_eventType, error) => {
           expect(error).to.equal(ERROR);
           resolve();
         });
@@ -141,7 +141,7 @@ describe('FileReencryptor', () => {
 
       return new Promise(resolve => {
         reencryptor[ 'onChunkCrypted' ]({ number: 1, vector, chunk });
-        reencryptor.on(EventType.FINISH, (eventType, metaFileHash) => {
+        reencryptor.on(EventType.FINISH, (_eventType, metaFileHash) => {
           expect(metaFileHash).to.equal(FILE_HASHES.NEW_IPFS_FILE);
           expect(decryptSymmetricKey.called).to.equal(true);
           expect(encryptSymmetricKey.called).to.equal(true);

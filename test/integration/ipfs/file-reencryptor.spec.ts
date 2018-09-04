@@ -35,7 +35,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
 
       repux.createFileUploader()
         .upload(asymmetricKeys.publicKey, file)
-        .on(EventType.FINISH, (eventType: EventType, metaFileHash: IpfsFileHash) => {
+        .on(EventType.FINISH, (_eventType: EventType, metaFileHash: IpfsFileHash) => {
           fileHash = metaFileHash;
           resolve();
         });
@@ -48,14 +48,14 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
 
       repux.createFileReencryptor()
         .reencrypt(asymmetricKeys.privateKey, newAsymmetricKeys.publicKey, fileHash)
-        .on(EventType.PROGRESS, (eventType: EventType, progress: number) => {
+        .on(EventType.PROGRESS, (_eventType: EventType, progress: number) => {
           progressCallCounter++;
 
           if (progress === 1) {
             assert.strictEqual(progressCallCounter, 2);
           }
         })
-        .on(EventType.FINISH, (eventType: EventType, reencryptedFileHash: IpfsFileHash) => {
+        .on(EventType.FINISH, (_eventType: EventType, reencryptedFileHash: IpfsFileHash) => {
           assert.notStrictEqual(reencryptedFileHash, fileHash);
           assert.strictEqual(reencryptedFileHash.length, IPFS_HASH_LENGTH);
           done();
@@ -69,7 +69,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
 
       repux.createFileReencryptor()
         .reencrypt(tempAsymmetricKeys.privateKey, newAsymmetricKeys.publicKey, fileHash)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.REENCRYPTION_ERROR);
           done();
         });
@@ -83,7 +83,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
 
       repux.createFileReencryptor()
         .reencrypt(tempAsymmetricKeys.privateKey, newAsymmetricKeys.publicKey, fileHash)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.REENCRYPTION_ERROR);
           done();
         });
@@ -94,7 +94,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
     it('should emit error when asymmetric key isn\'t present', (done) => {
       repux.createFileReencryptor()
         .reencrypt(<any> null, newAsymmetricKeys.publicKey, fileHash)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.REENCRYPTION_ERROR);
           done();
         });
@@ -108,7 +108,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
 
       repux.createFileReencryptor()
         .reencrypt(asymmetricKeys.privateKey, tempAsymmetricKeys.publicKey, fileHash)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.REENCRYPTION_ERROR);
           done();
         });
@@ -119,7 +119,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
     it('should emit error when asymmetric key isn\'t present', (done) => {
       repux.createFileReencryptor()
         .reencrypt(asymmetricKeys.privateKey, <any> null, fileHash)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.REENCRYPTION_ERROR);
           done();
         });
@@ -130,7 +130,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
     it('should emit error when file hash is improper', (done) => {
       repux.createFileReencryptor()
         .reencrypt(asymmetricKeys.privateKey, newAsymmetricKeys.publicKey, 'INCORRECT_FILE_HASH')
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.FILE_NOT_FOUND);
           done();
         });
@@ -141,7 +141,7 @@ describe('File re-encryptor should download first chunk, decrypt data and re-enc
     it('should emit error when file hash isn\'t present', (done) => {
       repux.createFileReencryptor()
         .reencrypt(asymmetricKeys.privateKey, newAsymmetricKeys.publicKey, <any> null)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.FILE_NOT_FOUND);
           done();
         });

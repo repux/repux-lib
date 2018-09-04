@@ -83,7 +83,7 @@ describe('FileDownloader', () => {
 
       return new Promise(resolve => {
         downloader.download(<any> PRIVATE_KEY, <any> FILE_HASHES.META_FILE_HASH);
-        downloader.on(EventType.ERROR, (eventType, error) => {
+        downloader.on(EventType.ERROR, (_eventType, error) => {
           expect(error).to.equal(ErrorMessage.MAX_FILE_SIZE_EXCEEDED);
           resolve();
         });
@@ -101,7 +101,7 @@ describe('FileDownloader', () => {
         downloader[ 'downloadFileChunks' ] = () => {
         };
         downloader.download(<any> PRIVATE_KEY, <any> FILE_HASHES.META_FILE_HASH);
-        downloader.on(EventType.ERROR, (eventType, error) => {
+        downloader.on(EventType.ERROR, (_eventType, error) => {
           expect(error).to.equal(ErrorMessage.DOESNT_SUPPPORT_ANY_FILE_WRITER);
           resolve();
         });
@@ -122,7 +122,7 @@ describe('FileDownloader', () => {
           throw new Error(ERROR);
         };
         downloader.download(<any> PRIVATE_KEY, <any> FILE_HASHES.META_FILE_HASH);
-        downloader.on(EventType.ERROR, (eventType, error) => {
+        downloader.on(EventType.ERROR, (_eventType, error) => {
           expect(error).to.equal(ERROR);
           resolve();
         });
@@ -192,7 +192,7 @@ describe('FileDownloader', () => {
       downloader[ 'downloadFileChunks' ]();
 
       return new Promise(resolve => {
-        downloader.on(EventType.FINISH, (eventType, data) => {
+        downloader.on(EventType.FINISH, (_eventType, data) => {
           expect(data.fileURL).to.equal(fileUrl);
           expect(data.fileName).to.equal(fileName);
           resolve();
@@ -208,7 +208,7 @@ describe('FileDownloader', () => {
       downloader[ 'fileChunksNumber' ] = 3;
 
       return new Promise(resolve => {
-        downloader.on(EventType.PROGRESS, (eventType, progress) => {
+        downloader.on(EventType.PROGRESS, (_eventType, progress) => {
           expect(Math.round(progress * 100)).to.equal(40);
           resolve();
         });

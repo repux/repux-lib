@@ -9,7 +9,7 @@ export function mockRequestFileSystem() {
   // @ts-ignore
   window.requestFileSystem = (storageType, size, onSuccess) => onSuccess({
     root: {
-      getFile: (fileName, options, callback) => {
+      getFile: (_fileName, _options, callback) => {
         if (callback) {
           callback(<any> {
             toURL: () => FILE_URL,
@@ -24,7 +24,7 @@ export function mockRequestFileSystem() {
                 }, 10);
               }
             })
-          })
+          });
         }
       }
     }
