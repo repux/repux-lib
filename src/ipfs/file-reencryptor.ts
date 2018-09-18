@@ -17,11 +17,17 @@ export class FileReencryptor extends ProgressCrypto {
   private fileHash?: string;
   private fileMeta?: InternalFileMetaData;
 
+  /**
+   * @param ipfs - IPFS Api object (see: https://github.com/ipfs/js-ipfs-api)
+   * @param keyEncryptor - KeyEncryptor instance
+   * @param keyDecryptor - KeyDecryptor instance
+   * @param keyImporter - KeyImporter instance
+   */
   constructor(
-      private readonly ipfs: IpfsAPI,
-      protected readonly keyEncryptor: KeyEncryptor,
-      protected readonly keyDecryptor: KeyDecryptor,
-      protected readonly keyImporter: KeyImporter) {
+    private readonly ipfs: IpfsAPI,
+    protected readonly keyEncryptor: KeyEncryptor,
+    protected readonly keyDecryptor: KeyDecryptor,
+    protected readonly keyImporter: KeyImporter) {
     super(keyImporter);
   }
 
@@ -30,6 +36,7 @@ export class FileReencryptor extends ProgressCrypto {
    * @param oldPrivateKey - Public key in JWK (JSON Web Key) format to decrypt first chunk of file with RSA-OAEP algorithm
    * @param newPublicKey - Public key in JWK (JSON Web Key) format to encrypt first chunk of file with RSA-OAEP algorithm
    * @param fileHash - IPFS hash to meta file
+   * @return FileReencryptor instance
    */
   reencrypt(oldPrivateKey: PrivateKey, newPublicKey: PublicKey, fileHash: IpfsFileHash): FileReencryptor {
     if (!oldPrivateKey || !newPublicKey) {

@@ -23,6 +23,12 @@ export class FileUploader extends ProgressCrypto {
   private publicKey?: PublicKey;
   private symmetricKey?: SymmetricKey;
 
+  /**
+   * @param ipfs - IPFS Api object (see: https://github.com/ipfs/js-ipfs-api)
+   * @param keyGenerator - KeyGenerator instance
+   * @param keyEncryptor - KeyEncryptor instance
+   * @param keyImporter - KeyImporter instance
+   */
   constructor(
     private readonly ipfs: IpfsAPI,
     private readonly keyGenerator: KeyGenerator,
@@ -36,6 +42,7 @@ export class FileUploader extends ProgressCrypto {
    * @param publicKey - Public key in JWK (JSON Web Key) format to encrypt first chunk of file with RSA-OAEP algorithm
    * @param file - file to upload
    * @param metaData - meta data object
+   * @return FileUploader instance
    */
   upload(publicKey: PublicKey, file: File, metaData: FileMetaData = {}): FileUploader {
     this.isUploadFinished = false;

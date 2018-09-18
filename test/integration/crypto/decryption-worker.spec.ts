@@ -7,7 +7,7 @@ import {
   SYMMETRIC_ENCRYPTION_ALGORITHM, VECTOR_SIZE
 } from '../../../src/config';
 import IpfsAPI, { IpfsFileContent, IpfsFileHash } from 'ipfs-api';
-import { AsymmetricKeyPair, RepuxLib, SymmetricKey } from '../../../src/repux-lib';
+import { AsymmetricKeyPair, RepuxLib, SymmetricKey } from '../../../src';
 // @ts-ignore
 import { decryptionWorker } from '../../../src/threads/decryption-worker';
 import { InternalFileMetaData } from '../../../src/types/internal-file-meta-data';

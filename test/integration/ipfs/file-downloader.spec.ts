@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { AsymmetricKeyPair, RepuxLib } from '../../../src/repux-lib';
+import { AsymmetricKeyPair, RepuxLib } from '../../../src';
 import IpfsAPI, { IpfsFileHash } from 'ipfs-api';
 import { IPFS_HOST, IPFS_PORT, IPFS_PROTOCOL, FILE_CONTENT, FILE_NAME } from '../config';
 import { fetchBlobContents } from '../../helpers/fetch-blob-contents';

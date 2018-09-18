@@ -1,5 +1,8 @@
 # RepuX JavaScript API
 
+## API Reference
+API Reference is available [here](docs/README.md)
+
 ## Installation
 ```bash
 npm install @repux/repux-lib

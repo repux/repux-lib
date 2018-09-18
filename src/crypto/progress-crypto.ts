@@ -34,10 +34,18 @@ export class ProgressCrypto extends Observable {
   protected maxChunkNumber: number = 0;
   protected thread?: Thread;
 
+  /**
+   * @param keyImporter - KeyImporter instance
+   */
   constructor(protected readonly keyImporter: KeyImporter) {
     super();
   }
 
+  /**
+   * Returns worker thread by worker type
+   * @param type - worker type
+   * @return worker thread
+   */
   static getWorkerByType(type: string): Thread | undefined {
     if (type === CryptoType.ENCRYPT) {
       return spawn(encryptionWorker);
@@ -52,6 +60,11 @@ export class ProgressCrypto extends Observable {
     }
   }
 
+  /**
+   * Returns error by worker type
+   * @param type - worker type
+   * @return error message
+   */
   static getErrorByType(type: CryptoType): ErrorMessage | undefined {
     if (type === CryptoType.ENCRYPT) {
       return ErrorMessage.ENCRYPTION_ERROR;
@@ -66,6 +79,9 @@ export class ProgressCrypto extends Observable {
     }
   }
 
+  /**
+   * Terminates worker thread
+   */
   terminate() {
     if (this.thread) {
       this.thread.kill();

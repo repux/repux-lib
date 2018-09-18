@@ -59,7 +59,7 @@ describe('BlobWriter', () => {
       writer[ 'data' ] = new Uint8Array([ 0, 1, 2, 3 ]);
 
       window.URL.createObjectURL = (blob) => {
-        expect(blob).to.deep.equal(new Blob([ writer[ 'data' ] ]));
+        expect(blob).to.deep.equal(new Blob(<BlobPart[]> [ writer[ 'data' ] ]));
         return blobUrl;
       };
 
