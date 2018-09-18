@@ -38,7 +38,7 @@ Repux Lib
 
 ⊕ **new RepuxLib**(ipfs: *`IpfsAPI`*): [RepuxLib](repuxlib.md)
 
-*Defined in [src/index.ts:58](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L58)*
+*Defined in [src/index.ts:58](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L58)*
 
 **Parameters:**
 
@@ -58,7 +58,7 @@ ___
 
 ▸ **createFileDownloader**(): [FileDownloader](filedownloader.md)
 
-*Defined in [src/index.ts:171](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L171)*
+*Defined in [src/index.ts:171](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L171)*
 
 Creates FileDownloader instance
 
@@ -72,7 +72,7 @@ ___
 
 ▸ **createFileReencryptor**(): [FileReencryptor](filereencryptor.md)
 
-*Defined in [src/index.ts:163](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L163)*
+*Defined in [src/index.ts:163](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L163)*
 
 Creates FileReencryptor instance
 
@@ -86,7 +86,7 @@ ___
 
 ▸ **createFileUploader**(): [FileUploader](fileuploader.md)
 
-*Defined in [src/index.ts:155](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L155)*
+*Defined in [src/index.ts:155](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L155)*
 
 Creates FileUploader instance
 
@@ -100,7 +100,7 @@ ___
 
 ▸ **decryptSymmetricKey**(encryptedSymmetricKey: *`string`*, privateKey: *[PrivateKey](../interfaces/privatekey.md)*): `Promise`<[SymmetricKey](../interfaces/symmetrickey.md)>
 
-*Defined in [src/index.ts:129](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L129)*
+*Defined in [src/index.ts:129](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L129)*
 
 Decrypts encrypted symmetric key using public key
 
@@ -121,7 +121,7 @@ ___
 
 ▸ **deserializePublicKey**(publicKeyString: *`string`*): [PublicKey](../interfaces/publickey.md)
 
-*Defined in [src/index.ts:147](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L147)*
+*Defined in [src/index.ts:147](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L147)*
 
 Deserializes string public key and returns PublicKey
 
@@ -141,7 +141,7 @@ ___
 
 ▸ **encryptSymmetricKey**(symmetricKey: *[SymmetricKey](../interfaces/symmetrickey.md)*, publicKey: *[PublicKey](../interfaces/publickey.md)*): `Promise`<`string`>
 
-*Defined in [src/index.ts:119](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L119)*
+*Defined in [src/index.ts:119](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L119)*
 
 Encrypts symmetric key using public key
 
@@ -162,7 +162,7 @@ ___
 
 ▸ **generateAsymmetricKeyPair**(): `Promise`<[AsymmetricKeyPair](../interfaces/asymmetrickeypair.md)>
 
-*Defined in [src/index.ts:109](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L109)*
+*Defined in [src/index.ts:109](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L109)*
 
 Generates keys for asymmetric encryption/decryption
 
@@ -176,7 +176,7 @@ ___
 
 ▸ **generateSymmetricKey**(): `Promise`<[SymmetricKey](../interfaces/symmetrickey.md)>
 
-*Defined in [src/index.ts:101](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L101)*
+*Defined in [src/index.ts:101](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L101)*
 
 Generates key for symmetric encryption/decryption
 
@@ -190,7 +190,7 @@ ___
 
 ▸ **getMaxFileSize**(): `Promise`<`number`>
 
-*Defined in [src/index.ts:93](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L93)*
+*Defined in [src/index.ts:93](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L93)*
 
 Returns maximum file size in bytes
 
@@ -204,7 +204,7 @@ ___
 
 ▸ **getVersion**(): `string`
 
-*Defined in [src/index.ts:85](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L85)*
+*Defined in [src/index.ts:85](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L85)*
 
 Returns API version
 
@@ -218,7 +218,7 @@ ___
 
 ▸ **serializePublicKey**(publicKeyJWK: *[PublicKey](../interfaces/publickey.md)*): `string`
 
-*Defined in [src/index.ts:138](https://github.com/repux/repux-lib/blob/7e923cd/src/index.ts#L138)*
+*Defined in [src/index.ts:138](https://github.com/repux/repux-lib/blob/09025a1/src/index.ts#L138)*
 
 Serializes public key as a string.
 

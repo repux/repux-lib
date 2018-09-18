@@ -24,7 +24,7 @@
 
 **● fileHash**: *`IpfsFileHash`*
 
-*Defined in [src/types/eula.ts:13](https://github.com/repux/repux-lib/blob/7e923cd/src/types/eula.ts#L13)*
+*Defined in [src/types/eula.ts:13](https://github.com/repux/repux-lib/blob/09025a1/src/types/eula.ts#L13)*
 
 File hash
 
@@ -35,7 +35,7 @@ ___
 
 **● fileName**: *`string`*
 
-*Defined in [src/types/eula.ts:18](https://github.com/repux/repux-lib/blob/7e923cd/src/types/eula.ts#L18)*
+*Defined in [src/types/eula.ts:18](https://github.com/repux/repux-lib/blob/09025a1/src/types/eula.ts#L18)*
 
 File name
 
@@ -46,7 +46,7 @@ ___
 
 **● type**: *[EulaType](../enums/eulatype.md)*
 
-*Defined in [src/types/eula.ts:8](https://github.com/repux/repux-lib/blob/7e923cd/src/types/eula.ts#L8)*
+*Defined in [src/types/eula.ts:8](https://github.com/repux/repux-lib/blob/09025a1/src/types/eula.ts#L8)*
 
 Type of EULA
 

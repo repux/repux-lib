@@ -1,6 +1,6 @@
 {
-  "name": "repux-lib",
-  "version": "0.6.1",
+  "name": "@repux/repux-lib",
+  "version": "0.7.0",
   "description": "RepuX encryption/decryption library",
   "author": "RepuX <support@repux.io>",
   "license": "MIT",
@@ -27,6 +27,9 @@
     "test:watch": "karma start --auto-watch --browsers ChromeHeadless karma.conf.js --folder test/unit",
     "release": "semantic-release",
     "docs": "typedoc --theme markdown --mdEngine github --out ./docs/ --name \"API Reference\" --mode file --readme none --excludePrivate --excludeProtected --excludeExternals"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@semantic-release/git": "^5.0.0",

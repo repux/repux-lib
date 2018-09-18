@@ -38,7 +38,7 @@
 
 ⊕ **new BlobWriter**(fileName: *`string`*, fileSize: *`number`*): [BlobWriter](blobwriter.md)
 
-*Defined in [src/file-handling/blob-writer.ts:9](https://github.com/repux/repux-lib/blob/7e923cd/src/file-handling/blob-writer.ts#L9)*
+*Defined in [src/file-handling/blob-writer.ts:9](https://github.com/repux/repux-lib/blob/09025a1/src/file-handling/blob-writer.ts#L9)*
 
 **Parameters:**
 
@@ -61,7 +61,7 @@ ___
 
 *Implementation of [FileWriterInterface](../interfaces/filewriterinterface.md).[fileName](../interfaces/filewriterinterface.md#filename)*
 
-*Defined in [src/file-handling/blob-writer.ts:6](https://github.com/repux/repux-lib/blob/7e923cd/src/file-handling/blob-writer.ts#L6)*
+*Defined in [src/file-handling/blob-writer.ts:6](https://github.com/repux/repux-lib/blob/09025a1/src/file-handling/blob-writer.ts#L6)*
 
 ___
 <a id="filesize"></a>
@@ -72,7 +72,7 @@ ___
 
 *Implementation of [FileWriterInterface](../interfaces/filewriterinterface.md).[fileSize](../interfaces/filewriterinterface.md#filesize)*
 
-*Defined in [src/file-handling/blob-writer.ts:7](https://github.com/repux/repux-lib/blob/7e923cd/src/file-handling/blob-writer.ts#L7)*
+*Defined in [src/file-handling/blob-writer.ts:7](https://github.com/repux/repux-lib/blob/09025a1/src/file-handling/blob-writer.ts#L7)*
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 *Implementation of [FileWriterInterface](../interfaces/filewriterinterface.md).[getFileURL](../interfaces/filewriterinterface.md#getfileurl)*
 
-*Defined in [src/file-handling/blob-writer.ts:40](https://github.com/repux/repux-lib/blob/7e923cd/src/file-handling/blob-writer.ts#L40)*
+*Defined in [src/file-handling/blob-writer.ts:40](https://github.com/repux/repux-lib/blob/09025a1/src/file-handling/blob-writer.ts#L40)*
 
 **Returns:** `string`
 
@@ -99,7 +99,7 @@ ___
 
 *Implementation of [FileWriterInterface](../interfaces/filewriterinterface.md).[init](../interfaces/filewriterinterface.md#init)*
 
-*Defined in [src/file-handling/blob-writer.ts:20](https://github.com/repux/repux-lib/blob/7e923cd/src/file-handling/blob-writer.ts#L20)*
+*Defined in [src/file-handling/blob-writer.ts:20](https://github.com/repux/repux-lib/blob/09025a1/src/file-handling/blob-writer.ts#L20)*
 
 **Returns:** `Promise`<`Object`>
 
@@ -112,7 +112,7 @@ ___
 
 *Implementation of [FileWriterInterface](../interfaces/filewriterinterface.md).[write](../interfaces/filewriterinterface.md#write)*
 
-*Defined in [src/file-handling/blob-writer.ts:32](https://github.com/repux/repux-lib/blob/7e923cd/src/file-handling/blob-writer.ts#L32)*
+*Defined in [src/file-handling/blob-writer.ts:32](https://github.com/repux/repux-lib/blob/09025a1/src/file-handling/blob-writer.ts#L32)*
 
 **Parameters:**
 
@@ -129,7 +129,7 @@ ___
 
 ▸ **isSupported**(): `boolean`
 
-*Defined in [src/file-handling/blob-writer.ts:16](https://github.com/repux/repux-lib/blob/7e923cd/src/file-handling/blob-writer.ts#L16)*
+*Defined in [src/file-handling/blob-writer.ts:16](https://github.com/repux/repux-lib/blob/09025a1/src/file-handling/blob-writer.ts#L16)*
 
 **Returns:** `boolean`
 

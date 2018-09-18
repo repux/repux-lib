@@ -24,7 +24,7 @@
 
 ▸ **importPrivateKey**(privateKeyJwk: *[PrivateKey](../interfaces/privatekey.md)*): `PromiseLike`<`CryptoKey`>
 
-*Defined in [src/crypto/key-importer.ts:14](https://github.com/repux/repux-lib/blob/7e923cd/src/crypto/key-importer.ts#L14)*
+*Defined in [src/crypto/key-importer.ts:14](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-importer.ts#L14)*
 
 **Parameters:**
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **importPublicKey**(publicKeyJwk: *[PublicKey](../interfaces/publickey.md)*): `PromiseLike`<`CryptoKey`>
 
-*Defined in [src/crypto/key-importer.ts:7](https://github.com/repux/repux-lib/blob/7e923cd/src/crypto/key-importer.ts#L7)*
+*Defined in [src/crypto/key-importer.ts:7](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-importer.ts#L7)*
 
 **Parameters:**
 
@@ -58,7 +58,7 @@ ___
 
 ▸ **importSymmetricKey**(symmetricKeyJwk: *[SymmetricKey](../interfaces/symmetrickey.md)*): `PromiseLike`<`CryptoKey`>
 
-*Defined in [src/crypto/key-importer.ts:21](https://github.com/repux/repux-lib/blob/7e923cd/src/crypto/key-importer.ts#L21)*
+*Defined in [src/crypto/key-importer.ts:21](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-importer.ts#L21)*
 
 **Parameters:**
 

@@ -26,7 +26,7 @@
 
 ⊕ **new KeyEncryptor**(textEncoder: *`TextEncoder`*, keyImporter: *[KeyImporter](keyimporter.md)*, base64Encoder: *[Base64Encoder](base64encoder.md)*): [KeyEncryptor](keyencryptor.md)
 
-*Defined in [src/crypto/key-encryptor.ts:7](https://github.com/repux/repux-lib/blob/7e923cd/src/crypto/key-encryptor.ts#L7)*
+*Defined in [src/crypto/key-encryptor.ts:7](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-encryptor.ts#L7)*
 
 **Parameters:**
 
@@ -48,7 +48,7 @@ ___
 
 ▸ **encryptSymmetricKey**(symmetricKey: *[SymmetricKey](../interfaces/symmetrickey.md)*, publicKey: *[PublicKey](../interfaces/publickey.md)*): `Promise`<`string`>
 
-*Defined in [src/crypto/key-encryptor.ts:14](https://github.com/repux/repux-lib/blob/7e923cd/src/crypto/key-encryptor.ts#L14)*
+*Defined in [src/crypto/key-encryptor.ts:14](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-encryptor.ts#L14)*
 
 **Parameters:**
 

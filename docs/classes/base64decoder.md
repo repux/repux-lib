@@ -22,7 +22,7 @@
 
 ▸ **decode**(str: *`string`*): `Uint8Array`
 
-*Defined in [src/utils/base64-decoder.ts:2](https://github.com/repux/repux-lib/blob/7e923cd/src/utils/base64-decoder.ts#L2)*
+*Defined in [src/utils/base64-decoder.ts:2](https://github.com/repux/repux-lib/blob/09025a1/src/utils/base64-decoder.ts#L2)*
 
 **Parameters:**
 
