@@ -1,3 +1,5 @@
+.idea/
+build/tests/
 coverage/
 docs/
 examples/
@@ -5,16 +7,14 @@ node_modules/
 src/
 test/
 .babelrc
-.eslint
+.eslintrc
 .gitignore
 .npmignore
 .npmrc
 .releaserc
-CONTRIBUTING.md
 index.html
 intellij-cs.xml
 karma.conf.js
-README.md
 tsconfig.json
 tslint.json
 webpack.config.js

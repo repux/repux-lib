@@ -19,7 +19,7 @@
 
 **NON_VERIFIED_USER**:  = "NON_VERIFIED_USER"
 
-*Defined in [src/types/buyer-type.ts:3](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/buyer-type.ts#L3)*
+*Defined in [src/types/buyer-type.ts:3](https://github.com/repux/repux-lib/blob/7768859/src/types/buyer-type.ts#L3)*
 
 ___
 <a id="verified_user"></a>
@@ -28,7 +28,7 @@ ___
 
 **VERIFIED_USER**:  = "VERIFIED_USER"
 
-*Defined in [src/types/buyer-type.ts:2](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/buyer-type.ts#L2)*
+*Defined in [src/types/buyer-type.ts:2](https://github.com/repux/repux-lib/blob/7768859/src/types/buyer-type.ts#L2)*
 
 ___
 

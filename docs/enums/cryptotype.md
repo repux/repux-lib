@@ -20,7 +20,7 @@
 
 **DECRYPT**:  = "decrypt"
 
-*Defined in [src/types/crypto-type.ts:3](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/crypto-type.ts#L3)*
+*Defined in [src/types/crypto-type.ts:3](https://github.com/repux/repux-lib/blob/7768859/src/types/crypto-type.ts#L3)*
 
 ___
 <a id="encrypt"></a>
@@ -29,7 +29,7 @@ ___
 
 **ENCRYPT**:  = "encrypt"
 
-*Defined in [src/types/crypto-type.ts:2](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/crypto-type.ts#L2)*
+*Defined in [src/types/crypto-type.ts:2](https://github.com/repux/repux-lib/blob/7768859/src/types/crypto-type.ts#L2)*
 
 ___
 <a id="reencrypt"></a>
@@ -38,7 +38,7 @@ ___
 
 **REENCRYPT**:  = "reencrypt"
 
-*Defined in [src/types/crypto-type.ts:4](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/crypto-type.ts#L4)*
+*Defined in [src/types/crypto-type.ts:4](https://github.com/repux/repux-lib/blob/7768859/src/types/crypto-type.ts#L4)*
 
 ___
 

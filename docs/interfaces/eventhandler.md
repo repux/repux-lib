@@ -9,7 +9,7 @@
 ## Callable
 ▸ **__call**(eventType: *[EventType](../enums/eventtype.md)*, ...args: *`any`[]*): `any`
 
-*Defined in [src/utils/observable.ts:3](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/observable.ts#L3)*
+*Defined in [src/utils/observable.ts:3](https://github.com/repux/repux-lib/blob/7768859/src/utils/observable.ts#L3)*
 
 **Parameters:**
 

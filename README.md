@@ -22,7 +22,7 @@ console.log(version);
 ```
 
 ### API Reference
-API Reference is available [here](docs/README.md)
+API Reference is available [here](https://github.com/repux/repux-lib/tree/master/docs/README.md)
 
 ### How it works
 1. Data seller should generate RSA key pair using RepuxLib.generateAsymmetricKeyPair() function. This key pair should be stored on user local device.
@@ -69,4 +69,4 @@ API Reference is available [here](docs/README.md)
 | Safari  | Mobile  | Not tested   | -                       |       |
 
 ## Want to help?
-Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contributing](CONTRIBUTING.md)
+Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contributing](https://github.com/repux/repux-lib/tree/master/CONTRIBUTING.md)

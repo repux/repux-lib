@@ -25,7 +25,7 @@
 
 **● cities**: *`string`[]*
 
-*Defined in [src/types/data-location.ts:20](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/data-location.ts#L20)*
+*Defined in [src/types/data-location.ts:20](https://github.com/repux/repux-lib/blob/7768859/src/types/data-location.ts#L20)*
 
 List of cities
 
@@ -36,7 +36,7 @@ ___
 
 **● countries**: *`string`[]*
 
-*Defined in [src/types/data-location.ts:10](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/data-location.ts#L10)*
+*Defined in [src/types/data-location.ts:10](https://github.com/repux/repux-lib/blob/7768859/src/types/data-location.ts#L10)*
 
 List of countries
 
@@ -47,7 +47,7 @@ ___
 
 **● global**: *`boolean`*
 
-*Defined in [src/types/data-location.ts:5](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/data-location.ts#L5)*
+*Defined in [src/types/data-location.ts:5](https://github.com/repux/repux-lib/blob/7768859/src/types/data-location.ts#L5)*
 
 It specifies if data is global (if it is set to true, other fields should be omitted)
 
@@ -58,7 +58,7 @@ ___
 
 **● regions**: *`string`[]*
 
-*Defined in [src/types/data-location.ts:15](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/data-location.ts#L15)*
+*Defined in [src/types/data-location.ts:15](https://github.com/repux/repux-lib/blob/7768859/src/types/data-location.ts#L15)*
 
 List of regions
 

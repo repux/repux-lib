@@ -28,7 +28,7 @@
 
 ▸ **getUA**(): `string`
 
-*Defined in [src/utils/user-agent.ts:2](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/user-agent.ts#L2)*
+*Defined in [src/utils/user-agent.ts:2](https://github.com/repux/repux-lib/blob/7768859/src/utils/user-agent.ts#L2)*
 
 **Returns:** `string`
 
@@ -39,7 +39,7 @@ ___
 
 ▸ **is64bit**(): `boolean`
 
-*Defined in [src/utils/user-agent.ts:26](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/user-agent.ts#L26)*
+*Defined in [src/utils/user-agent.ts:26](https://github.com/repux/repux-lib/blob/7768859/src/utils/user-agent.ts#L26)*
 
 **Returns:** `boolean`
 
@@ -50,7 +50,7 @@ ___
 
 ▸ **isChromeOS**(): `boolean`
 
-*Defined in [src/utils/user-agent.ts:10](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/user-agent.ts#L10)*
+*Defined in [src/utils/user-agent.ts:10](https://github.com/repux/repux-lib/blob/7768859/src/utils/user-agent.ts#L10)*
 
 **Returns:** `boolean`
 
@@ -61,7 +61,7 @@ ___
 
 ▸ **isEdge**(): `boolean`
 
-*Defined in [src/utils/user-agent.ts:22](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/user-agent.ts#L22)*
+*Defined in [src/utils/user-agent.ts:22](https://github.com/repux/repux-lib/blob/7768859/src/utils/user-agent.ts#L22)*
 
 **Returns:** `boolean`
 
@@ -72,7 +72,7 @@ ___
 
 ▸ **isFirefoxOS**(): `boolean`
 
-*Defined in [src/utils/user-agent.ts:14](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/user-agent.ts#L14)*
+*Defined in [src/utils/user-agent.ts:14](https://github.com/repux/repux-lib/blob/7768859/src/utils/user-agent.ts#L14)*
 
 **Returns:** `boolean`
 
@@ -83,7 +83,7 @@ ___
 
 ▸ **isMobile**(): `boolean`
 
-*Defined in [src/utils/user-agent.ts:6](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/user-agent.ts#L6)*
+*Defined in [src/utils/user-agent.ts:6](https://github.com/repux/repux-lib/blob/7768859/src/utils/user-agent.ts#L6)*
 
 **Returns:** `boolean`
 
@@ -94,7 +94,7 @@ ___
 
 ▸ **isTrident**(): `boolean`
 
-*Defined in [src/utils/user-agent.ts:18](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/user-agent.ts#L18)*
+*Defined in [src/utils/user-agent.ts:18](https://github.com/repux/repux-lib/blob/7768859/src/utils/user-agent.ts#L18)*
 
 **Returns:** `boolean`
 

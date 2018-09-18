@@ -26,7 +26,7 @@
 
 ⊕ **new FileSize**(userAgent: *[UserAgent](useragent.md)*): [FileSize](filesize.md)
 
-*Defined in [src/file-handling/file-size.ts:5](https://github.com/repux/repux-lib/blob/dcfa8fe/src/file-handling/file-size.ts#L5)*
+*Defined in [src/file-handling/file-size.ts:5](https://github.com/repux/repux-lib/blob/7768859/src/file-handling/file-size.ts#L5)*
 
 **Parameters:**
 
@@ -46,7 +46,7 @@ ___
 
 ▸ **getMaxFileSize**(): `Promise`<`number`>
 
-*Defined in [src/file-handling/file-size.ts:9](https://github.com/repux/repux-lib/blob/dcfa8fe/src/file-handling/file-size.ts#L9)*
+*Defined in [src/file-handling/file-size.ts:9](https://github.com/repux/repux-lib/blob/7768859/src/file-handling/file-size.ts#L9)*
 
 **Returns:** `Promise`<`number`>
 

@@ -22,7 +22,7 @@
 
 ▸ **serializePublicKey**(publicKeyJWK: *[PublicKey](../interfaces/publickey.md)*): `string`
 
-*Defined in [src/crypto/key-serializer.ts:6](https://github.com/repux/repux-lib/blob/dcfa8fe/src/crypto/key-serializer.ts#L6)*
+*Defined in [src/crypto/key-serializer.ts:6](https://github.com/repux/repux-lib/blob/7768859/src/crypto/key-serializer.ts#L6)*
 
 **Parameters:**
 
