@@ -22,7 +22,7 @@
 
 ▸ **create**(fileName: *`string`*, fileSize: *`number`*): `Promise`< [FileSystemWriter](filesystemwriter.md) &#124; [BlobWriter](blobwriter.md)>
 
-*Defined in [src/file-handling/file-writer-factory.ts:6](https://github.com/repux/repux-lib/blob/09025a1/src/file-handling/file-writer-factory.ts#L6)*
+*Defined in [src/file-handling/file-writer-factory.ts:6](https://github.com/repux/repux-lib/blob/dcfa8fe/src/file-handling/file-writer-factory.ts#L6)*
 
 **Parameters:**
 

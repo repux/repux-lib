@@ -22,7 +22,7 @@
 
 ▸ **encode**(u8: *`Uint8Array`*): `string`
 
-*Defined in [src/utils/base64-encoder.ts:2](https://github.com/repux/repux-lib/blob/09025a1/src/utils/base64-encoder.ts#L2)*
+*Defined in [src/utils/base64-encoder.ts:2](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/base64-encoder.ts#L2)*
 
 **Parameters:**
 

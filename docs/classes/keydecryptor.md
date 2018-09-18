@@ -26,7 +26,7 @@
 
 ⊕ **new KeyDecryptor**(textDecoder: *`TextDecoder`*, keyImporter: *[KeyImporter](keyimporter.md)*, base64Decoder: *[Base64Decoder](base64decoder.md)*): [KeyDecryptor](keydecryptor.md)
 
-*Defined in [src/crypto/key-decryptor.ts:7](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-decryptor.ts#L7)*
+*Defined in [src/crypto/key-decryptor.ts:7](https://github.com/repux/repux-lib/blob/dcfa8fe/src/crypto/key-decryptor.ts#L7)*
 
 **Parameters:**
 
@@ -48,7 +48,7 @@ ___
 
 ▸ **decryptSymmetricKey**(encryptedSymmetricKey: *`string`*, privateKey: *[PrivateKey](../interfaces/privatekey.md)*): `Promise`<[SymmetricKey](../interfaces/symmetrickey.md)>
 
-*Defined in [src/crypto/key-decryptor.ts:14](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-decryptor.ts#L14)*
+*Defined in [src/crypto/key-decryptor.ts:14](https://github.com/repux/repux-lib/blob/dcfa8fe/src/crypto/key-decryptor.ts#L14)*
 
 **Parameters:**
 

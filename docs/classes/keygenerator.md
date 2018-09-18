@@ -24,7 +24,7 @@
 
 ▸ **generateAsymmetricKeyPair**(): `Promise`<[AsymmetricKeyPair](../interfaces/asymmetrickeypair.md)>
 
-*Defined in [src/crypto/key-generator.ts:26](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-generator.ts#L26)*
+*Defined in [src/crypto/key-generator.ts:26](https://github.com/repux/repux-lib/blob/dcfa8fe/src/crypto/key-generator.ts#L26)*
 
 **Returns:** `Promise`<[AsymmetricKeyPair](../interfaces/asymmetrickeypair.md)>
 
@@ -35,7 +35,7 @@ ___
 
 ▸ **generateInitializationVector**(): `Uint8Array`
 
-*Defined in [src/crypto/key-generator.ts:13](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-generator.ts#L13)*
+*Defined in [src/crypto/key-generator.ts:13](https://github.com/repux/repux-lib/blob/dcfa8fe/src/crypto/key-generator.ts#L13)*
 
 **Returns:** `Uint8Array`
 
@@ -46,7 +46,7 @@ ___
 
 ▸ **generateSymmetricKey**(): `Promise`<[SymmetricKey](../interfaces/symmetrickey.md)>
 
-*Defined in [src/crypto/key-generator.ts:17](https://github.com/repux/repux-lib/blob/09025a1/src/crypto/key-generator.ts#L17)*
+*Defined in [src/crypto/key-generator.ts:17](https://github.com/repux/repux-lib/blob/dcfa8fe/src/crypto/key-generator.ts#L17)*
 
 **Returns:** `Promise`<[SymmetricKey](../interfaces/symmetrickey.md)>
 

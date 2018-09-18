@@ -22,7 +22,7 @@
 
 **files**: *`object`*
 
-*Defined in [test/helpers/ipfs-api-mock.ts:26](https://github.com/repux/repux-lib/blob/09025a1/test/helpers/ipfs-api-mock.ts#L26)*
+*Defined in [test/helpers/ipfs-api-mock.ts:26](https://github.com/repux/repux-lib/blob/dcfa8fe/test/helpers/ipfs-api-mock.ts#L26)*
 
 <a id="files.add"></a>
 
@@ -30,7 +30,7 @@
 
 ▸ **add**(buffer: *`Buffer`*, callback: *`any`*): `any`
 
-*Defined in [test/helpers/ipfs-api-mock.ts:35](https://github.com/repux/repux-lib/blob/09025a1/test/helpers/ipfs-api-mock.ts#L35)*
+*Defined in [test/helpers/ipfs-api-mock.ts:35](https://github.com/repux/repux-lib/blob/dcfa8fe/test/helpers/ipfs-api-mock.ts#L35)*
 
 **Parameters:**
 
@@ -48,7 +48,7 @@ ___
 
 ▸ **get**(hash: *`IpfsFileHash`*, callback: *`any`*): `any`
 
-*Defined in [test/helpers/ipfs-api-mock.ts:27](https://github.com/repux/repux-lib/blob/09025a1/test/helpers/ipfs-api-mock.ts#L27)*
+*Defined in [test/helpers/ipfs-api-mock.ts:27](https://github.com/repux/repux-lib/blob/dcfa8fe/test/helpers/ipfs-api-mock.ts#L27)*
 
 **Parameters:**
 

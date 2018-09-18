@@ -24,7 +24,7 @@
 
 **● fileHash**: *`IpfsFileHash`*
 
-*Defined in [src/types/attachment.ts:12](https://github.com/repux/repux-lib/blob/09025a1/src/types/attachment.ts#L12)*
+*Defined in [src/types/attachment.ts:12](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/attachment.ts#L12)*
 
 File hash
 
@@ -35,7 +35,7 @@ ___
 
 **● fileName**: *`string`*
 
-*Defined in [src/types/attachment.ts:17](https://github.com/repux/repux-lib/blob/09025a1/src/types/attachment.ts#L17)*
+*Defined in [src/types/attachment.ts:17](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/attachment.ts#L17)*
 
 File name
 
@@ -46,7 +46,7 @@ ___
 
 **● title**: *`string`*
 
-*Defined in [src/types/attachment.ts:7](https://github.com/repux/repux-lib/blob/09025a1/src/types/attachment.ts#L7)*
+*Defined in [src/types/attachment.ts:7](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/attachment.ts#L7)*
 
 Title
 

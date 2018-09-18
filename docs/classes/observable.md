@@ -30,7 +30,7 @@
 
 ⊕ **new Observable**(): [Observable](observable.md)
 
-*Defined in [src/utils/observable.ts:8](https://github.com/repux/repux-lib/blob/09025a1/src/utils/observable.ts#L8)*
+*Defined in [src/utils/observable.ts:8](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/observable.ts#L8)*
 
 **Returns:** [Observable](observable.md)
 
@@ -44,7 +44,7 @@ ___
 
 ▸ **emit**(eventTypes: * [EventType](../enums/eventtype.md)[] &#124; [EventType](../enums/eventtype.md)*, ...args: *`any`[]*): [Observable](observable.md)
 
-*Defined in [src/utils/observable.ts:19](https://github.com/repux/repux-lib/blob/09025a1/src/utils/observable.ts#L19)*
+*Defined in [src/utils/observable.ts:19](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/observable.ts#L19)*
 
 Emits event
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **off**(eventTypes?: * [EventType](../enums/eventtype.md)[] &#124; [EventType](../enums/eventtype.md)*, handler?: *`any`*): [Observable](observable.md)
 
-*Defined in [src/utils/observable.ts:61](https://github.com/repux/repux-lib/blob/09025a1/src/utils/observable.ts#L61)*
+*Defined in [src/utils/observable.ts:61](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/observable.ts#L61)*
 
 Usbuscribes from events
 
@@ -84,7 +84,7 @@ ___
 
 ▸ **on**(eventTypes: * [EventType](../enums/eventtype.md)[] &#124; [EventType](../enums/eventtype.md)*, handler: *[EventHandler](../interfaces/eventhandler.md)*): [Observable](observable.md)
 
-*Defined in [src/utils/observable.ts:41](https://github.com/repux/repux-lib/blob/09025a1/src/utils/observable.ts#L41)*
+*Defined in [src/utils/observable.ts:41](https://github.com/repux/repux-lib/blob/dcfa8fe/src/utils/observable.ts#L41)*
 
 Subscribes to events
 

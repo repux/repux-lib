@@ -20,7 +20,7 @@
 
 **OWNER**:  = "OWNER"
 
-*Defined in [src/types/eula-type.ts:4](https://github.com/repux/repux-lib/blob/09025a1/src/types/eula-type.ts#L4)*
+*Defined in [src/types/eula-type.ts:4](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/eula-type.ts#L4)*
 
 ___
 <a id="restrictive"></a>
@@ -29,7 +29,7 @@ ___
 
 **RESTRICTIVE**:  = "RESTRICTIVE"
 
-*Defined in [src/types/eula-type.ts:3](https://github.com/repux/repux-lib/blob/09025a1/src/types/eula-type.ts#L3)*
+*Defined in [src/types/eula-type.ts:3](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/eula-type.ts#L3)*
 
 ___
 <a id="standard"></a>
@@ -38,7 +38,7 @@ ___
 
 **STANDARD**:  = "STANDARD"
 
-*Defined in [src/types/eula-type.ts:2](https://github.com/repux/repux-lib/blob/09025a1/src/types/eula-type.ts#L2)*
+*Defined in [src/types/eula-type.ts:2](https://github.com/repux/repux-lib/blob/dcfa8fe/src/types/eula-type.ts#L2)*
 
 ___
 
