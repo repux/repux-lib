@@ -21,7 +21,7 @@
 
 **BYTE**:  = 1
 
-*Defined in [src/types/storage-size.ts:2](https://github.com/repux/repux-lib/blob/7e923cd/src/types/storage-size.ts#L2)*
+*Defined in [src/types/storage-size.ts:2](https://github.com/repux/repux-lib/blob/7768859/src/types/storage-size.ts#L2)*
 
 ___
 <a id="gigabyte"></a>
@@ -30,7 +30,7 @@ ___
 
 **GIGABYTE**:  = 1073741824
 
-*Defined in [src/types/storage-size.ts:5](https://github.com/repux/repux-lib/blob/7e923cd/src/types/storage-size.ts#L5)*
+*Defined in [src/types/storage-size.ts:5](https://github.com/repux/repux-lib/blob/7768859/src/types/storage-size.ts#L5)*
 
 ___
 <a id="kilobyte"></a>
@@ -39,7 +39,7 @@ ___
 
 **KILOBYTE**:  = 1024
 
-*Defined in [src/types/storage-size.ts:3](https://github.com/repux/repux-lib/blob/7e923cd/src/types/storage-size.ts#L3)*
+*Defined in [src/types/storage-size.ts:3](https://github.com/repux/repux-lib/blob/7768859/src/types/storage-size.ts#L3)*
 
 ___
 <a id="megabyte"></a>
@@ -48,7 +48,7 @@ ___
 
 **MEGABYTE**:  = 1048576
 
-*Defined in [src/types/storage-size.ts:4](https://github.com/repux/repux-lib/blob/7e923cd/src/types/storage-size.ts#L4)*
+*Defined in [src/types/storage-size.ts:4](https://github.com/repux/repux-lib/blob/7768859/src/types/storage-size.ts#L4)*
 
 ___
 

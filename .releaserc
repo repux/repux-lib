@@ -4,9 +4,9 @@
   "noCi": true,
   "prepare": ["@semantic-release/npm", {
     "path": "@semantic-release/git",
-    "assets": ["package.json", "yarn.lock"],
+    "assets": ["build/*"],
     "message": "chore(release): ${nextRelease.version}"
   }],
-  "verifyConditions": ["@semantic-release/github"],
-  "publish": ["@semantic-release/github"]
+  "verifyConditions": ["@semantic-release/npm", "@semantic-release/github"],
+  "publish": ["@semantic-release/npm", "@semantic-release/github"],
 }

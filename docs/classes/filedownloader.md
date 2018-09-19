@@ -36,7 +36,7 @@
 
 *Overrides [ProgressCrypto](progresscrypto.md).[constructor](progresscrypto.md#constructor)*
 
-*Defined in [src/ipfs/file-downloader.ts:24](https://github.com/repux/repux-lib/blob/7e923cd/src/ipfs/file-downloader.ts#L24)*
+*Defined in [src/ipfs/file-downloader.ts:24](https://github.com/repux/repux-lib/blob/7768859/src/ipfs/file-downloader.ts#L24)*
 
 **Parameters:**
 
@@ -59,7 +59,7 @@ ___
 
 ▸ **download**(privateKey: *[PrivateKey](../interfaces/privatekey.md)*, fileHash: *`IpfsFileHash`*): [FileDownloader](filedownloader.md)
 
-*Defined in [src/ipfs/file-downloader.ts:45](https://github.com/repux/repux-lib/blob/7e923cd/src/ipfs/file-downloader.ts#L45)*
+*Defined in [src/ipfs/file-downloader.ts:45](https://github.com/repux/repux-lib/blob/7768859/src/ipfs/file-downloader.ts#L45)*
 
 Downloads and decrypts file
 
@@ -81,7 +81,7 @@ ___
 
 *Inherited from [Observable](observable.md).[emit](observable.md#emit)*
 
-*Defined in [src/utils/observable.ts:19](https://github.com/repux/repux-lib/blob/7e923cd/src/utils/observable.ts#L19)*
+*Defined in [src/utils/observable.ts:19](https://github.com/repux/repux-lib/blob/7768859/src/utils/observable.ts#L19)*
 
 Emits event
 
@@ -103,7 +103,7 @@ ___
 
 *Inherited from [Observable](observable.md).[off](observable.md#off)*
 
-*Defined in [src/utils/observable.ts:61](https://github.com/repux/repux-lib/blob/7e923cd/src/utils/observable.ts#L61)*
+*Defined in [src/utils/observable.ts:61](https://github.com/repux/repux-lib/blob/7768859/src/utils/observable.ts#L61)*
 
 Usbuscribes from events
 
@@ -125,7 +125,7 @@ ___
 
 *Inherited from [Observable](observable.md).[on](observable.md#on)*
 
-*Defined in [src/utils/observable.ts:41](https://github.com/repux/repux-lib/blob/7e923cd/src/utils/observable.ts#L41)*
+*Defined in [src/utils/observable.ts:41](https://github.com/repux/repux-lib/blob/7768859/src/utils/observable.ts#L41)*
 
 Subscribes to events
 
@@ -147,7 +147,7 @@ ___
 
 *Inherited from [ProgressCrypto](progresscrypto.md).[terminate](progresscrypto.md#terminate)*
 
-*Defined in [src/crypto/progress-crypto.ts:85](https://github.com/repux/repux-lib/blob/7e923cd/src/crypto/progress-crypto.ts#L85)*
+*Defined in [src/crypto/progress-crypto.ts:85](https://github.com/repux/repux-lib/blob/7768859/src/crypto/progress-crypto.ts#L85)*
 
 Terminates worker thread
 
@@ -162,7 +162,7 @@ ___
 
 *Inherited from [ProgressCrypto](progresscrypto.md).[getErrorByType](progresscrypto.md#geterrorbytype)*
 
-*Defined in [src/crypto/progress-crypto.ts:68](https://github.com/repux/repux-lib/blob/7e923cd/src/crypto/progress-crypto.ts#L68)*
+*Defined in [src/crypto/progress-crypto.ts:68](https://github.com/repux/repux-lib/blob/7768859/src/crypto/progress-crypto.ts#L68)*
 
 Returns error by worker type
 
@@ -185,7 +185,7 @@ ___
 
 *Inherited from [ProgressCrypto](progresscrypto.md).[getWorkerByType](progresscrypto.md#getworkerbytype)*
 
-*Defined in [src/crypto/progress-crypto.ts:49](https://github.com/repux/repux-lib/blob/7e923cd/src/crypto/progress-crypto.ts#L49)*
+*Defined in [src/crypto/progress-crypto.ts:49](https://github.com/repux/repux-lib/blob/7768859/src/crypto/progress-crypto.ts#L49)*
 
 Returns worker thread by worker type
 

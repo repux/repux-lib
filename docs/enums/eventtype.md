@@ -21,7 +21,7 @@
 
 **CHUNK_CRYPTED**: 
 
-*Defined in [src/types/event-type.ts:5](https://github.com/repux/repux-lib/blob/7e923cd/src/types/event-type.ts#L5)*
+*Defined in [src/types/event-type.ts:5](https://github.com/repux/repux-lib/blob/7768859/src/types/event-type.ts#L5)*
 
 ___
 <a id="error"></a>
@@ -30,7 +30,7 @@ ___
 
 **ERROR**: 
 
-*Defined in [src/types/event-type.ts:4](https://github.com/repux/repux-lib/blob/7e923cd/src/types/event-type.ts#L4)*
+*Defined in [src/types/event-type.ts:4](https://github.com/repux/repux-lib/blob/7768859/src/types/event-type.ts#L4)*
 
 ___
 <a id="finish"></a>
@@ -39,7 +39,7 @@ ___
 
 **FINISH**: 
 
-*Defined in [src/types/event-type.ts:3](https://github.com/repux/repux-lib/blob/7e923cd/src/types/event-type.ts#L3)*
+*Defined in [src/types/event-type.ts:3](https://github.com/repux/repux-lib/blob/7768859/src/types/event-type.ts#L3)*
 
 ___
 <a id="progress"></a>
@@ -48,7 +48,7 @@ ___
 
 **PROGRESS**: 
 
-*Defined in [src/types/event-type.ts:2](https://github.com/repux/repux-lib/blob/7e923cd/src/types/event-type.ts#L2)*
+*Defined in [src/types/event-type.ts:2](https://github.com/repux/repux-lib/blob/7768859/src/types/event-type.ts#L2)*
 
 ___
 

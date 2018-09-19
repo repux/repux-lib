@@ -44,7 +44,7 @@
 
 *Inherited from [FileMetaData](filemetadata.md).[apiDocumentation](filemetadata.md#apidocumentation)*
 
-*Defined in [src/types/file-meta-data.ts:62](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L62)*
+*Defined in [src/types/file-meta-data.ts:62](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L62)*
 
 File API documentation
 
@@ -57,7 +57,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[buyerType](filemetadata.md#buyertype)*
 
-*Defined in [src/types/file-meta-data.ts:47](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L47)*
+*Defined in [src/types/file-meta-data.ts:47](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L47)*
 
 Possible buyer types
 
@@ -70,7 +70,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[category](filemetadata.md#category)*
 
-*Defined in [src/types/file-meta-data.ts:37](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L37)*
+*Defined in [src/types/file-meta-data.ts:37](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L37)*
 
 File categories
 
@@ -81,7 +81,7 @@ ___
 
 **● chunks**: *`string`[]*
 
-*Defined in [src/types/internal-file-meta-data.ts:7](https://github.com/repux/repux-lib/blob/7e923cd/src/types/internal-file-meta-data.ts#L7)*
+*Defined in [src/types/internal-file-meta-data.ts:7](https://github.com/repux/repux-lib/blob/7768859/src/types/internal-file-meta-data.ts#L7)*
 
 File chunks array
 
@@ -94,7 +94,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[eula](filemetadata.md#eula)*
 
-*Defined in [src/types/file-meta-data.ts:57](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L57)*
+*Defined in [src/types/file-meta-data.ts:57](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L57)*
 
 End User License Agreement
 
@@ -108,7 +108,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[fullDescription](filemetadata.md#fulldescription)*
 
-*Defined in [src/types/file-meta-data.ts:22](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L22)*
+*Defined in [src/types/file-meta-data.ts:22](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L22)*
 
 Full description of the file - no length limit
 
@@ -119,7 +119,7 @@ ___
 
 **● initializationVector**: *`Uint8Array`*
 
-*Defined in [src/types/internal-file-meta-data.ts:12](https://github.com/repux/repux-lib/blob/7e923cd/src/types/internal-file-meta-data.ts#L12)*
+*Defined in [src/types/internal-file-meta-data.ts:12](https://github.com/repux/repux-lib/blob/7768859/src/types/internal-file-meta-data.ts#L12)*
 
 Initialization vector
 
@@ -132,7 +132,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[location](filemetadata.md#location)*
 
-*Defined in [src/types/file-meta-data.ts:32](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L32)*
+*Defined in [src/types/file-meta-data.ts:32](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L32)*
 
 Locations where data is collected
 
@@ -146,7 +146,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[maxNumberOfDownloads](filemetadata.md#maxnumberofdownloads)*
 
-*Defined in [src/types/file-meta-data.ts:42](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L42)*
+*Defined in [src/types/file-meta-data.ts:42](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L42)*
 
 Maximum numbers of downloads (-1 means unlimited downloads number)
 
@@ -158,7 +158,7 @@ ___
 **● name**: * `undefined` &#124; `string`
 *
 
-*Defined in [src/types/internal-file-meta-data.ts:22](https://github.com/repux/repux-lib/blob/7e923cd/src/types/internal-file-meta-data.ts#L22)*
+*Defined in [src/types/internal-file-meta-data.ts:22](https://github.com/repux/repux-lib/blob/7768859/src/types/internal-file-meta-data.ts#L22)*
 
 File name
 
@@ -171,7 +171,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[otherDocumentation](filemetadata.md#otherdocumentation)*
 
-*Defined in [src/types/file-meta-data.ts:67](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L67)*
+*Defined in [src/types/file-meta-data.ts:67](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L67)*
 
 Other file documentation
 
@@ -184,7 +184,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[price](filemetadata.md#price)*
 
-*Defined in [src/types/file-meta-data.ts:52](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L52)*
+*Defined in [src/types/file-meta-data.ts:52](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L52)*
 
 Price for file in smallest token unit
 
@@ -197,7 +197,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[sampleFile](filemetadata.md#samplefile)*
 
-*Defined in [src/types/file-meta-data.ts:72](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L72)*
+*Defined in [src/types/file-meta-data.ts:72](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L72)*
 
 Sample not encrypted file
 
@@ -211,7 +211,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[shortDescription](filemetadata.md#shortdescription)*
 
-*Defined in [src/types/file-meta-data.ts:17](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L17)*
+*Defined in [src/types/file-meta-data.ts:17](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L17)*
 
 Short description of the file - up to 256 characters
 
@@ -223,7 +223,7 @@ ___
 **● size**: * `undefined` &#124; `number`
 *
 
-*Defined in [src/types/internal-file-meta-data.ts:27](https://github.com/repux/repux-lib/blob/7e923cd/src/types/internal-file-meta-data.ts#L27)*
+*Defined in [src/types/internal-file-meta-data.ts:27](https://github.com/repux/repux-lib/blob/7768859/src/types/internal-file-meta-data.ts#L27)*
 
 File size
 
@@ -235,7 +235,7 @@ ___
 **● symmetricKey**: * `undefined` &#124; `string`
 *
 
-*Defined in [src/types/internal-file-meta-data.ts:17](https://github.com/repux/repux-lib/blob/7e923cd/src/types/internal-file-meta-data.ts#L17)*
+*Defined in [src/types/internal-file-meta-data.ts:17](https://github.com/repux/repux-lib/blob/7768859/src/types/internal-file-meta-data.ts#L17)*
 
 Encrypted symmetric key
 
@@ -249,7 +249,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[title](filemetadata.md#title)*
 
-*Defined in [src/types/file-meta-data.ts:12](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L12)*
+*Defined in [src/types/file-meta-data.ts:12](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L12)*
 
 Title of the file
 
@@ -262,7 +262,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[type](filemetadata.md#type)*
 
-*Defined in [src/types/file-meta-data.ts:27](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L27)*
+*Defined in [src/types/file-meta-data.ts:27](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L27)*
 
 Possible type of purchase
 
@@ -275,7 +275,7 @@ ___
 
 *Inherited from [FileMetaData](filemetadata.md).[useCaseDocumentation](filemetadata.md#usecasedocumentation)*
 
-*Defined in [src/types/file-meta-data.ts:77](https://github.com/repux/repux-lib/blob/7e923cd/src/types/file-meta-data.ts#L77)*
+*Defined in [src/types/file-meta-data.ts:77](https://github.com/repux/repux-lib/blob/7768859/src/types/file-meta-data.ts#L77)*
 
 Use-case documentation
 
