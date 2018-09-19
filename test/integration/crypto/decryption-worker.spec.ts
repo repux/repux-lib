@@ -7,7 +7,7 @@ import {
   SYMMETRIC_ENCRYPTION_ALGORITHM, VECTOR_SIZE
 } from '../../../src/config';
 import IpfsAPI, { IpfsFileContent, IpfsFileHash } from 'ipfs-api';
-import { AsymmetricKeyPair, RepuxLib, SymmetricKey } from '../../../src/repux-lib';
+import { AsymmetricKeyPair, RepuxLib, SymmetricKey } from '../../../src';
 // @ts-ignore
 import { decryptionWorker } from '../../../src/threads/decryption-worker';
 import { InternalFileMetaData } from '../../../src/types/internal-file-meta-data';
@@ -45,7 +45,7 @@ describe('File chunks shouldn\'t be decrypted when user provides improper keys',
       asymmetricKeys = await repux.generateAsymmetricKeyPair();
       const uploader = repux.createFileUploader();
 
-      uploader.on(EventType.FINISH, (eventType: EventType, metaFileHash: string) => {
+      uploader.on(EventType.FINISH, (_eventType: EventType, metaFileHash: string) => {
         fileHash = metaFileHash;
         symmetricKey = <SymmetricKey> uploader[ 'symmetricKey' ];
 

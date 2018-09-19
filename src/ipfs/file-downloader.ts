@@ -23,6 +23,12 @@ export class FileDownloader extends ProgressCrypto {
   private vector?: Uint8Array;
   private firstChunkData?: Uint8Array;
 
+  /**
+   * @param ipfs - IPFS Api object (see: https://github.com/ipfs/js-ipfs-api)
+   * @param keyDecryptor - KeyDecryptor instance
+   * @param fileSize - FileSize instance
+   * @param keyImporter - KeyImporter instance
+   */
   constructor(
     private readonly ipfs: IpfsAPI,
     private readonly keyDecryptor: KeyDecryptor,

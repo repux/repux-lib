@@ -17,6 +17,12 @@ export class FileReencryptor extends ProgressCrypto {
   private fileHash?: string;
   private fileMeta?: InternalFileMetaData;
 
+  /**
+   * @param ipfs - IPFS Api object (see: https://github.com/ipfs/js-ipfs-api)
+   * @param keyEncryptor - KeyEncryptor instance
+   * @param keyDecryptor - KeyDecryptor instance
+   * @param keyImporter - KeyImporter instance
+   */
   constructor(
     private readonly ipfs: IpfsAPI,
     protected readonly keyEncryptor: KeyEncryptor,
@@ -30,6 +36,7 @@ export class FileReencryptor extends ProgressCrypto {
    * @param oldPrivateKey - Public key in JWK (JSON Web Key) format to decrypt first chunk of file with RSA-OAEP algorithm
    * @param newPublicKey - Public key in JWK (JSON Web Key) format to encrypt first chunk of file with RSA-OAEP algorithm
    * @param fileHash - IPFS hash to meta file
+   * @return FileReencryptor instance
    */
   reencrypt(oldPrivateKey: PrivateKey, newPublicKey: PublicKey, fileHash: IpfsFileHash): FileReencryptor {
     if (!oldPrivateKey || !newPublicKey) {
@@ -44,6 +51,10 @@ export class FileReencryptor extends ProgressCrypto {
     this.ipfs.files.get(this.fileHash, (err, files) => {
       if (!files || files.length === 0) {
         return this.onError(ErrorMessage.FILE_NOT_FOUND);
+      }
+
+      if (err) {
+        return this.onError(err);
       }
 
       files.forEach(async (file) => {
@@ -72,7 +83,7 @@ export class FileReencryptor extends ProgressCrypto {
     const meta: InternalFileMetaData = Object.assign({}, this.fileMeta);
 
     this.ipfs.files.add(Buffer.from(chunk.chunk), async (err, files) => {
-      if (!meta.chunks || !meta.symmetricKey || !this.oldPrivateKey || !this.newPublicKey) {
+      if (err || !meta.chunks || !meta.symmetricKey || !this.oldPrivateKey || !this.newPublicKey) {
         return;
       }
 
@@ -81,12 +92,12 @@ export class FileReencryptor extends ProgressCrypto {
       const decryptedSymmetricKey = await this.keyDecryptor.decryptSymmetricKey(meta.symmetricKey, this.oldPrivateKey);
       meta.symmetricKey = await this.keyEncryptor.encryptSymmetricKey(decryptedSymmetricKey, this.newPublicKey);
 
-      this.ipfs.files.add(Buffer.from(JSON.stringify(meta)), (err, files) => {
-        if (err) {
-          this.onError(err);
+      this.ipfs.files.add(Buffer.from(JSON.stringify(meta)), (_err, _files) => {
+        if (_err) {
+          this.onError(_err);
           return this.terminate();
         }
-        this.emit(EventType.FINISH, files[ 0 ].hash);
+        this.emit(EventType.FINISH, _files[ 0 ].hash);
         this.emit(EventType.PROGRESS, 1);
       });
     });
@@ -99,8 +110,12 @@ export class FileReencryptor extends ProgressCrypto {
         return;
       }
 
+      if (err) {
+        return this.onError(err);
+      }
+
       files.forEach(async (file) => {
-        let content = file.content;
+        const content = file.content;
 
         if (!this.oldPrivateKey || !this.newPublicKey) {
           return;

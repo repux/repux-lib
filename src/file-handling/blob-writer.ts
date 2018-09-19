@@ -38,6 +38,6 @@ export class BlobWriter implements FileWriterInterface {
   }
 
   getFileURL() {
-    return window.URL.createObjectURL(new Blob([ this.data ]));
+    return window.URL.createObjectURL(new Blob(<BlobPart[]> [ this.data ]));
   }
 }

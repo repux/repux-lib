@@ -1,11 +1,11 @@
 {
-  "name": "repux-lib",
-  "version": "0.6.1",
+  "name": "@repux/repux-lib",
+  "version": "0.7.0",
   "description": "RepuX encryption/decryption library",
   "author": "RepuX <support@repux.io>",
   "license": "MIT",
   "main": "build/lib/index.js",
-  "types": "src/repux-lib.ts",
+  "types": "build/types/src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/repux/repux-lib.git"
@@ -25,10 +25,15 @@
     "dev": "WEBPACK_ENV=dev webpack --mode development --progress --colors --watch",
     "test": "karma start --single-run --browsers ChromeHeadless karma.conf.js --folder test/unit",
     "test:watch": "karma start --auto-watch --browsers ChromeHeadless karma.conf.js --folder test/unit",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "docs": "typedoc --theme markdown --mdEngine github --out ./docs/ --name \"API Reference\" --mode file --readme none --excludePrivate --excludeProtected --excludeExternals"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@semantic-release/git": "^5.0.0",
+    "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
     "@types/sinon": "^5.0.1",
     "awesome-typescript-loader": "^5.2.0",
@@ -63,12 +68,13 @@
     "sinon": "^5.0.7",
     "tslint": "^5.10.0",
     "tslint-eslint-rules": "^5.3.1",
-    "typescript": "^2.9.2",
+    "typedoc-plugin-markdown": "^1.1.15",
+    "typedoc": "^0.12.0",
+    "typescript": "^3.0.3",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.15"
   },
   "dependencies": {
-    "@types/chai": "^4.1.4",
     "@types/filesystem": "^0.0.28",
     "@types/node": "^10.3.0",
     "buffer": "5.1.0",

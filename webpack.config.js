@@ -2,11 +2,11 @@ const path = require('path');
 
 module.exports = env => {
     let entries = {};
-    entries['lib/index'] = ['./src/repux-lib.ts'];
+    entries['lib/index'] = ['./src/index.ts'];
 
     if (env && env === 'test') {
         entries = {};
-        entries['tests/index'] = ['./test/integration/run.js'];
+        entries['tests/index'] = ['./test/integration/index.js'];
     }
 
     return {

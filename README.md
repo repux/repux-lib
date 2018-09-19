@@ -1,9 +1,28 @@
-# RepuX JavaScript API
+# RepuX Lib
+This library helps developers using RepuX protocol. It supports file encryption, decryption and storage (including in-browser uploading and downloading) of files on IPFS.
 
-## Installation
+## Quickstart
+
+### Installation
 ```bash
 npm install @repux/repux-lib
 ```
+
+### Usage
+```javascript
+import IpfsAPI from 'ipfs-api';
+import { RepuxLib } from '@repux/repux-lib';
+const repux = new RepuxLib(new IpfsAPI({
+    host: 'marketplace-ipfs.repux.io',
+    port: 443,
+    protocol: 'https'
+}));
+const version = repux.getVersion();
+console.log(version);
+```
+
+### API Reference
+API Reference is available [here](https://github.com/repux/repux-lib/tree/master/docs/README.md)
 
 ### How it works
 1. Data seller should generate RSA key pair using RepuxLib.generateAsymmetricKeyPair() function. This key pair should be stored on user local device.
@@ -33,65 +52,6 @@ npm install @repux/repux-lib
     - Library emits progress event with downloading progress.
     - Library joins all file parts into one file and exposes url to file in finish event.
 
-## Example usage
-```javascript
-import IpfsAPI from 'ipfs-api';
-import { RepuxLib } from 'repux-lib';
-const repux = new RepuxLib(new IpfsAPI({
-    host: '127.0.0.1',
-    port: 5002,
-    protocol: 'http'
-}));
-const version = repux.getVersion();
-console.log(version);
-```
-
-## Development
-* Run ethereum node, compile and migrate contracts. 
-
-* Run following commands:
-```bash
-npm install -g ipfs http-server
-yarn
-```
-    
-additionally run these commands to setup CORS for integration tests   
- 
-    jsipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://127.0.0.1:8081\"]"
-    jsipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
-    jsipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
-
-
-and then start daemon:
-
-    jsipfs daemon   
-
-**Note for ipfs-go users**: Instead of `jsipfs` command use `ipfs`. Also please make sure that you have properly address API configured. Default port 5001 is busy on MacOSX. Please re-configure IPFS using command:
-    
-    ipfs config Addresses.API /ip4/127.0.0.1/tcp/5002 
-
-* And to build library run:
-```bash
-yarn build
-```
-
-## Tests
-
-### Unit testing
-Unit tests are executed by Karma runner (https://karma-runner.github.io) written in Mocha test framework (https://mochajs.org/) using Chai assertions library (http://www.chaijs.com/) with `expect` style. To run unit tests use command: 
-
-    yarn test
-    
-To use watch: 
-
-    yarn test:watch    
-
-### Integration testing
-
-Tp perform integration tests please follow these steps:
-* build library `yarn build:integration-test` 
-* run `http-server` or `npx http-server` 
-* open url in a browser `http://127.0.0.1:8081`.
 
 ## Browser compatibility
 
@@ -108,16 +68,5 @@ Tp perform integration tests please follow these steps:
 | Firefox | Mobile  | &check;      | 100MB                   |       |
 | Safari  | Mobile  | Not tested   | -                       |       |
 
-## Contribution
-We are using [semantic-release](https://github.com/semantic-release/semantic-release) to make semantic versioning easier. 
-This tool requires special commit message convention taken from Angular to determine the type of changes in repository. 
-You can read more about Angular commit message conventions [here](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines).
-Please follow this conventions when you contributing.
-
-## Releasing new version
-To release new library version checkout master branch and run `GH_TOKEN=YOUR-GITHUB-PERSONAL-ACCESS-TOKEN NPM_TOKEN=YOUR-NPM-TOKEN yarn release` command.
-You can also add GH_TOKEN and NPM_TOKEN environment variable to your .bashrc file and then simply run `yarn release` command.
-Semantic-release needs access to at least GitHub **repo** scope. If you don't know how to generate your personal token, please read 
-[this article](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/). You also have to generate NPM_TOKEN. This 
-token is used only to preparing package.json file. Library won't be published to NPM repository until you add "@semantic-release/npm" to **publish** section
-in `.releaserc` file.
+## Want to help?
+Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contributing](https://github.com/repux/repux-lib/tree/master/CONTRIBUTING.md)

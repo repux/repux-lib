@@ -11,6 +11,11 @@ export class Observable {
     this.handlers = new Map<EventType, EventHandler[]>();
   }
 
+  /**
+   * Emits event
+   * @param eventTypes - types of events to emit
+   * @param args - event data
+   */
   emit(eventTypes: EventType[] | EventType, ...args: any[]): Observable {
     setTimeout(() => {
       this.forEachEventType(eventTypes, (eventType: EventType) => {
@@ -28,6 +33,11 @@ export class Observable {
     return this;
   }
 
+  /**
+   * Subscribes to events
+   * @param eventTypes - types of events to subscribe
+   * @param handler - handler method
+   */
   on(eventTypes: EventType[] | EventType, handler: EventHandler): Observable {
     this.forEachEventType(eventTypes, eventType => {
       let handlers = this.handlers.get(eventType);
@@ -43,6 +53,11 @@ export class Observable {
     return this;
   }
 
+  /**
+   * Usbuscribes from events
+   * @param eventTypes - types of events to unsubscribe
+   * @param handler - handler method
+   */
   off(eventTypes?: EventType[] | EventType, handler?: any): Observable {
     if (!eventTypes || Array.isArray(eventTypes) && eventTypes.length === 0) {
       this.handlers = new Map<EventType, EventHandler[]>();

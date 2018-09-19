@@ -45,6 +45,9 @@ export {
   EulaType
 };
 
+/**
+ * Repux Lib
+ */
 export class RepuxLib {
   private readonly fileSize: FileSize;
   private readonly keyGenerator: KeyGenerator;
@@ -54,6 +57,9 @@ export class RepuxLib {
   private readonly keyDeserializer: KeyDeserializer;
   private readonly keyImporter: KeyImporter;
 
+  /**
+   * @param ipfs - IPFS Api object (see: https://github.com/ipfs/js-ipfs-api)
+   */
   constructor(
     private readonly ipfs: IpfsAPI
   ) {
@@ -73,7 +79,8 @@ export class RepuxLib {
   }
 
   /**
-   * Return API version
+   * Returns API version
+   * @return API version
    */
   getVersion(): string {
     return packageConfig.version;
@@ -81,6 +88,7 @@ export class RepuxLib {
 
   /**
    * Returns maximum file size in bytes
+   * @return maximum file size
    */
   getMaxFileSize(): Promise<number> {
     return this.fileSize.getMaxFileSize();
@@ -88,6 +96,7 @@ export class RepuxLib {
 
   /**
    * Generates key for symmetric encryption/decryption
+   * @return symmetric key in JsonWebKey format
    */
   generateSymmetricKey(): Promise<SymmetricKey> {
     return this.keyGenerator.generateSymmetricKey();
@@ -95,6 +104,7 @@ export class RepuxLib {
 
   /**
    * Generates keys for asymmetric encryption/decryption
+   * @return asymmetric key pair in JsonWebKey format
    */
   generateAsymmetricKeyPair(): Promise<AsymmetricKeyPair> {
     return this.keyGenerator.generateAsymmetricKeyPair();
@@ -102,6 +112,9 @@ export class RepuxLib {
 
   /**
    * Encrypts symmetric key using public key
+   * @param symmetricKey - symmetric key in JsonWebKey format
+   * @param publicKey - public key in JsonWebKey format
+   * @return encrypted symmetric key as a string
    */
   encryptSymmetricKey(symmetricKey: SymmetricKey, publicKey: PublicKey): Promise<string> {
     return this.keyEncryptor.encryptSymmetricKey(symmetricKey, publicKey);
@@ -109,6 +122,9 @@ export class RepuxLib {
 
   /**
    * Decrypts encrypted symmetric key using public key
+   * @param encryptedSymmetricKey - encrypted symmetric key
+   * @param privateKey - private key in JsonWebKey format
+   * @return decrypted symmetric key in JsonWebKey format
    */
   decryptSymmetricKey(encryptedSymmetricKey: string, privateKey: PrivateKey): Promise<SymmetricKey> {
     return this.keyDecryptor.decryptSymmetricKey(encryptedSymmetricKey, privateKey);
@@ -116,6 +132,8 @@ export class RepuxLib {
 
   /**
    * Serializes public key as a string.
+   * @param publicKeyJWK - public key in JsonWebKey format
+   * @return serialized public key
    */
   serializePublicKey(publicKeyJWK: PublicKey): string {
     return this.keySerializer.serializePublicKey(publicKeyJWK);
@@ -123,6 +141,8 @@ export class RepuxLib {
 
   /**
    * Deserializes string public key and returns PublicKey
+   * @param publicKeyString - serialized public key
+   * @return public key in JsonWebKey format
    */
   deserializePublicKey(publicKeyString: string): PublicKey {
     return this.keyDeserializer.deserializePublicKey(publicKeyString);
@@ -130,6 +150,7 @@ export class RepuxLib {
 
   /**
    * Creates FileUploader instance
+   * @return FileUploader instance
    */
   createFileUploader(): FileUploader {
     return new FileUploader(this.ipfs, this.keyGenerator, this.keyEncryptor, this.keyImporter);
@@ -137,6 +158,7 @@ export class RepuxLib {
 
   /**
    * Creates FileReencryptor instance
+   * @return FileReencryptor instance
    */
   createFileReencryptor(): FileReencryptor {
     return new FileReencryptor(this.ipfs, this.keyEncryptor, this.keyDecryptor, this.keyImporter);
@@ -144,6 +166,7 @@ export class RepuxLib {
 
   /**
    * Creates FileDownloader instance
+   * @return FileDownloader instance
    */
   createFileDownloader(): FileDownloader {
     return new FileDownloader(this.ipfs, this.keyDecryptor, this.fileSize, this.keyImporter);

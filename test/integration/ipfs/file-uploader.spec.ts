@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { AsymmetricKeyPair, RepuxLib } from '../../../src/repux-lib';
+import { AsymmetricKeyPair, RepuxLib } from '../../../src';
 import IpfsAPI from 'ipfs-api';
 import { IPFS_HOST, IPFS_PORT, IPFS_PROTOCOL, FILE_CONTENT, FILE_NAME, IPFS_HASH_LENGTH } from '../config';
 import { ErrorMessage } from '../../../src/error-message';
@@ -38,14 +38,14 @@ describe('File uploader should upload and encrypt data only with proper keys', f
       let progressCallCounter = 0;
       repux.createFileUploader()
         .upload(asymmetricKeys.publicKey, file)
-        .on(EventType.PROGRESS, (eventType: EventType, progress: number) => {
+        .on(EventType.PROGRESS, (_eventType: EventType, progress: number) => {
           progressCallCounter++;
 
           if (progress === 1) {
             assert.strictEqual(progressCallCounter, 57);
           }
         })
-        .on(EventType.FINISH, (eventType: EventType, fileHash: string) => {
+        .on(EventType.FINISH, (_eventType: EventType, fileHash: string) => {
           assert.strictEqual(fileHash.length, IPFS_HASH_LENGTH);
           done();
         });
@@ -59,7 +59,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
 
       repux.createFileUploader()
         .upload(tempAsymmetricKeys.publicKey, file)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.ENCRYPTION_ERROR);
           done();
         });
@@ -70,7 +70,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
     it('should emit error when asymmetric key isn\'t present', (done) => {
       repux.createFileUploader()
         .upload(<any> null, file)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.ENCRYPTION_ERROR);
           done();
         });
@@ -81,7 +81,7 @@ describe('File uploader should upload and encrypt data only with proper keys', f
     it('should emit error when file hash isn\'t present', (done) => {
       repux.createFileUploader()
         .upload(asymmetricKeys.publicKey, <any> null)
-        .on(EventType.ERROR, (eventType: EventType, error: ErrorMessage) => {
+        .on(EventType.ERROR, (_eventType: EventType, error: ErrorMessage) => {
           assert.strictEqual(error, ErrorMessage.FILE_NOT_SPECIFIED);
           done();
         });

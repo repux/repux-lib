@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { AsymmetricKeyPair, RepuxLib, SymmetricKey } from '../../src/repux-lib';
+import { AsymmetricKeyPair, RepuxLib, SymmetricKey } from '../../src';
 import IpfsAPI, { IpfsFileHash } from 'ipfs-api';
 import { IPFS_HOST, IPFS_PORT, IPFS_PROTOCOL, FILE_CONTENT, FILE_NAME } from './config';
 import { downloadBlob } from '../helpers/download-blob';
@@ -64,12 +64,12 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
 
     it('should emit progress event and emit finish event with meta file hash', function (done) {
       const fileUploader = repux.createFileUploader();
-      fileUploader.on(EventType.PROGRESS, (eventType: EventType, progress: number) => {
+      fileUploader.on(EventType.PROGRESS, (_eventType: EventType, progress: number) => {
         console.log('progress', progress);
         assert.ok(progress !== null);
       });
 
-      fileUploader.on(EventType.FINISH, (eventType: EventType, metaFileHash: IpfsFileHash) => {
+      fileUploader.on(EventType.FINISH, (_eventType: EventType, metaFileHash: IpfsFileHash) => {
         assert.ok(metaFileHash);
         console.log('metaFileHash', metaFileHash);
         uploadedFileHash = metaFileHash;
@@ -85,7 +85,7 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
     it('should emit progress event and emit finish event with new meta file hash', function (done) {
       repux.createFileReencryptor()
         .reencrypt(asymmetricKeys1.privateKey, asymmetricKeys2.publicKey, uploadedFileHash)
-        .on(EventType.FINISH, (eventType: EventType, metaFileHash: IpfsFileHash) => {
+        .on(EventType.FINISH, (_eventType: EventType, metaFileHash: IpfsFileHash) => {
           assert.ok(metaFileHash);
           console.log('metaFileHash', metaFileHash);
           uploadedFileHash = metaFileHash;
@@ -133,11 +133,11 @@ describe('File can be uploaded and downloaded using encryption/decryption', func
     it('should emit progress event and emit finish event with url to file', function (done) {
       repux.createFileDownloader()
         .download(asymmetricKeys2.privateKey, uploadedFileHash)
-        .on(EventType.PROGRESS, (eventType: EventType, progress: number) => {
+        .on(EventType.PROGRESS, (_eventType: EventType, progress: number) => {
           console.log('progress', progress);
           assert.ok(progress);
         })
-        .on(EventType.FINISH, (eventType: EventType, result: DownloadedFile) => {
+        .on(EventType.FINISH, (_eventType: EventType, result: DownloadedFile) => {
           console.log('result', result);
           assert.ok(result.fileURL);
           assert.strictEqual(result.fileName, FILE_NAME);

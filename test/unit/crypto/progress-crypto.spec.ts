@@ -173,7 +173,7 @@ describe('ProgressCrypto', () => {
         return {
           send: () => {
           },
-          on: (eventName: string, callback: (data: any) => any) => {
+          on: (_eventName: string, callback: (data: any) => any) => {
             progressCallback = callback;
           },
           kill: () => {
@@ -225,7 +225,7 @@ describe('ProgressCrypto', () => {
         return {
           send: () => {
           },
-          on: (eventName: string, callback: (data: any) => any) => {
+          on: (_eventName: string, callback: (data: any) => any) => {
             progressCallback = callback;
           },
           kill: () => {
@@ -273,7 +273,7 @@ describe('ProgressCrypto', () => {
         return {
           send: () => {
           },
-          on: (eventName: string, callback: (data: any) => any) => {
+          on: (_eventName: string, callback: (data: any) => any) => {
             progressCallback = callback;
           },
           kill: () => {
@@ -317,7 +317,7 @@ describe('ProgressCrypto', () => {
         return {
           send: () => {
           },
-          on: (eventName: string, callback: (data: any) => any) => {
+          on: (_eventName: string, callback: (data: any) => any) => {
             progressCallback = callback;
           },
           kill: () => {

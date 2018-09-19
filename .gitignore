@@ -1,4 +1,5 @@
 node_modules/
 .idea/
 build/tests/
-docs/coverage
+build/types/test/
+/coverage/
