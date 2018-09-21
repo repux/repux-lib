@@ -1,4 +1,4 @@
-# Contributing to RepuX
+# Contributing to RepuX Lib
 
 ## Development
 * Run ethereum node, compile and migrate contracts. 
